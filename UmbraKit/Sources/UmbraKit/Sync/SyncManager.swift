@@ -1,5 +1,6 @@
 import Foundation
 import Network
+import os
 
 @MainActor
 @Observable
@@ -72,7 +73,7 @@ public final class SyncManager {
 
             lastSyncDate = Date()
         } catch {
-            print("Sync failed: \(error)")
+            UmbraLogger.sync.error("Sync failed: \(error.localizedDescription)")
         }
     }
 
@@ -93,7 +94,7 @@ public final class SyncManager {
                     &project, status: .synced, remoteId: remote.id
                 )
             } catch {
-                print("Failed to upload project \(project.name): \(error)")
+                UmbraLogger.sync.error("Failed to upload project \(project.name): \(error.localizedDescription)")
             }
         }
     }
@@ -121,7 +122,7 @@ public final class SyncManager {
                     &task, status: .synced, remoteId: remote.id
                 )
             } catch {
-                print("Failed to upload task \(task.title): \(error)")
+                UmbraLogger.sync.error("Failed to upload task \(task.title): \(error.localizedDescription)")
             }
         }
     }
@@ -147,7 +148,7 @@ public final class SyncManager {
                 )
                 try DatabaseManager.shared.updateSyncStatus(&task, status: .synced)
             } catch {
-                print("Failed to update task \(task.title): \(error)")
+                UmbraLogger.sync.error("Failed to update task \(task.title): \(error.localizedDescription)")
             }
         }
     }
@@ -228,7 +229,7 @@ public final class SyncManager {
                     &mutableSession, status: .synced, remoteId: remote.id
                 )
             } catch {
-                print("Failed to upload session: \(error)")
+                UmbraLogger.sync.error("Failed to upload session: \(error.localizedDescription)")
             }
         } else if let remoteId = session.remoteId {
             let body = SessionUpdateBody(
@@ -244,7 +245,7 @@ public final class SyncManager {
                 )
                 try DatabaseManager.shared.updateSyncStatus(&mutableSession, status: .synced)
             } catch {
-                print("Failed to update session: \(error)")
+                UmbraLogger.sync.error("Failed to update session: \(error.localizedDescription)")
             }
         }
     }
@@ -277,7 +278,7 @@ public final class SyncManager {
                 try DatabaseManager.shared.updateSyncStatus(&event, status: .synced)
             }
         } catch {
-            print("Failed to upload session events: \(error)")
+            UmbraLogger.sync.error("Failed to upload events: \(error.localizedDescription)")
         }
     }
 

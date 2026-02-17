@@ -22,7 +22,10 @@ let package = Package(
         ),
         .testTarget(
             name: "UmbraKitTests",
-            dependencies: ["UmbraKit"]
+            dependencies: [
+                "UmbraKit",
+                .product(name: "GRDB", package: "GRDB.swift"),
+            ]
         ),
     ]
 )

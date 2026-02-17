@@ -65,7 +65,7 @@ struct IOSStatsView: View {
                         title: "Avg Length",
                         value: Session.formatSeconds(periodStats.averageSessionLength),
                         icon: "clock",
-                        color: .purple
+                        color: Color.accentColor
                     )
                     IOSSummaryCard(
                         title: "Focus Rate",

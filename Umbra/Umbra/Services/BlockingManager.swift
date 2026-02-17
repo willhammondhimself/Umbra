@@ -2,6 +2,7 @@ import Foundation
 import AppKit
 import SwiftUI
 import Combine
+import os
 import UmbraKit
 
 @MainActor
@@ -32,7 +33,7 @@ final class BlockingManager {
         do {
             blocklistItems = try DatabaseManager.shared.fetchBlocklistItems()
         } catch {
-            print("Failed to load blocklist: \(error)")
+            UmbraLogger.blocking.error("Failed to load blocklist: \(error.localizedDescription)")
         }
     }
 
@@ -43,7 +44,7 @@ final class BlockingManager {
             loadBlocklist()
             updateSessionManagerBlocklist()
         } catch {
-            print("Failed to save blocklist item: \(error)")
+            UmbraLogger.blocking.error("Failed to save blocklist item: \(error.localizedDescription)")
         }
     }
 
@@ -53,7 +54,7 @@ final class BlockingManager {
             loadBlocklist()
             updateSessionManagerBlocklist()
         } catch {
-            print("Failed to delete blocklist item: \(error)")
+            UmbraLogger.blocking.error("Failed to delete blocklist item: \(error.localizedDescription)")
         }
     }
 
@@ -65,7 +66,7 @@ final class BlockingManager {
             loadBlocklist()
             updateSessionManagerBlocklist()
         } catch {
-            print("Failed to toggle blocklist item: \(error)")
+            UmbraLogger.blocking.error("Failed to toggle blocklist item: \(error.localizedDescription)")
         }
     }
 
@@ -227,7 +228,7 @@ final class BlockingManager {
         if let sessionManager = Optional(SessionManager.shared),
            sessionManager.state == .running || sessionManager.state == .paused {
             // The override is logged as metadata
-            print("Override: \(reason)")
+            UmbraLogger.blocking.info("Block override: \(reason)")
         }
         dismissOverlay()
     }

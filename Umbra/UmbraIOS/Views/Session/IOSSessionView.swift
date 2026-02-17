@@ -171,7 +171,7 @@ struct IOSActiveSessionView: View {
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.large)
-                .tint(.red)
+                .tint(Color.umbraDistracted)
             }
             .padding(.horizontal)
             .padding(.bottom, 32)

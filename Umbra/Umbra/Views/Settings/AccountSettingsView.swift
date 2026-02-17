@@ -1,10 +1,15 @@
+import AppKit
 import SwiftUI
 import UmbraKit
+import UniformTypeIdentifiers
 
 struct AccountSettingsView: View {
     @State private var authManager = AuthManager.shared
     @State private var visibility = "private"
     @State private var showDeleteConfirmation = false
+    @State private var isExporting = false
+    @State private var exportError: String?
+    @State private var deleteError: String?
 
     var body: some View {
         Form {
@@ -29,12 +34,34 @@ struct AccountSettingsView: View {
             }
 
             Section("Data") {
-                Button("Export Data (JSON)") {
-                    // TODO: Trigger data export via /account/export
+                Button {
+                    Task { await exportData() }
+                } label: {
+                    HStack {
+                        Text("Export Data (JSON)")
+                        if isExporting {
+                            Spacer()
+                            ProgressView()
+                                .controlSize(.small)
+                        }
+                    }
+                }
+                .disabled(isExporting)
+
+                if let exportError {
+                    Text(exportError)
+                        .font(.caption)
+                        .foregroundStyle(.red)
                 }
 
                 Button("Delete Account", role: .destructive) {
                     showDeleteConfirmation = true
+                }
+
+                if let deleteError {
+                    Text(deleteError)
+                        .font(.caption)
+                        .foregroundStyle(.red)
                 }
             }
 
@@ -42,18 +69,47 @@ struct AccountSettingsView: View {
                 Button("Log Out") {
                     authManager.logout()
                 }
-                .foregroundStyle(.red)
+                .foregroundStyle(Color.umbraDistracted)
             }
         }
         .formStyle(.grouped)
         .alert("Delete Account?", isPresented: $showDeleteConfirmation) {
             Button("Cancel", role: .cancel) {}
             Button("Delete", role: .destructive) {
-                // TODO: Call DELETE /account endpoint
-                authManager.logout()
+                Task { await deleteAccount() }
             }
         } message: {
             Text("This will permanently delete all your data. This cannot be undone.")
+        }
+    }
+
+    private func exportData() async {
+        isExporting = true
+        exportError = nil
+        defer { isExporting = false }
+
+        do {
+            let jsonData = try await APIClient.shared.requestRawData(.accountExport)
+
+            let panel = NSSavePanel()
+            panel.allowedContentTypes = [.json]
+            panel.nameFieldStringValue = "umbra-export.json"
+            let result = await panel.begin()
+            if result == .OK, let url = panel.url {
+                try jsonData.write(to: url)
+            }
+        } catch {
+            exportError = "Export failed: \(error.localizedDescription)"
+        }
+    }
+
+    private func deleteAccount() async {
+        deleteError = nil
+        do {
+            try await APIClient.shared.requestVoid(.accountDelete, method: "DELETE")
+            authManager.logout()
+        } catch {
+            deleteError = "Delete failed: \(error.localizedDescription)"
         }
     }
 }

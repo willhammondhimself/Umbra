@@ -73,3 +73,53 @@ async def test_login_invalid_provider(client):
         json={"provider": "invalid", "identity_token": "xxx"},
     )
     assert response.status_code == 400
+
+
+@pytest.mark.asyncio
+async def test_account_export(client):
+    response = await client.get("/auth/account/export")
+    assert response.status_code == 200
+    data = response.json()
+    assert "user" in data
+    assert data["user"]["email"] == "test@example.com"
+    assert "projects" in data
+    assert "tasks" in data
+    assert "sessions" in data
+    assert "session_events" in data
+
+
+@pytest.mark.asyncio
+async def test_account_export_with_data(client, db_session, test_user):
+    from app.models.project import Project
+
+    project = Project(
+        user_id=test_user.id,
+        name="Test Project",
+    )
+    db_session.add(project)
+    await db_session.commit()
+
+    response = await client.get("/auth/account/export")
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data["projects"]) == 1
+    assert data["projects"][0]["name"] == "Test Project"
+
+
+@pytest.mark.asyncio
+async def test_account_delete(client):
+    response = await client.delete("/auth/account")
+    assert response.status_code == 204
+
+
+@pytest.mark.asyncio
+async def test_token_structure():
+    """Verify token payload contains expected fields."""
+    test_id = uuid.uuid4()
+    tokens = issue_tokens(test_id)
+    assert tokens["token_type"] == "bearer"
+    assert tokens["expires_in"] == 3600
+    assert len(tokens["access_token"]) > 20
+    assert len(tokens["refresh_token"]) > 20
+    # Tokens should be different
+    assert tokens["access_token"] != tokens["refresh_token"]

@@ -11,22 +11,22 @@ struct ActiveSessionView: View {
             // Timer display
             Text(Session.formatSeconds(sessionManager.elapsedSeconds))
                 .font(.system(size: 72, weight: .light, design: .monospaced))
-                .foregroundStyle(sessionManager.isDistracted ? .red : .primary)
+                .foregroundStyle(sessionManager.isDistracted ? Color.umbraDistracted : .primary)
                 .contentTransition(.numericText())
 
             // Status
             HStack(spacing: 16) {
                 if sessionManager.state == .paused {
                     Label("Paused", systemImage: "pause.circle.fill")
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(Color.umbraPaused)
                         .font(.headline)
                 } else if sessionManager.isDistracted {
                     Label("Distracted — \(sessionManager.currentApp)", systemImage: "exclamationmark.triangle.fill")
-                        .foregroundStyle(.red)
+                        .foregroundStyle(Color.umbraDistracted)
                         .font(.headline)
                 } else {
                     Label("Focused", systemImage: "checkmark.circle.fill")
-                        .foregroundStyle(.green)
+                        .foregroundStyle(Color.umbraFocused)
                         .font(.headline)
                 }
             }
@@ -74,7 +74,7 @@ struct ActiveSessionView: View {
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.large)
-                .tint(.red)
+                .tint(Color.umbraDistracted)
                 .keyboardShortcut("s", modifiers: [.command, .shift])
             }
 
@@ -103,5 +103,7 @@ struct StatBadge: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
+        .padding(12)
+        .glassCard(cornerRadius: 12)
     }
 }

@@ -2,7 +2,7 @@ import SwiftUI
 import UmbraKit
 
 struct ContentView: View {
-    @State private var selectedTab: AppTab = .plan
+    @AppStorage("selectedTab") private var selectedTab: AppTab = .plan
     @State private var isSidebarExpanded = false
 
     var body: some View {
@@ -16,6 +16,7 @@ struct ContentView: View {
         } detail: {
             selectedTab.view
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .animation(.umbraSpring, value: selectedTab)
         }
         .frame(minWidth: 700, minHeight: 500)
     }

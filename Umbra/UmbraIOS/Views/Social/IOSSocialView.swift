@@ -2,22 +2,21 @@ import SwiftUI
 import UmbraKit
 
 struct IOSSocialView: View {
-    @State private var selectedTab = 0
-
     var body: some View {
         VStack(spacing: 0) {
-            Picker("", selection: $selectedTab) {
-                Text("Friends").tag(0)
-                Text("Groups").tag(1)
-            }
-            .pickerStyle(.segmented)
-            .padding()
+            IOSFriendsListView()
 
-            if selectedTab == 0 {
-                IOSFriendsListView()
-            } else {
-                IOSGroupView()
+            Divider()
+
+            HStack(spacing: 8) {
+                Image(systemName: "person.3")
+                    .foregroundStyle(.secondary)
+                Text("Groups & Leaderboards coming soon")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
         }
     }
 }
@@ -28,9 +27,18 @@ struct IOSFriendsListView: View {
     @State private var friends: [FriendItem] = []
     @State private var inviteEmail = ""
     @State private var isInviting = false
+    @State private var isLoading = true
     @State private var showEncourageSheet = false
     @State private var selectedFriend: FriendItem?
     @State private var errorMessage: String?
+
+    private var pendingInvites: [FriendItem] {
+        friends.filter { $0.status == "pending" }
+    }
+
+    private var acceptedFriends: [FriendItem] {
+        friends.filter { $0.status == "accepted" }
+    }
 
     var body: some View {
         List {
@@ -49,52 +57,57 @@ struct IOSFriendsListView: View {
                 }
 
                 if let error = errorMessage {
-                    Text(error)
-                        .font(.caption)
-                        .foregroundStyle(.red)
+                    HStack(spacing: 6) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .font(.caption)
+                        Text(error)
+                            .font(.caption)
+                        Spacer()
+                        Button {
+                            withAnimation { errorMessage = nil }
+                        } label: {
+                            Image(systemName: "xmark")
+                                .font(.caption2)
+                        }
+                        .buttonStyle(.borderless)
+                    }
+                    .foregroundStyle(Color.umbraDistracted)
                 }
             }
 
-            if friends.isEmpty {
+            if isLoading {
+                HStack {
+                    Spacer()
+                    ProgressView("Loading friends...")
+                    Spacer()
+                }
+                .listRowBackground(Color.clear)
+            } else if friends.isEmpty {
                 ContentUnavailableView(
                     "No Friends Yet",
                     systemImage: "person.2",
                     description: Text("Invite friends to hold each other accountable.")
                 )
             } else {
-                ForEach(friends) { friend in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(friend.displayName ?? friend.email)
-                                .font(.body)
-                            if friend.status == "pending" {
-                                Text("Pending")
-                                    .font(.caption)
-                                    .foregroundStyle(Color.umbraPaused)
-                            }
+                if !pendingInvites.isEmpty {
+                    Section("Pending Invites") {
+                        ForEach(pendingInvites) { friend in
+                            friendRow(friend)
                         }
+                    }
+                }
 
-                        Spacer()
-
-                        if friend.status == "accepted" {
-                            Button {
-                                selectedFriend = friend
-                                showEncourageSheet = true
-                            } label: {
-                                Image(systemName: "heart.fill")
-                                    .foregroundStyle(Color.umbraDistracted)
-                            }
-
-                            Button {
-                                Task { await sendPing(to: friend) }
-                            } label: {
-                                Image(systemName: "bell.fill")
-                                    .foregroundStyle(Color.umbraPaused)
-                            }
+                if !acceptedFriends.isEmpty {
+                    Section("Friends") {
+                        ForEach(acceptedFriends) { friend in
+                            friendRow(friend)
                         }
                     }
                 }
             }
+        }
+        .refreshable {
+            await loadFriends()
         }
         .sheet(isPresented: $showEncourageSheet) {
             if let friend = selectedFriend {
@@ -106,11 +119,60 @@ struct IOSFriendsListView: View {
         }
     }
 
+    @ViewBuilder
+    private func friendRow(_ friend: FriendItem) -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(friend.displayName ?? friend.email)
+                    .font(.body)
+                if friend.status == "pending" {
+                    Text("Invite sent")
+                        .font(.caption)
+                        .foregroundStyle(Color.umbraPaused)
+                } else {
+                    Text("Since \(friend.since, format: .dateTime.month().year())")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+
+            Spacer()
+
+            if friend.status == "pending" {
+                Button("Accept") {
+                    Task { await acceptInvite(friend) }
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+                .tint(Color.umbraFocused)
+            } else if friend.status == "accepted" {
+                Button {
+                    selectedFriend = friend
+                    showEncourageSheet = true
+                } label: {
+                    Image(systemName: "heart.fill")
+                        .foregroundStyle(Color.umbraDistracted)
+                }
+
+                Button {
+                    Task { await sendPing(to: friend) }
+                } label: {
+                    Image(systemName: "bell.fill")
+                        .foregroundStyle(Color.umbraPaused)
+                }
+            }
+        }
+    }
+
+    // MARK: - Actions
+
     private func loadFriends() async {
+        isLoading = true
+        defer { isLoading = false }
         do {
             friends = try await APIClient.shared.request(.friends)
         } catch {
-            // Non-critical
+            errorMessage = "Failed to load friends"
         }
     }
 
@@ -130,6 +192,17 @@ struct IOSFriendsListView: View {
         isInviting = false
     }
 
+    private func acceptInvite(_ friend: FriendItem) async {
+        do {
+            try await APIClient.shared.requestVoid(
+                .friendAccept(friend.id), method: "POST"
+            )
+            await loadFriends()
+        } catch {
+            errorMessage = "Failed to accept invite"
+        }
+    }
+
     private func sendPing(to friend: FriendItem) async {
         do {
             let body = ["to_user_id": friend.userId.uuidString]
@@ -138,11 +211,6 @@ struct IOSFriendsListView: View {
             errorMessage = "Failed to send ping"
         }
     }
-}
-
-private struct InviteResponse: Codable {
-    let id: UUID
-    let status: String
 }
 
 // MARK: - Encourage View
@@ -201,152 +269,5 @@ struct IOSEncourageView: View {
             // Non-critical
         }
         isSending = false
-    }
-}
-
-// MARK: - Group Views
-
-struct IOSGroupView: View {
-    @State private var groups: [GroupItem] = []
-
-    var body: some View {
-        if groups.isEmpty {
-            ContentUnavailableView(
-                "No Groups",
-                systemImage: "person.3",
-                description: Text("Groups let you compete on leaderboards with friends.")
-            )
-            .task { await loadGroups() }
-        } else {
-            List(groups) { group in
-                NavigationLink {
-                    IOSLeaderboardView(groupId: group.id, groupName: group.name)
-                } label: {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(group.name)
-                                .font(.body)
-                            Text("\(group.memberCount) members")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                        Spacer()
-                        Image(systemName: "trophy")
-                            .foregroundStyle(Color.accentColor)
-                    }
-                }
-            }
-            .task { await loadGroups() }
-        }
-    }
-
-    private func loadGroups() async {
-        do {
-            groups = try await APIClient.shared.request(.groups)
-        } catch {
-            // Non-critical
-        }
-    }
-}
-
-// MARK: - Leaderboard
-
-struct IOSLeaderboardView: View {
-    let groupId: UUID
-    let groupName: String
-
-    @State private var entries: [LeaderboardEntryItem] = []
-
-    var body: some View {
-        List(entries) { entry in
-            HStack {
-                ZStack {
-                    Circle()
-                        .fill(entry.rank <= 3 ? Color.accentColor.opacity(0.2) : Color.gray.opacity(0.1))
-                        .frame(width: 32, height: 32)
-                    Text("\(entry.rank)")
-                        .font(.caption.bold())
-                        .foregroundStyle(entry.rank <= 3 ? Color.accentColor : .secondary)
-                }
-
-                Text(entry.displayName ?? "Anonymous")
-
-                Spacer()
-
-                VStack(alignment: .trailing) {
-                    Text(formatTime(entry.focusedSeconds))
-                        .font(.headline)
-                    Text("\(entry.sessionCount) sessions")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            }
-        }
-        .navigationTitle(groupName)
-        .task { await loadLeaderboard() }
-    }
-
-    private func formatTime(_ seconds: Int) -> String {
-        let hours = seconds / 3600
-        let minutes = (seconds % 3600) / 60
-        return hours > 0 ? "\(hours)h \(minutes)m" : "\(minutes)m"
-    }
-
-    private func loadLeaderboard() async {
-        do {
-            entries = try await APIClient.shared.request(.groupLeaderboard(groupId))
-        } catch {
-            // Non-critical
-        }
-    }
-}
-
-// MARK: - Shared Model Types
-
-struct FriendItem: Identifiable, Codable, Sendable {
-    let id: UUID
-    let userId: UUID
-    let displayName: String?
-    let email: String
-    let status: String
-    let since: Date
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case userId = "user_id"
-        case displayName = "display_name"
-        case email, status, since
-    }
-}
-
-struct GroupItem: Identifiable, Codable, Sendable {
-    let id: UUID
-    let name: String
-    let createdBy: UUID
-    let createdAt: Date
-    let memberCount: Int
-
-    enum CodingKeys: String, CodingKey {
-        case id, name
-        case createdBy = "created_by"
-        case createdAt = "created_at"
-        case memberCount = "member_count"
-    }
-}
-
-struct LeaderboardEntryItem: Identifiable, Codable, Sendable {
-    var id: UUID { userId }
-    let userId: UUID
-    let displayName: String?
-    let focusedSeconds: Int
-    let sessionCount: Int
-    let rank: Int
-
-    enum CodingKeys: String, CodingKey {
-        case userId = "user_id"
-        case displayName = "display_name"
-        case focusedSeconds = "focused_seconds"
-        case sessionCount = "session_count"
-        case rank
     }
 }

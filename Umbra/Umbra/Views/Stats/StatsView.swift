@@ -1,5 +1,6 @@
 import SwiftUI
 import Charts
+import os
 import UmbraKit
 
 enum TimeRange: String, CaseIterable {
@@ -95,31 +96,31 @@ struct StatsView: View {
                 title: "Focused Time",
                 value: Session.formatSeconds(periodStats.focusedSeconds),
                 icon: "eye",
-                color: .green
+                color: .umbraFocused
             )
             SummaryCard(
                 title: "Sessions",
                 value: "\(periodStats.sessionCount)",
                 icon: "timer",
-                color: .blue
+                color: .umbraNeutral
             )
             SummaryCard(
                 title: "Avg Length",
                 value: Session.formatSeconds(periodStats.averageSessionLength),
                 icon: "clock",
-                color: .purple
+                color: Color.accentColor
             )
             SummaryCard(
                 title: "Focus Rate",
                 value: String(format: "%.0f%%", periodStats.focusPercentage),
                 icon: "percent",
-                color: .orange
+                color: .umbraPaused
             )
             SummaryCard(
                 title: "Streak",
                 value: "\(periodStats.currentStreak)d",
                 icon: "flame",
-                color: .red
+                color: .umbraStreak
             )
         }
     }
@@ -150,8 +151,7 @@ struct StatsView: View {
             }
         }
         .padding()
-        .background(RoundedRectangle(cornerRadius: 12).fill(.background))
-        .shadow(color: .black.opacity(0.05), radius: 3, y: 2)
+        .glassCard(cornerRadius: 12)
     }
 
     // MARK: - Distractors
@@ -188,8 +188,7 @@ struct StatsView: View {
             }
         }
         .padding()
-        .background(RoundedRectangle(cornerRadius: 12).fill(.background))
-        .shadow(color: .black.opacity(0.05), radius: 3, y: 2)
+        .glassCard(cornerRadius: 12)
         .frame(maxWidth: .infinity)
     }
 
@@ -222,7 +221,7 @@ struct StatsView: View {
             dailyData = try aggregator.dailyFocusData(from: range.start, to: range.end)
             distractors = try aggregator.topDistractors(from: range.start, to: range.end)
         } catch {
-            print("Failed to load stats: \(error)")
+            UmbraLogger.general.error("Failed to load stats: \(error.localizedDescription)")
         }
         insights = insightsEngine.generateInsights()
     }
@@ -249,8 +248,7 @@ struct SummaryCard: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(RoundedRectangle(cornerRadius: 12).fill(.background))
-        .shadow(color: .black.opacity(0.05), radius: 3, y: 2)
+        .glassCard(cornerRadius: 12)
     }
 }
 
@@ -279,9 +277,9 @@ struct InsightCardView: View {
 
     private var insightColor: Color {
         switch insight.type {
-        case .positive: .green
-        case .warning: .orange
-        case .neutral: .blue
+        case .positive: .umbraPositive
+        case .warning: .umbraWarning
+        case .neutral: .umbraNeutral
         }
     }
 }

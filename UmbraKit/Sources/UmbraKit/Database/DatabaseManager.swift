@@ -1,11 +1,25 @@
 import Foundation
 import GRDB
+import os
 
 @MainActor
 public final class DatabaseManager {
     public static let shared = DatabaseManager()
 
     public let dbQueue: DatabaseQueue
+
+    /// Creates an in-memory database for testing
+    public init(inMemory: Bool) {
+        do {
+            let dbQueue = try DatabaseQueue(configuration: Configuration())
+            self.dbQueue = dbQueue
+            var migrator = DatabaseMigrator()
+            AppMigrations.registerAll(in: &migrator)
+            try migrator.migrate(dbQueue)
+        } catch {
+            fatalError("In-memory database setup failed: \(error)")
+        }
+    }
 
     private init() {
         do {
@@ -23,7 +37,7 @@ public final class DatabaseManager {
             var config = Configuration()
             #if DEBUG
             config.prepareDatabase { db in
-                db.trace { print("SQL: \($0)") }
+                db.trace { UmbraLogger.database.debug("SQL: \($0)") }
             }
             #endif
 

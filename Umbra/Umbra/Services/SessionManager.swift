@@ -1,6 +1,7 @@
 import Foundation
 import AppKit
 import Combine
+import os
 import UmbraKit
 
 enum SessionState: Equatable {
@@ -46,7 +47,7 @@ final class SessionManager {
         do {
             try DatabaseManager.shared.saveSession(&session)
         } catch {
-            print("Failed to save session: \(error)")
+            UmbraLogger.session.error("Failed to save session: \(error.localizedDescription)")
             return
         }
 
@@ -84,6 +85,7 @@ final class SessionManager {
         pauseStartUptime = ProcessInfo.processInfo.systemUptime
         endDistraction()
         logEvent(.pause)
+        persistCurrentState()
         stopTimer()
         appMonitor.stopMonitoring()
     }
@@ -119,7 +121,7 @@ final class SessionManager {
         do {
             try DatabaseManager.shared.saveSession(&session)
         } catch {
-            print("Failed to finalize session: \(error)")
+            UmbraLogger.session.error("Failed to finalize session: \(error.localizedDescription)")
         }
 
         logEvent(.stop)
@@ -194,7 +196,7 @@ final class SessionManager {
             try DatabaseManager.shared.saveSession(&session)
             currentSession = session
         } catch {
-            print("Failed to persist session state: \(error)")
+            UmbraLogger.session.error("Failed to persist state: \(error.localizedDescription)")
         }
     }
 
@@ -249,7 +251,7 @@ final class SessionManager {
                 SyncManager.shared.syncSessionEvents(session)
             }
         } catch {
-            print("Failed to log event: \(error)")
+            UmbraLogger.session.error("Failed to log event: \(error.localizedDescription)")
         }
     }
 
@@ -292,7 +294,7 @@ final class SessionManager {
                 SyncManager.shared.syncSessionEvents(incomplete)
             }
         } catch {
-            print("Failed to check for incomplete sessions: \(error)")
+            UmbraLogger.session.error("Failed to check incomplete sessions: \(error.localizedDescription)")
         }
     }
 }

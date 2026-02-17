@@ -3,7 +3,7 @@ import Foundation
 public actor APIClient {
     public static let shared = APIClient()
 
-    private let baseURL = URL(string: "http://localhost:8000")!
+    private var baseURL: URL { ServerEnvironment.current.baseURL }
     private let session = URLSession.shared
     private let encoder: JSONEncoder = {
         let e = JSONEncoder()
@@ -42,6 +42,8 @@ public actor APIClient {
         case authRefresh
         case registerDevice
         case unregisterDevice(UUID)
+        case accountExport
+        case accountDelete
 
         public var path: String {
             switch self {
@@ -63,6 +65,8 @@ public actor APIClient {
             case .authRefresh: "/auth/refresh"
             case .registerDevice: "/devices/register"
             case .unregisterDevice(let id): "/devices/\(id)"
+            case .accountExport: "/auth/account/export"
+            case .accountDelete: "/auth/account"
             }
         }
     }
@@ -117,6 +121,30 @@ public actor APIClient {
         }
 
         return try decoder.decode(T.self, from: data)
+    }
+
+    // Raw data version for export endpoints
+    public func requestRawData(
+        _ endpoint: Endpoint,
+        method: String = "GET"
+    ) async throws -> Data {
+        let url = baseURL.appendingPathComponent(endpoint.path)
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        if let token = await MainActor.run(body: { AuthManager.shared.getAccessToken() }) {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+
+        let (data, response) = try await session.data(for: request)
+
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw APIError.serverError((response as? HTTPURLResponse)?.statusCode ?? 0)
+        }
+
+        return data
     }
 
     // Non-decoding version for fire-and-forget

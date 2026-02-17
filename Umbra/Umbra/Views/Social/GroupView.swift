@@ -1,4 +1,5 @@
 import SwiftUI
+import os
 import UmbraKit
 
 struct GroupView: View {
@@ -43,22 +44,7 @@ struct GroupView: View {
         do {
             groups = try await APIClient.shared.request(.groups)
         } catch {
-            print("Failed to load groups: \(error)")
+            UmbraLogger.social.error("Failed to load groups: \(error.localizedDescription)")
         }
-    }
-}
-
-struct GroupItem: Identifiable, Codable {
-    let id: UUID
-    let name: String
-    let createdBy: UUID
-    let createdAt: Date
-    let memberCount: Int
-
-    enum CodingKeys: String, CodingKey {
-        case id, name
-        case createdBy = "created_by"
-        case createdAt = "created_at"
-        case memberCount = "member_count"
     }
 }

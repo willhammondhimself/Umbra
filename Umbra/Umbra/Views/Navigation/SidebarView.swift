@@ -6,9 +6,26 @@ struct SidebarView: View {
     @Binding var isExpanded: Bool
     @Namespace private var sidebarAnimation
     @State private var hoverTask: Task<Void, Never>?
+    @State private var isPinned = false
 
     var body: some View {
         VStack(spacing: 8) {
+            // Pin/unpin toggle
+            Button {
+                withAnimation(.umbraSpring) {
+                    isPinned.toggle()
+                    isExpanded = isPinned
+                }
+            } label: {
+                Image(systemName: isPinned ? "sidebar.left" : "sidebar.leading")
+                    .font(.system(size: 14))
+                    .foregroundStyle(.secondary)
+                    .frame(width: 24, height: 24)
+            }
+            .buttonStyle(.plain)
+            .help(isPinned ? "Collapse sidebar" : "Pin sidebar open")
+            .padding(.bottom, 4)
+
             ForEach(AppTab.allCases, id: \.self) { tab in
                 sidebarItem(for: tab)
             }
@@ -19,10 +36,11 @@ struct SidebarView: View {
         .frame(maxHeight: .infinity)
         .glassEffect(in: .rect(cornerRadius: UmbraRadius.sidebar))
         .onHover { hovering in
+            guard !isPinned else { return }
             hoverTask?.cancel()
             hoverTask = Task {
                 if hovering {
-                    try? await Task.sleep(for: .milliseconds(120))
+                    try? await Task.sleep(for: .milliseconds(200))
                 }
                 guard !Task.isCancelled else { return }
                 await MainActor.run {

@@ -5,9 +5,18 @@ struct FriendsListView: View {
     @State private var friends: [FriendItem] = []
     @State private var inviteEmail = ""
     @State private var isInviting = false
+    @State private var isLoading = true
     @State private var showEncourageSheet = false
     @State private var selectedFriend: FriendItem?
     @State private var errorMessage: String?
+
+    private var pendingInvites: [FriendItem] {
+        friends.filter { $0.status == "pending" }
+    }
+
+    private var acceptedFriends: [FriendItem] {
+        friends.filter { $0.status == "accepted" }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -24,53 +33,60 @@ struct FriendsListView: View {
             }
             .padding()
 
+            // Inline error banner
             if let error = errorMessage {
-                Text(error)
-                    .font(.caption)
-                    .foregroundStyle(.red)
-                    .padding(.horizontal)
+                HStack(spacing: 6) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .font(.caption)
+                    Text(error)
+                        .font(.caption)
+                    Spacer()
+                    Button {
+                        withAnimation(.umbraQuick) { errorMessage = nil }
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.caption2)
+                    }
+                    .buttonStyle(.borderless)
+                }
+                .foregroundStyle(Color.umbraDistracted)
+                .padding(.horizontal)
+                .padding(.bottom, 8)
+                .transition(.move(edge: .top).combined(with: .opacity))
             }
 
-            if friends.isEmpty {
+            if isLoading {
+                Spacer()
+                ProgressView("Loading friends...")
+                    .frame(maxWidth: .infinity)
+                Spacer()
+            } else if friends.isEmpty {
                 ContentUnavailableView(
                     "No Friends Yet",
                     systemImage: "person.2",
                     description: Text("Invite friends to hold each other accountable.")
                 )
             } else {
-                List(friends) { friend in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(friend.displayName ?? friend.email)
-                                .font(.headline)
-                            if friend.status == "pending" {
-                                Text("Pending")
-                                    .font(.caption)
-                                    .foregroundStyle(.orange)
+                List {
+                    // Pending invites section
+                    if !pendingInvites.isEmpty {
+                        Section("Pending Invites") {
+                            ForEach(pendingInvites) { friend in
+                                friendRow(friend)
                             }
-                        }
-
-                        Spacer()
-
-                        if friend.status == "accepted" {
-                            Button {
-                                selectedFriend = friend
-                                showEncourageSheet = true
-                            } label: {
-                                Image(systemName: "heart.fill")
-                            }
-                            .buttonStyle(.borderless)
-
-                            Button {
-                                Task { await sendPing(to: friend) }
-                            } label: {
-                                Image(systemName: "bell.fill")
-                            }
-                            .buttonStyle(.borderless)
                         }
                     }
-                    .padding(.vertical, 4)
+
+                    // Accepted friends section
+                    if !acceptedFriends.isEmpty {
+                        Section("Friends") {
+                            ForEach(acceptedFriends) { friend in
+                                friendRow(friend)
+                            }
+                        }
+                    }
                 }
+                .listStyle(.inset(alternatesRowBackgrounds: true))
             }
         }
         .sheet(isPresented: $showEncourageSheet) {
@@ -83,11 +99,67 @@ struct FriendsListView: View {
         }
     }
 
+    @ViewBuilder
+    private func friendRow(_ friend: FriendItem) -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(friend.displayName ?? friend.email)
+                    .font(.headline)
+                if friend.status == "pending" {
+                    Text("Invite sent")
+                        .font(.caption)
+                        .foregroundStyle(Color.umbraPaused)
+                } else {
+                    Text("Since \(friend.since, format: .dateTime.month().year())")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+
+            Spacer()
+
+            if friend.status == "pending" {
+                Button("Accept") {
+                    Task { await acceptInvite(friend) }
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+                .tint(Color.umbraFocused)
+            } else if friend.status == "accepted" {
+                Button {
+                    selectedFriend = friend
+                    showEncourageSheet = true
+                } label: {
+                    Image(systemName: "heart.fill")
+                        .foregroundStyle(Color.umbraDistracted)
+                }
+                .buttonStyle(.borderless)
+                .help("Send encouragement")
+
+                Button {
+                    Task { await sendPing(to: friend) }
+                } label: {
+                    Image(systemName: "bell.fill")
+                        .foregroundStyle(Color.umbraPaused)
+                }
+                .buttonStyle(.borderless)
+                .help("Send accountability ping")
+            }
+        }
+        .padding(.vertical, 4)
+    }
+
+    // MARK: - Actions
+
     private func loadFriends() async {
+        isLoading = true
+        defer { isLoading = false }
         do {
             friends = try await APIClient.shared.request(.friends)
         } catch {
-            print("Failed to load friends: \(error)")
+            withAnimation(.umbraQuick) {
+                errorMessage = "Failed to load friends"
+            }
         }
     }
 
@@ -102,9 +174,24 @@ struct FriendsListView: View {
             inviteEmail = ""
             await loadFriends()
         } catch {
-            errorMessage = "Failed to send invite"
+            withAnimation(.umbraQuick) {
+                errorMessage = "Failed to send invite"
+            }
         }
         isInviting = false
+    }
+
+    private func acceptInvite(_ friend: FriendItem) async {
+        do {
+            try await APIClient.shared.requestVoid(
+                .friendAccept(friend.id), method: "POST"
+            )
+            await loadFriends()
+        } catch {
+            withAnimation(.umbraQuick) {
+                errorMessage = "Failed to accept invite"
+            }
+        }
     }
 
     private func sendPing(to friend: FriendItem) async {
@@ -112,30 +199,9 @@ struct FriendsListView: View {
             let body = ["to_user_id": friend.userId.uuidString]
             try await APIClient.shared.requestVoid(.socialPing, method: "POST", body: body)
         } catch {
-            errorMessage = "Failed to send ping"
+            withAnimation(.umbraQuick) {
+                errorMessage = "Failed to send ping"
+            }
         }
     }
-}
-
-// MARK: - Supporting Types
-
-struct FriendItem: Identifiable, Codable {
-    let id: UUID
-    let userId: UUID
-    let displayName: String?
-    let email: String
-    let status: String
-    let since: Date
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case userId = "user_id"
-        case displayName = "display_name"
-        case email, status, since
-    }
-}
-
-private struct InviteResponse: Codable {
-    let id: UUID
-    let status: String
 }

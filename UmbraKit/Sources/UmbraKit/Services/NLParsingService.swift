@@ -6,12 +6,14 @@ public struct ParsedTask: Sendable {
     public var estimateMinutes: Int?
     public var priority: UmbraTask.Priority
     public var projectName: String?
+    public var dueDate: Date?
 
-    public init(title: String, estimateMinutes: Int? = nil, priority: UmbraTask.Priority = .medium, projectName: String? = nil) {
+    public init(title: String, estimateMinutes: Int? = nil, priority: UmbraTask.Priority = .medium, projectName: String? = nil, dueDate: Date? = nil) {
         self.title = title
         self.estimateMinutes = estimateMinutes
         self.priority = priority
         self.projectName = projectName
+        self.dueDate = dueDate
     }
 }
 
@@ -50,6 +52,14 @@ public struct NLParsingService: Sendable {
             }
         }
 
+        // Split on " and " conjunction when both sides are substantial
+        if segments.count == 1 {
+            let parts = segments[0].components(separatedBy: " and ")
+            if parts.count > 1 && parts.allSatisfy({ $0.trimmingCharacters(in: .whitespaces).count > 5 }) {
+                segments = parts
+            }
+        }
+
         if segments.count == 1 {
             let parts = segments[0].components(separatedBy: ",")
             if parts.count > 1 && parts.allSatisfy({ $0.trimmingCharacters(in: .whitespaces).count > 5 }) {
@@ -75,6 +85,7 @@ public struct NLParsingService: Sendable {
         var remaining = trimmed
         let estimate = extractEstimate(from: &remaining)
         let priority = extractPriority(from: &remaining)
+        let dueDate = extractDueDate(from: &remaining)
         let projectName = extractProjectName(from: &remaining)
 
         let title = cleanTitle(remaining)
@@ -84,7 +95,8 @@ public struct NLParsingService: Sendable {
             title: title,
             estimateMinutes: estimate,
             priority: priority,
-            projectName: projectName
+            projectName: projectName,
+            dueDate: dueDate
         )
     }
 
@@ -154,12 +166,64 @@ public struct NLParsingService: Sendable {
         return .medium
     }
 
+    // MARK: - Due Date Extraction
+
+    private func extractDueDate(from text: inout String) -> Date? {
+        let calendar = Calendar.current
+        let today = Date()
+
+        // "by tomorrow", "due tomorrow"
+        if let regex = try? NSRegularExpression(pattern: #"(?:by|due|before)\s+tomorrow\b"#, options: .caseInsensitive) {
+            let nsRange = NSRange(text.startIndex..., in: text)
+            if let match = regex.firstMatch(in: text, range: nsRange), let fullRange = Range(match.range, in: text) {
+                text.removeSubrange(fullRange)
+                return calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: today))
+            }
+        }
+
+        // "by today", "due today"
+        if let regex = try? NSRegularExpression(pattern: #"(?:by|due|before)\s+today\b"#, options: .caseInsensitive) {
+            let nsRange = NSRange(text.startIndex..., in: text)
+            if let match = regex.firstMatch(in: text, range: nsRange), let fullRange = Range(match.range, in: text) {
+                text.removeSubrange(fullRange)
+                return calendar.startOfDay(for: today)
+            }
+        }
+
+        // "by [day name]" e.g. "by Friday"
+        let dayNames = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+        if let regex = try? NSRegularExpression(
+            pattern: #"(?:by|due|before)\s+(sunday|monday|tuesday|wednesday|thursday|friday|saturday)\b"#,
+            options: .caseInsensitive
+        ) {
+            let nsRange = NSRange(text.startIndex..., in: text)
+            if let match = regex.firstMatch(in: text, range: nsRange),
+               let captureRange = Range(match.range(at: 1), in: text) {
+                let dayName = String(text[captureRange]).lowercased()
+                if let targetWeekday = dayNames.firstIndex(of: dayName) {
+                    // Calendar weekday: Sunday = 1
+                    let target = targetWeekday + 1
+                    let currentWeekday = calendar.component(.weekday, from: today)
+                    var daysAhead = target - currentWeekday
+                    if daysAhead <= 0 { daysAhead += 7 }
+                    if let fullRange = Range(match.range, in: text) {
+                        text.removeSubrange(fullRange)
+                    }
+                    return calendar.date(byAdding: .day, value: daysAhead, to: calendar.startOfDay(for: today))
+                }
+            }
+        }
+
+        return nil
+    }
+
     // MARK: - Project Name Extraction
 
     private func extractProjectName(from text: inout String) -> String? {
         let patterns = [
             #"\[([^\]]+)\]"#,
             #"(?:project:\s*)(\S+(?:\s+\S+)?)"#,
+            #"(?:for\s+(?:the\s+)?)([\w]+(?:\s+[\w]+)?)\s+project\b"#,
         ]
 
         for pattern in patterns {

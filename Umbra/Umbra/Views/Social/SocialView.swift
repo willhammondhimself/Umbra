@@ -1,36 +1,23 @@
 import SwiftUI
+import UmbraKit
 
 struct SocialView: View {
-    @State private var selectedTab: SocialTab = .friends
-
-    enum SocialTab: String, CaseIterable {
-        case friends, groups
-
-        var title: String {
-            switch self {
-            case .friends: "Friends"
-            case .groups: "Groups"
-            }
-        }
-    }
-
     var body: some View {
         VStack(spacing: 0) {
-            // Sub-tab picker
-            Picker("", selection: $selectedTab) {
-                ForEach(SocialTab.allCases, id: \.self) { tab in
-                    Text(tab.title).tag(tab)
-                }
-            }
-            .pickerStyle(.segmented)
-            .padding()
+            FriendsListView()
 
-            switch selectedTab {
-            case .friends:
-                FriendsListView()
-            case .groups:
-                GroupView()
+            Divider()
+
+            // Groups coming soon placeholder
+            HStack(spacing: 8) {
+                Image(systemName: "person.3")
+                    .foregroundStyle(.secondary)
+                Text("Groups & Leaderboards coming soon")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

@@ -1,4 +1,5 @@
 import SwiftUI
+import os
 import UmbraKit
 
 struct PlanningView: View {
@@ -54,7 +55,7 @@ struct PlanningView: View {
             // Chat input
             ChatInputView(inputText: $chatInput) { text in
                 let results = parsingService.parse(text)
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                withAnimation(.umbraQuick) {
                     parsedTasks.append(contentsOf: results)
                 }
             }
@@ -196,7 +197,7 @@ struct PlanningView: View {
         )
         saveTask(task)
 
-        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+        withAnimation(.umbraQuick) {
             parsedTasks.remove(at: index)
         }
     }
@@ -220,7 +221,7 @@ struct PlanningView: View {
     }
 
     private func discardParsedTask(at index: Int) {
-        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+        withAnimation(.umbraQuick) {
             if parsedTasks.indices.contains(index) {
                 parsedTasks.remove(at: index)
             }
@@ -237,7 +238,7 @@ struct PlanningView: View {
             try DatabaseManager.shared.saveProject(&project)
             return project.id
         } catch {
-            print("Failed to find/create project: \(error)")
+            UmbraLogger.general.error("Failed to find/create project: \(error.localizedDescription)")
             return nil
         }
     }
@@ -248,7 +249,7 @@ struct PlanningView: View {
         do {
             tasks = try DatabaseManager.shared.fetchTasks()
         } catch {
-            print("Failed to load tasks: \(error)")
+            UmbraLogger.general.error("Failed to load tasks: \(error.localizedDescription)")
         }
     }
 
@@ -261,7 +262,7 @@ struct PlanningView: View {
             try DatabaseManager.shared.saveTask(&mutableTask)
             loadTasks()
         } catch {
-            print("Failed to save task: \(error)")
+            UmbraLogger.general.error("Failed to save task: \(error.localizedDescription)")
         }
     }
 
@@ -280,7 +281,7 @@ struct PlanningView: View {
             try DatabaseManager.shared.deleteTask(task)
             loadTasks()
         } catch {
-            print("Failed to delete task: \(error)")
+            UmbraLogger.general.error("Failed to delete task: \(error.localizedDescription)")
         }
     }
 
@@ -295,7 +296,7 @@ struct PlanningView: View {
             }
             loadTasks()
         } catch {
-            print("Failed to reorder tasks: \(error)")
+            UmbraLogger.general.error("Failed to reorder tasks: \(error.localizedDescription)")
         }
     }
 }

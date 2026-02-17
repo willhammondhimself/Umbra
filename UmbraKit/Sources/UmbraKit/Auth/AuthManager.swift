@@ -1,6 +1,29 @@
 import AuthenticationServices
 import Foundation
+import os
 import Security
+
+public enum ServerEnvironment: Sendable {
+    case development
+    case production
+
+    public var baseURL: URL {
+        switch self {
+        case .development:
+            URL(string: "http://localhost:8000")!
+        case .production:
+            URL(string: "https://api.umbra.app")!
+        }
+    }
+
+    public static var current: ServerEnvironment {
+        #if DEBUG
+        .development
+        #else
+        .production
+        #endif
+    }
+}
 
 @MainActor
 @Observable
@@ -11,7 +34,7 @@ public final class AuthManager: NSObject {
     public private(set) var isAuthenticated = false
     public private(set) var isLoading = false
 
-    private let baseURL = URL(string: "http://localhost:8000")!
+    private var baseURL: URL { ServerEnvironment.current.baseURL }
 
     private override init() {
         super.init()
@@ -58,7 +81,7 @@ public final class AuthManager: NSObject {
 
             guard let httpResponse = response as? HTTPURLResponse,
                   httpResponse.statusCode == 200 else {
-                print("Auth failed: bad status code")
+                UmbraLogger.auth.error("Auth failed: bad status code")
                 return
             }
 
@@ -67,7 +90,7 @@ public final class AuthManager: NSObject {
             saveTokensToKeychain(access: tokenResponse.accessToken, refresh: tokenResponse.refreshToken)
             await fetchCurrentUser()
         } catch {
-            print("Auth token exchange failed: \(error)")
+            UmbraLogger.auth.error("Token exchange failed: \(error.localizedDescription)")
         }
     }
 
@@ -101,7 +124,7 @@ public final class AuthManager: NSObject {
             currentUser = try decoder.decode(User.self, from: data)
             isAuthenticated = true
         } catch {
-            print("Failed to fetch user: \(error)")
+            UmbraLogger.auth.error("Failed to fetch user: \(error.localizedDescription)")
         }
     }
 
@@ -248,7 +271,7 @@ extension AuthManager: ASAuthorizationControllerDelegate {
         controller: ASAuthorizationController,
         didCompleteWithError error: Error
     ) {
-        print("Apple Sign In failed: \(error)")
+        UmbraLogger.auth.error("Apple Sign In failed: \(error.localizedDescription)")
     }
 }
 

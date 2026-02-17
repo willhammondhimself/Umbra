@@ -1,4 +1,5 @@
 import SwiftUI
+import os
 import UmbraKit
 
 struct LeaderboardView: View {
@@ -76,24 +77,7 @@ struct LeaderboardView: View {
         do {
             entries = try await APIClient.shared.request(.groupLeaderboard(groupId))
         } catch {
-            print("Failed to load leaderboard: \(error)")
+            UmbraLogger.social.error("Failed to load leaderboard: \(error.localizedDescription)")
         }
-    }
-}
-
-struct LeaderboardEntryItem: Identifiable, Codable {
-    var id: UUID { userId }
-    let userId: UUID
-    let displayName: String?
-    let focusedSeconds: Int
-    let sessionCount: Int
-    let rank: Int
-
-    enum CodingKeys: String, CodingKey {
-        case userId = "user_id"
-        case displayName = "display_name"
-        case focusedSeconds = "focused_seconds"
-        case sessionCount = "session_count"
-        case rank
     }
 }

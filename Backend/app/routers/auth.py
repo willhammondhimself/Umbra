@@ -125,5 +125,7 @@ async def delete_account(
     db: AsyncSession = Depends(get_db),
 ):
     """GDPR: Cascade delete all user data."""
-    await db.delete(user)
-    await db.flush()
+    db_user = await db.get(User, user.id)
+    if db_user:
+        await db.delete(db_user)
+        await db.flush()

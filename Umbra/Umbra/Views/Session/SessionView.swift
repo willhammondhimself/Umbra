@@ -1,4 +1,5 @@
 import SwiftUI
+import os
 import UmbraKit
 
 struct SessionView: View {
@@ -98,7 +99,7 @@ struct SessionView: View {
             pastSessions = try DatabaseManager.shared.fetchSessions(limit: 20)
                 .filter { $0.isComplete }
         } catch {
-            print("Failed to load sessions: \(error)")
+            UmbraLogger.session.error("Failed to load sessions: \(error.localizedDescription)")
         }
     }
 }
@@ -125,11 +126,11 @@ struct SessionHistoryRow: View {
 
                 Label(String(format: "%.0f%%", session.focusPercentage), systemImage: "eye")
                     .font(.caption)
-                    .foregroundStyle(session.focusPercentage >= 80 ? .green : .orange)
+                    .foregroundStyle(session.focusPercentage >= 80 ? Color.umbraFocused : Color.umbraPaused)
 
                 Label("\(session.distractionCount)", systemImage: "exclamationmark.triangle")
                     .font(.caption)
-                    .foregroundStyle(session.distractionCount == 0 ? .green : .secondary)
+                    .foregroundStyle(session.distractionCount == 0 ? Color.umbraFocused : .secondary)
             }
         }
         .padding(.vertical, 2)

@@ -1,4 +1,5 @@
 import SwiftUI
+import os
 import UmbraKit
 
 struct EncourageView: View {
@@ -48,7 +49,7 @@ struct EncourageView: View {
             try await APIClient.shared.requestVoid(.socialEncourage, method: "POST", body: body)
             dismiss()
         } catch {
-            print("Failed to send encouragement: \(error)")
+            UmbraLogger.social.error("Failed to send encouragement: \(error.localizedDescription)")
         }
         isSending = false
     }

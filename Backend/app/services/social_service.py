@@ -94,7 +94,7 @@ async def send_invite(
     # Send push notification to invited user
     await notify_friend_request(db, user_id, target.id, apns_client)
 
-    return {"id": friendship.id, "status": "pending"}
+    return {"id": str(friendship.id), "status": "pending"}
 
 
 async def accept_invite(

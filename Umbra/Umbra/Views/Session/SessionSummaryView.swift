@@ -11,7 +11,7 @@ struct SessionSummaryView: View {
 
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 56))
-                .foregroundStyle(.green)
+                .foregroundStyle(Color.umbraFocused)
 
             Text("Session Complete")
                 .font(.largeTitle)

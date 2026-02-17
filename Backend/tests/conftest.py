@@ -16,6 +16,36 @@ from app.models.user import User
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
 
 
+class FakeRedis:
+    """In-memory Redis mock for testing."""
+
+    def __init__(self):
+        self._store: dict[str, str] = {}
+        self._ttls: dict[str, int] = {}
+
+    async def get(self, key: str) -> str | None:
+        return self._store.get(key)
+
+    async def set(self, key: str, value: str, ex: int | None = None) -> None:
+        self._store[key] = str(value)
+        if ex:
+            self._ttls[key] = ex
+
+    async def incr(self, key: str) -> int:
+        val = int(self._store.get(key, "0")) + 1
+        self._store[key] = str(val)
+        return val
+
+    async def expire(self, key: str, seconds: int) -> None:
+        self._ttls[key] = seconds
+
+    async def ping(self) -> bool:
+        return True
+
+    async def close(self) -> None:
+        pass
+
+
 @pytest.fixture
 async def db_engine():
     engine = create_async_engine(
@@ -96,6 +126,7 @@ async def client(db_engine, test_user: User) -> AsyncGenerator[AsyncClient, None
 
     app.dependency_overrides[get_db] = override_get_db
     app.dependency_overrides[get_current_user] = override_get_current_user
+    app.state.redis = FakeRedis()
 
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
