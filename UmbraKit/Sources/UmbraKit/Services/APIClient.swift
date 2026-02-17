@@ -44,6 +44,7 @@ public actor APIClient {
         case unregisterDevice(UUID)
         case accountExport
         case accountDelete
+        case accountSettings
 
         public var path: String {
             switch self {
@@ -67,6 +68,7 @@ public actor APIClient {
             case .unregisterDevice(let id): "/devices/\(id)"
             case .accountExport: "/auth/account/export"
             case .accountDelete: "/auth/account"
+            case .accountSettings: "/auth/account/settings"
             }
         }
     }

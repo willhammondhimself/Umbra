@@ -218,20 +218,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		230CBC15F7A1D2DE8BCA9A59 /* DesignSystem */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DesignSystem;
-			sourceTree = "<group>";
-		};
-		30F8B895BDB64C85B2339EA0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		4030B22468D36B5F17CFBDD2 /* Planning */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,21 +235,11 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		4E7FD36D1AF7BABFF6870645 /* Database */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Database;
-			sourceTree = "<group>";
-		};
 		51A6302F2CC7284676577F86 /* Umbra */ = {
 			isa = PBXGroup;
 			children = (
-				4E7FD36D1AF7BABFF6870645 /* Database */,
-				230CBC15F7A1D2DE8BCA9A59 /* DesignSystem */,
 				5DB706D3B73A2962280AE684 /* FloatingWidget */,
 				F3ACD3807EA74468E3E1978E /* MenuBar */,
-				30F8B895BDB64C85B2339EA0 /* Models */,
 				EC15C9E4AED6C047F73A33C0 /* Resources */,
 				1487E5312A014A3FB9B92B90 /* Services */,
 				63570D7A04DCB529D9045F66 /* Views */,
