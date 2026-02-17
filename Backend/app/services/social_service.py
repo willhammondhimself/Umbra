@@ -10,6 +10,11 @@ from app.models.group_member import GroupMember
 from app.models.session import Session
 from app.models.social_event import SocialEvent
 from app.models.user import User
+from app.services.notification_service import (
+    notify_encourage,
+    notify_friend_request,
+    notify_ping,
+)
 
 
 async def get_friends(db: AsyncSession, user_id: uuid.UUID) -> list[dict]:
@@ -42,7 +47,7 @@ async def get_friends(db: AsyncSession, user_id: uuid.UUID) -> list[dict]:
 
 
 async def send_invite(
-    db: AsyncSession, user_id: uuid.UUID, email: str, redis_client
+    db: AsyncSession, user_id: uuid.UUID, email: str, redis_client, apns_client=None
 ) -> dict:
     """Send friend invite. Rate limited to 20/day."""
     # Check rate limit
@@ -85,6 +90,9 @@ async def send_invite(
     # Increment rate limit
     await redis_client.incr(today_key)
     await redis_client.expire(today_key, 86400)
+
+    # Send push notification to invited user
+    await notify_friend_request(db, user_id, target.id, apns_client)
 
     return {"id": friendship.id, "status": "pending"}
 
@@ -193,7 +201,8 @@ async def get_leaderboard(
 
 
 async def send_encourage(
-    db: AsyncSession, from_user_id: uuid.UUID, to_user_id: uuid.UUID, message: str
+    db: AsyncSession, from_user_id: uuid.UUID, to_user_id: uuid.UUID, message: str,
+    apns_client=None,
 ) -> None:
     """Send encouragement to a friend."""
     # Verify friendship
@@ -209,9 +218,12 @@ async def send_encourage(
     db.add(event)
     await db.flush()
 
+    await notify_encourage(db, from_user_id, to_user_id, message, apns_client)
+
 
 async def send_ping(
-    db: AsyncSession, from_user_id: uuid.UUID, to_user_id: uuid.UUID, redis_client
+    db: AsyncSession, from_user_id: uuid.UUID, to_user_id: uuid.UUID, redis_client,
+    apns_client=None,
 ) -> None:
     """Send accountability ping. Rate limited to 5/friend/day."""
     if not await are_friends(db, from_user_id, to_user_id):
@@ -232,6 +244,8 @@ async def send_ping(
 
     await redis_client.incr(today_key)
     await redis_client.expire(today_key, 86400)
+
+    await notify_ping(db, from_user_id, to_user_id, apns_client)
 
 
 async def are_friends(db: AsyncSession, user_a: uuid.UUID, user_b: uuid.UUID) -> bool:

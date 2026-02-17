@@ -46,6 +46,7 @@ from app.routers.sessions import router as sessions_router  # noqa: E402
 from app.routers.stats import router as stats_router  # noqa: E402
 from app.routers.social import router as social_router  # noqa: E402
 from app.routers.tasks import router as tasks_router  # noqa: E402
+from app.routers.devices import router as devices_router  # noqa: E402
 
 app.include_router(auth_router)
 app.include_router(projects_router)
@@ -53,6 +54,7 @@ app.include_router(tasks_router)
 app.include_router(sessions_router)
 app.include_router(stats_router)
 app.include_router(social_router)
+app.include_router(devices_router)
 
 
 @app.get("/health")

@@ -13,6 +13,13 @@ class Settings(BaseSettings):
     APPLE_TEAM_ID: str = ""
     GOOGLE_CLIENT_ID: str = ""
 
+    # APNs Configuration
+    APNS_KEY_ID: str = ""
+    APNS_TEAM_ID: str = ""
+    APNS_KEY_PATH: str = ""  # Path to .p8 key file
+    APNS_BUNDLE_ID: str = "com.umbra.ios"
+    APNS_USE_SANDBOX: bool = True
+
     ENVIRONMENT: str = "development"
     RATE_LIMIT_PER_MINUTE: int = 100
 
