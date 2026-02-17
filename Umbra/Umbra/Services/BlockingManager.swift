@@ -90,7 +90,7 @@ final class BlockingManager {
     }
 
     func deactivate() {
-        guard isActive else { return }
+        guard !isActive else { return }
         isActive = false
         stopObserving()
         dismissOverlay()
