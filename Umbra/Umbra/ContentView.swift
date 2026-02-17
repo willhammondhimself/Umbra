@@ -1,39 +1,21 @@
 import SwiftUI
+import UmbraKit
 
 struct ContentView: View {
     @State private var selectedTab: AppTab = .plan
+    @State private var isSidebarExpanded = false
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            PlanningView()
-                .tabItem {
-                    Label(AppTab.plan.title, systemImage: AppTab.plan.icon)
-                }
-                .tag(AppTab.plan)
-
-            SessionView()
-                .tabItem {
-                    Label(AppTab.session.title, systemImage: AppTab.session.icon)
-                }
-                .tag(AppTab.session)
-
-            StatsView()
-                .tabItem {
-                    Label(AppTab.stats.title, systemImage: AppTab.stats.icon)
-                }
-                .tag(AppTab.stats)
-
-            SocialView()
-                .tabItem {
-                    Label(AppTab.social.title, systemImage: AppTab.social.icon)
-                }
-                .tag(AppTab.social)
-
-            SettingsView()
-                .tabItem {
-                    Label(AppTab.settings.title, systemImage: AppTab.settings.icon)
-                }
-                .tag(AppTab.settings)
+        NavigationSplitView {
+            SidebarView(selectedTab: $selectedTab, isExpanded: $isSidebarExpanded)
+                .navigationSplitViewColumnWidth(
+                    min: 56,
+                    ideal: isSidebarExpanded ? 200 : 56,
+                    max: 200
+                )
+        } detail: {
+            selectedTab.view
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(minWidth: 700, minHeight: 500)
     }
@@ -59,6 +41,17 @@ enum AppTab: String, CaseIterable {
         case .stats: "chart.bar.fill"
         case .social: "person.2"
         case .settings: "gearshape"
+        }
+    }
+
+    @MainActor @ViewBuilder
+    var view: some View {
+        switch self {
+        case .plan: PlanningView()
+        case .session: SessionView()
+        case .stats: StatsView()
+        case .social: SocialView()
+        case .settings: SettingsView()
         }
     }
 }
