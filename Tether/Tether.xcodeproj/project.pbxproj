@@ -1,0 +1,1318 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0D1A6621B6D11AC385C6A936 /* TetherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A889575450966E20ED42D89 /* TetherTests.swift */; };
+		107DC9E453446EA0BA183985 /* ScreenTimeBlockingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13D76A8F10DF9139BA9DB3D /* ScreenTimeBlockingManager.swift */; };
+		12F0522FAC61FFD594E41F45 /* IntegrationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68D244FF87E5121225C29DBE /* IntegrationsView.swift */; };
+		13C089E340081A9AAE58B47C /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736617983FC17D611433F6CA /* TaskRowView.swift */; };
+		15B6D8E7601200912588E1A2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60DBDF38654DA050F089A6B /* SettingsView.swift */; };
+		1817C536EEAC8829781ADA38 /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B9F7FC8313990398668601 /* GroupView.swift */; };
+		1879B50BBCA339D66D4CC261 /* IOSSocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2224FE99975E47A4164F2D2E /* IOSSocialView.swift */; };
+		187B1AB6C8C6133973A2AA03 /* TetherKit in Frameworks */ = {isa = PBXBuildFile; productRef = 019FEC353252D381C5F33646 /* TetherKit */; };
+		1A117E1556024CECF7EC60D2 /* PostSessionSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24775954B225881DA41A68D /* PostSessionSummaryView.swift */; };
+		1C7D97CC6733F67C05284BC8 /* FamilyControls.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47544863958422E08037D92E /* FamilyControls.framework */; };
+		22451C7FB3AAB5FD2BAC16E6 /* MenuBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD277E3D0453601B173FAFC /* MenuBarManager.swift */; };
+		29C45E80C82592BC095310E9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A63C381D0A3079C4F74F89 /* ContentView.swift */; };
+		2D30735DC167F3AE3EB2B010 /* ChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F05FC0EE216CF456147DF4 /* ChatInputView.swift */; };
+		2F99DA10777DB9B959C3A386 /* IOSLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3432C95C375D4457DD6F03E5 /* IOSLoginView.swift */; };
+		40C9E560AC5F7AC94FCE5E22 /* FloatingWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B2357A05523DA9773364DC /* FloatingWidgetView.swift */; };
+		41FBA39E26A71882F255BDDD /* PlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A40BFF34313E802C2242D1E /* PlanningView.swift */; };
+		4241B345D675209BDCDDF68A /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01414538B0EEAA81773345E /* AccountSettingsView.swift */; };
+		4E880BFBB6513A4FA2F701D0 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC7978C7A079482668A9A2D0 /* FriendsListView.swift */; };
+		5128377E36DB2AB60807840D /* TetherIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81DC260FFABD53F49FB5D8C /* TetherIOSApp.swift */; };
+		5210FBD6700BBAD9F60427CF /* IOSSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FBA098EE800B742AEEEFA5 /* IOSSessionManager.swift */; };
+		542A25009F998538228D480B /* FloatingWidgetPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C8DBC792953059437D9445 /* FloatingWidgetPanel.swift */; };
+		5C3D9E1B7B58536C216E8E8A /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B5FFB830AD2A368F8D21CD /* AuthenticationServices.framework */; };
+		5C6BC252DCB4B1251A058FD2 /* IOSContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7399D7A4333EC051969B8 /* IOSContentView.swift */; };
+		5F350DD881F9DB262EFD60ED /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A86A2ECC14DFA80E6B42B52 /* SidebarView.swift */; };
+		64B71BEA878C55435CF39C70 /* CalendarSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48132B478FECCF8EA8260C48 /* CalendarSidebarView.swift */; };
+		64F9F66B6EB08603AD1B6855 /* ActiveSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05683BE43B826B779DC92CC /* ActiveSessionView.swift */; };
+		69990062BE8D57BEBBD83B0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE9398C97BBABBC36FF77A8E /* Assets.xcassets */; };
+		719E929BFA4A43FA9FF375F7 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B5FFB830AD2A368F8D21CD /* AuthenticationServices.framework */; };
+		71E482DB38154F8F62513208 /* IOSIntegrationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C97CA7E35DBE0B62C11CFA /* IOSIntegrationsView.swift */; };
+		7325979D2A97BE333128A55D /* IOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407F5243BBFAEDFC2BA64227 /* IOSSettingsView.swift */; };
+		7636A2DDD58A3585840B6918 /* PostSessionSummaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D74D05743E89AF3EB7C970 /* PostSessionSummaryController.swift */; };
+		7E4491E01DC0F12D26861783 /* ManualTaskForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2821844419ECCF3E1CED1AAC /* ManualTaskForm.swift */; };
+		84AE298E836031F8E984E514 /* IOSChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A06AE5AFDBF753F17235315 /* IOSChatInputView.swift */; };
+		868226B6476C2325ADDCEB87 /* BlocklistEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1B21C1D0A32FFD8FAF4844 /* BlocklistEditorView.swift */; };
+		89080CAC43816A9F52B242FE /* IOSSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E682A3B8657DC027688FC6DA /* IOSSessionView.swift */; };
+		94CF88005A7F172319F3A0E7 /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BC5E2B872620CA72F082497 /* ManagedSettings.framework */; };
+		9610B653309FF15A24A98DD7 /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D027B6B915ECC762787B9AF0 /* SocialView.swift */; };
+		9A9D3FEE07FE54828A4297F2 /* AppMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399647D7B8043CBCA9C0E5C /* AppMonitor.swift */; };
+		9C67A845FA4C8E97872A925C /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36388862F3BF95EC2707383 /* SessionManager.swift */; };
+		9C8519010BC02844B3136F42 /* PostSessionSummaryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62960B7877F41DA8A0FBA6C2 /* PostSessionSummaryPanel.swift */; };
+		9FABCAC9C8AEBF398B7FBD1C /* SessionSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B6CD0F01A70A82FC9FAF4C /* SessionSummaryView.swift */; };
+		A2B83C19676769F3E018A741 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A441F72AF59E9813F4F0F882 /* SafariWebExtensionHandler.swift */; };
+		A2DD8DD38903695EF02A998B /* CoachingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89056A921908EF666F82B8CA /* CoachingView.swift */; };
+		A76C3C106FA8AE0C64412A09 /* FloatingWidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E3E79DD7E1C0CA6B2AE5F1 /* FloatingWidgetController.swift */; };
+		AB0813D8E0475879096FC52E /* BlockingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7717D7016388ACB4BFA8C0C4 /* BlockingManager.swift */; };
+		AC71CC7D161912EBABCC899A /* TetherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64869ECA8C7396008FA83F38 /* TetherApp.swift */; };
+		AE7DE533A056631B3FD00DB2 /* IOSCoachingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA240A2C7954FCE531A879C /* IOSCoachingView.swift */; };
+		AEF557F86EC1149C25549F78 /* IOSLeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172A6105FA8AF98AF93F89F7 /* IOSLeaderboardView.swift */; };
+		B17A2A4DA63898AED5C46D17 /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6061971A7983CC3FA5D4D22E /* LeaderboardView.swift */; };
+		B650F3CFCE7A55AAAD39FC14 /* IOSStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFB558CE3C2B65154E4B431 /* IOSStatsView.swift */; };
+		BEDD4060215B64088E150E7A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D171A83E12A4815303F4C3 /* LoginView.swift */; };
+		C1743E48BB759F922892716A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A37F46BC12F80D0D38DBB7 /* OnboardingView.swift */; };
+		C261630F83E5C097BDD062C7 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC6633E7D06D9140A4AC2AC6 /* EventKit.framework */; };
+		C700DF161D374455CBAD793F /* MenuBarPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DEAD631D4BD976ED435C5C3 /* MenuBarPopoverView.swift */; };
+		C8336A6FBBB7A8F6D9A61D16 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD9B3C59F18C986266338486 /* Assets.xcassets */; };
+		D1597DD2B9993AD02553FA3F /* ParsedTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E661892E5ADE97499CB17B5 /* ParsedTaskCard.swift */; };
+		D2F4320AD23BD33A3591F543 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47250A910D9892DFD4B114AF /* SafariServices.framework */; };
+		D3F431DEF400A6D9CD2CA2AE /* NLParsingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80530D92E04BC2F691DE248E /* NLParsingServiceTests.swift */; };
+		D5AF0683FDFBA85826CA66F2 /* BlockOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8989012314D0FE3389C4E926 /* BlockOverlayView.swift */; };
+		DA5F7FF378C74B53C93AC41B /* EncourageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E793BB206D4AF1F9F7469B0F /* EncourageView.swift */; };
+		E190366CB0DF051B472A0D78 /* TetherSafari.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8B2DF406FD67B3030DBF0D4D /* TetherSafari.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E3BCFD0B71A87329BFDE2668 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4836016429468CC30646459F /* Localizable.strings */; };
+		E4CE575F57E7BC808F4A23B2 /* IOSParsedTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45C3FAD91B3E4C96C1FFED1 /* IOSParsedTaskCard.swift */; };
+		E6E8D727573A650C297DC187 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC6633E7D06D9140A4AC2AC6 /* EventKit.framework */; };
+		E748A92174364572F008F296 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DD24F75A657156C79A1B42 /* StatsView.swift */; };
+		E83BED4F2B0709CA2AA98613 /* TetherKit in Frameworks */ = {isa = PBXBuildFile; productRef = DEF38DF50265DF947B09DFB0 /* TetherKit */; };
+		EC9D10FF8580895A20B04C0C /* IOSTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F569570B99C5F1073514C56 /* IOSTaskListView.swift */; };
+		EFC5DAE23206845512DA6F86 /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390E846B83960291F2ECD769 /* SessionView.swift */; };
+		FBCF96A30F5DDF2C15DB18CA /* IOSGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9CFC3D3249C0334368501C /* IOSGroupsView.swift */; };
+		FE9AE587A1033188C351ADD7 /* TetherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D58862CC275FEA3A770A0B /* TetherUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		63DBFD67FA1AB6F5F9305911 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D154414679B8355E89FB1B6A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 45C693A1C79CDAB203A19612;
+			remoteInfo = Tether;
+		};
+		75CA4AB2FC67D2008F369BC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D154414679B8355E89FB1B6A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 45C693A1C79CDAB203A19612;
+			remoteInfo = Tether;
+		};
+		D3739BA53F2DFCF2CBF3CE51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D154414679B8355E89FB1B6A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 565231A737204FF693BDA84E;
+			remoteInfo = TetherSafari;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		260B1ED483949B70097AE72C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E190366CB0DF051B472A0D78 /* TetherSafari.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0A40BFF34313E802C2242D1E /* PlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanningView.swift; sourceTree = "<group>"; };
+		0A86A2ECC14DFA80E6B42B52 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		0E661892E5ADE97499CB17B5 /* ParsedTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedTaskCard.swift; sourceTree = "<group>"; };
+		1399647D7B8043CBCA9C0E5C /* AppMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMonitor.swift; sourceTree = "<group>"; };
+		172A6105FA8AF98AF93F89F7 /* IOSLeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSLeaderboardView.swift; sourceTree = "<group>"; };
+		1DEAD631D4BD976ED435C5C3 /* MenuBarPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarPopoverView.swift; sourceTree = "<group>"; };
+		21DD24F75A657156C79A1B42 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		2224FE99975E47A4164F2D2E /* IOSSocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSSocialView.swift; sourceTree = "<group>"; };
+		25FBA098EE800B742AEEEFA5 /* IOSSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSSessionManager.swift; sourceTree = "<group>"; };
+		2821844419ECCF3E1CED1AAC /* ManualTaskForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualTaskForm.swift; sourceTree = "<group>"; };
+		2F2CA052180B01BD2A5B6260 /* Tether.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tether.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		31B6CD0F01A70A82FC9FAF4C /* SessionSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSummaryView.swift; sourceTree = "<group>"; };
+		3432C95C375D4457DD6F03E5 /* IOSLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSLoginView.swift; sourceTree = "<group>"; };
+		37E3E79DD7E1C0CA6B2AE5F1 /* FloatingWidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingWidgetController.swift; sourceTree = "<group>"; };
+		390E846B83960291F2ECD769 /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
+		407F5243BBFAEDFC2BA64227 /* IOSSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSSettingsView.swift; sourceTree = "<group>"; };
+		46B9F7FC8313990398668601 /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
+		47250A910D9892DFD4B114AF /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		47544863958422E08037D92E /* FamilyControls.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FamilyControls.framework; path = System/Library/Frameworks/FamilyControls.framework; sourceTree = SDKROOT; };
+		48132B478FECCF8EA8260C48 /* CalendarSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSidebarView.swift; sourceTree = "<group>"; };
+		4836016429468CC30646459F /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		5F569570B99C5F1073514C56 /* IOSTaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSTaskListView.swift; sourceTree = "<group>"; };
+		6061971A7983CC3FA5D4D22E /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
+		62960B7877F41DA8A0FBA6C2 /* PostSessionSummaryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSessionSummaryPanel.swift; sourceTree = "<group>"; };
+		64869ECA8C7396008FA83F38 /* TetherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherApp.swift; sourceTree = "<group>"; };
+		68D244FF87E5121225C29DBE /* IntegrationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationsView.swift; sourceTree = "<group>"; };
+		6A06AE5AFDBF753F17235315 /* IOSChatInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSChatInputView.swift; sourceTree = "<group>"; };
+		6CD277E3D0453601B173FAFC /* MenuBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarManager.swift; sourceTree = "<group>"; };
+		721E72C75E88643F5DF7F688 /* TetherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TetherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		736617983FC17D611433F6CA /* TaskRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
+		7717D7016388ACB4BFA8C0C4 /* BlockingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockingManager.swift; sourceTree = "<group>"; };
+		77D58862CC275FEA3A770A0B /* TetherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherUITests.swift; sourceTree = "<group>"; };
+		78A37F46BC12F80D0D38DBB7 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		7A889575450966E20ED42D89 /* TetherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherTests.swift; sourceTree = "<group>"; };
+		7E1B21C1D0A32FFD8FAF4844 /* BlocklistEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocklistEditorView.swift; sourceTree = "<group>"; };
+		80530D92E04BC2F691DE248E /* NLParsingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLParsingServiceTests.swift; sourceTree = "<group>"; };
+		80B77CD8F1A8DCB081E33EC1 /* Tether.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tether.entitlements; sourceTree = "<group>"; };
+		88B38DB8C21B6CCAC42CCC28 /* TetherIOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TetherIOS.entitlements; sourceTree = "<group>"; };
+		89056A921908EF666F82B8CA /* CoachingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachingView.swift; sourceTree = "<group>"; };
+		8989012314D0FE3389C4E926 /* BlockOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockOverlayView.swift; sourceTree = "<group>"; };
+		89C97CA7E35DBE0B62C11CFA /* IOSIntegrationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSIntegrationsView.swift; sourceTree = "<group>"; };
+		8B2DF406FD67B3030DBF0D4D /* TetherSafari.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TetherSafari.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BA240A2C7954FCE531A879C /* IOSCoachingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSCoachingView.swift; sourceTree = "<group>"; };
+		8F03D568A09D680B362F7F58 /* TetherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TetherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F9CFC3D3249C0334368501C /* IOSGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSGroupsView.swift; sourceTree = "<group>"; };
+		9BC5E2B872620CA72F082497 /* ManagedSettings.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManagedSettings.framework; path = System/Library/Frameworks/ManagedSettings.framework; sourceTree = SDKROOT; };
+		9BC7399D7A4333EC051969B8 /* IOSContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSContentView.swift; sourceTree = "<group>"; };
+		A441F72AF59E9813F4F0F882 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		A450F19F80ED07A3F8AD5510 /* TetherSafari.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TetherSafari.entitlements; sourceTree = "<group>"; };
+		A4B5FFB830AD2A368F8D21CD /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
+		A4D171A83E12A4815303F4C3 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		AD9B3C59F18C986266338486 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B01414538B0EEAA81773345E /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
+		B13D76A8F10DF9139BA9DB3D /* ScreenTimeBlockingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeBlockingManager.swift; sourceTree = "<group>"; };
+		B36388862F3BF95EC2707383 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		B81DC260FFABD53F49FB5D8C /* TetherIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherIOSApp.swift; sourceTree = "<group>"; };
+		BAFB558CE3C2B65154E4B431 /* IOSStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSStatsView.swift; sourceTree = "<group>"; };
+		BE9398C97BBABBC36FF77A8E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C05683BE43B826B779DC92CC /* ActiveSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSessionView.swift; sourceTree = "<group>"; };
+		CC1FA17C254E4A084EC2ED1A /* TetherKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TetherKit; path = ../TetherKit; sourceTree = SOURCE_ROOT; };
+		CC7978C7A079482668A9A2D0 /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
+		D027B6B915ECC762787B9AF0 /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
+		D8F05FC0EE216CF456147DF4 /* ChatInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputView.swift; sourceTree = "<group>"; };
+		E2D74D05743E89AF3EB7C970 /* PostSessionSummaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSessionSummaryController.swift; sourceTree = "<group>"; };
+		E45C3FAD91B3E4C96C1FFED1 /* IOSParsedTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSParsedTaskCard.swift; sourceTree = "<group>"; };
+		E60DBDF38654DA050F089A6B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E682A3B8657DC027688FC6DA /* IOSSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSSessionView.swift; sourceTree = "<group>"; };
+		E793BB206D4AF1F9F7469B0F /* EncourageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncourageView.swift; sourceTree = "<group>"; };
+		EC6633E7D06D9140A4AC2AC6 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		EEF590AFC23FB4BF26CCBED4 /* TetherIOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = TetherIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0C8DBC792953059437D9445 /* FloatingWidgetPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingWidgetPanel.swift; sourceTree = "<group>"; };
+		F24775954B225881DA41A68D /* PostSessionSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSessionSummaryView.swift; sourceTree = "<group>"; };
+		F4B2357A05523DA9773364DC /* FloatingWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingWidgetView.swift; sourceTree = "<group>"; };
+		F8A63C381D0A3079C4F74F89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2926CDC993DC9DD1A186D427 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2F4320AD23BD33A3591F543 /* SafariServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		769688ECB36EAACD530D507E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E83BED4F2B0709CA2AA98613 /* TetherKit in Frameworks */,
+				719E929BFA4A43FA9FF375F7 /* AuthenticationServices.framework in Frameworks */,
+				C261630F83E5C097BDD062C7 /* EventKit.framework in Frameworks */,
+				1C7D97CC6733F67C05284BC8 /* FamilyControls.framework in Frameworks */,
+				94CF88005A7F172319F3A0E7 /* ManagedSettings.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEE04766517343F27C1B53D1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				187B1AB6C8C6133973A2AA03 /* TetherKit in Frameworks */,
+				5C3D9E1B7B58536C216E8E8A /* AuthenticationServices.framework in Frameworks */,
+				E6E8D727573A650C297DC187 /* EventKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0630E048EB2EC23551510FD5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				25FBA098EE800B742AEEEFA5 /* IOSSessionManager.swift */,
+				B13D76A8F10DF9139BA9DB3D /* ScreenTimeBlockingManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		06CAB0F65DD36B1E53D4FF48 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				89C97CA7E35DBE0B62C11CFA /* IOSIntegrationsView.swift */,
+				407F5243BBFAEDFC2BA64227 /* IOSSettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		0A4518A235F58BC2B9A78B60 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				21DD24F75A657156C79A1B42 /* StatsView.swift */,
+			);
+			path = Stats;
+			sourceTree = "<group>";
+		};
+		18F64D6D81AB0F5D6369CA79 /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				6CD277E3D0453601B173FAFC /* MenuBarManager.swift */,
+				1DEAD631D4BD976ED435C5C3 /* MenuBarPopoverView.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		24840C110F06C7FFBB43CD6D /* FloatingWidget */ = {
+			isa = PBXGroup;
+			children = (
+				37E3E79DD7E1C0CA6B2AE5F1 /* FloatingWidgetController.swift */,
+				F0C8DBC792953059437D9445 /* FloatingWidgetPanel.swift */,
+				F4B2357A05523DA9773364DC /* FloatingWidgetView.swift */,
+				E2D74D05743E89AF3EB7C970 /* PostSessionSummaryController.swift */,
+				62960B7877F41DA8A0FBA6C2 /* PostSessionSummaryPanel.swift */,
+				F24775954B225881DA41A68D /* PostSessionSummaryView.swift */,
+			);
+			path = FloatingWidget;
+			sourceTree = "<group>";
+		};
+		2D89F588FC699EDD6E33403A = {
+			isa = PBXGroup;
+			children = (
+				3C547BB1F615B14482BCADFB /* Packages */,
+				C964E9E1B324094D0B2DB4B1 /* Tether */,
+				6F7674C43F58A72252378A9E /* TetherIOS */,
+				37250B079254ED4375E51D67 /* TetherSafari */,
+				5F193DFA13F04BEE492F6FE2 /* TetherTests */,
+				D24CC09BB6949D57763A8FF8 /* TetherUITests */,
+				6DED4B48FB0B632ECC8F5677 /* Frameworks */,
+				B69029C48B0586990A516091 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		351D514B211159ACA704B494 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				E793BB206D4AF1F9F7469B0F /* EncourageView.swift */,
+				CC7978C7A079482668A9A2D0 /* FriendsListView.swift */,
+				46B9F7FC8313990398668601 /* GroupView.swift */,
+				6061971A7983CC3FA5D4D22E /* LeaderboardView.swift */,
+				D027B6B915ECC762787B9AF0 /* SocialView.swift */,
+			);
+			path = Social;
+			sourceTree = "<group>";
+		};
+		37250B079254ED4375E51D67 /* TetherSafari */ = {
+			isa = PBXGroup;
+			children = (
+				A441F72AF59E9813F4F0F882 /* SafariWebExtensionHandler.swift */,
+				A450F19F80ED07A3F8AD5510 /* TetherSafari.entitlements */,
+			);
+			path = TetherSafari;
+			sourceTree = "<group>";
+		};
+		3C547BB1F615B14482BCADFB /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				CC1FA17C254E4A084EC2ED1A /* TetherKit */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		414A21F889065F9F1C65A1BF /* Planning */ = {
+			isa = PBXGroup;
+			children = (
+				6A06AE5AFDBF753F17235315 /* IOSChatInputView.swift */,
+				E45C3FAD91B3E4C96C1FFED1 /* IOSParsedTaskCard.swift */,
+				5F569570B99C5F1073514C56 /* IOSTaskListView.swift */,
+			);
+			path = Planning;
+			sourceTree = "<group>";
+		};
+		5927D84EADA07AB6C8CD2A6C /* Coaching */ = {
+			isa = PBXGroup;
+			children = (
+				8BA240A2C7954FCE531A879C /* IOSCoachingView.swift */,
+			);
+			path = Coaching;
+			sourceTree = "<group>";
+		};
+		5CDE04F0349E68BF961C9C7D /* Coaching */ = {
+			isa = PBXGroup;
+			children = (
+				89056A921908EF666F82B8CA /* CoachingView.swift */,
+			);
+			path = Coaching;
+			sourceTree = "<group>";
+		};
+		5F193DFA13F04BEE492F6FE2 /* TetherTests */ = {
+			isa = PBXGroup;
+			children = (
+				80530D92E04BC2F691DE248E /* NLParsingServiceTests.swift */,
+				7A889575450966E20ED42D89 /* TetherTests.swift */,
+			);
+			path = TetherTests;
+			sourceTree = "<group>";
+		};
+		60F0DCA6106FF8312A39580B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6B56B97488E864637B016791 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				C05683BE43B826B779DC92CC /* ActiveSessionView.swift */,
+				31B6CD0F01A70A82FC9FAF4C /* SessionSummaryView.swift */,
+				390E846B83960291F2ECD769 /* SessionView.swift */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		6DED4B48FB0B632ECC8F5677 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A4B5FFB830AD2A368F8D21CD /* AuthenticationServices.framework */,
+				EC6633E7D06D9140A4AC2AC6 /* EventKit.framework */,
+				47544863958422E08037D92E /* FamilyControls.framework */,
+				9BC5E2B872620CA72F082497 /* ManagedSettings.framework */,
+				47250A910D9892DFD4B114AF /* SafariServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6F7674C43F58A72252378A9E /* TetherIOS */ = {
+			isa = PBXGroup;
+			children = (
+				DFD3FC8514EF757343FBEA86 /* Resources */,
+				0630E048EB2EC23551510FD5 /* Services */,
+				73BAD7942AC2E7C0D46A4EDA /* Views */,
+				88B38DB8C21B6CCAC42CCC28 /* TetherIOS.entitlements */,
+				B81DC260FFABD53F49FB5D8C /* TetherIOSApp.swift */,
+			);
+			path = TetherIOS;
+			sourceTree = "<group>";
+		};
+		73BAD7942AC2E7C0D46A4EDA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C070BC4932A6991BCD95BDDD /* Auth */,
+				5927D84EADA07AB6C8CD2A6C /* Coaching */,
+				B5F96E4964A294EEB211BE99 /* Navigation */,
+				414A21F889065F9F1C65A1BF /* Planning */,
+				C861A2EDE9A411C5D8B9C216 /* Session */,
+				06CAB0F65DD36B1E53D4FF48 /* Settings */,
+				95D44A22A8601738CB7E414D /* Social */,
+				9D02871C09923CA5E4031B38 /* Stats */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7AB2020654C5791C4A3007B1 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		84152FA1CB1B92F285E0B045 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1399647D7B8043CBCA9C0E5C /* AppMonitor.swift */,
+				7717D7016388ACB4BFA8C0C4 /* BlockingManager.swift */,
+				B36388862F3BF95EC2707383 /* SessionManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		84CBC797D69912317633C2CF /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				0A86A2ECC14DFA80E6B42B52 /* SidebarView.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		8C273634BA51B60ABA7D5C15 /* Blocking */ = {
+			isa = PBXGroup;
+			children = (
+				8989012314D0FE3389C4E926 /* BlockOverlayView.swift */,
+			);
+			path = Blocking;
+			sourceTree = "<group>";
+		};
+		95D44A22A8601738CB7E414D /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				8F9CFC3D3249C0334368501C /* IOSGroupsView.swift */,
+				172A6105FA8AF98AF93F89F7 /* IOSLeaderboardView.swift */,
+				2224FE99975E47A4164F2D2E /* IOSSocialView.swift */,
+			);
+			path = Social;
+			sourceTree = "<group>";
+		};
+		9B57737B746F05F8FAF57C00 /* Planning */ = {
+			isa = PBXGroup;
+			children = (
+				D8F05FC0EE216CF456147DF4 /* ChatInputView.swift */,
+				2821844419ECCF3E1CED1AAC /* ManualTaskForm.swift */,
+				0E661892E5ADE97499CB17B5 /* ParsedTaskCard.swift */,
+				0A40BFF34313E802C2242D1E /* PlanningView.swift */,
+				736617983FC17D611433F6CA /* TaskRowView.swift */,
+			);
+			path = Planning;
+			sourceTree = "<group>";
+		};
+		9C66E44885C9289EFA729DC8 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				A4D171A83E12A4815303F4C3 /* LoginView.swift */,
+				78A37F46BC12F80D0D38DBB7 /* OnboardingView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		9D02871C09923CA5E4031B38 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				BAFB558CE3C2B65154E4B431 /* IOSStatsView.swift */,
+			);
+			path = Stats;
+			sourceTree = "<group>";
+		};
+		B5F96E4964A294EEB211BE99 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				9BC7399D7A4333EC051969B8 /* IOSContentView.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		B69029C48B0586990A516091 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2F2CA052180B01BD2A5B6260 /* Tether.app */,
+				EEF590AFC23FB4BF26CCBED4 /* TetherIOS.app */,
+				8B2DF406FD67B3030DBF0D4D /* TetherSafari.appex */,
+				721E72C75E88643F5DF7F688 /* TetherTests.xctest */,
+				8F03D568A09D680B362F7F58 /* TetherUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B952B7692A0F1650A28A41C9 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		BDB5FA5CA820B6494DDB6A07 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9C66E44885C9289EFA729DC8 /* Auth */,
+				8C273634BA51B60ABA7D5C15 /* Blocking */,
+				FFBC1EA91B5ABA557B935006 /* Calendar */,
+				5CDE04F0349E68BF961C9C7D /* Coaching */,
+				84CBC797D69912317633C2CF /* Navigation */,
+				9B57737B746F05F8FAF57C00 /* Planning */,
+				6B56B97488E864637B016791 /* Session */,
+				C6577741BD1B7F382BA7074B /* Settings */,
+				351D514B211159ACA704B494 /* Social */,
+				0A4518A235F58BC2B9A78B60 /* Stats */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C070BC4932A6991BCD95BDDD /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				3432C95C375D4457DD6F03E5 /* IOSLoginView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		C6577741BD1B7F382BA7074B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B01414538B0EEAA81773345E /* AccountSettingsView.swift */,
+				7E1B21C1D0A32FFD8FAF4844 /* BlocklistEditorView.swift */,
+				68D244FF87E5121225C29DBE /* IntegrationsView.swift */,
+				E60DBDF38654DA050F089A6B /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		C861A2EDE9A411C5D8B9C216 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				E682A3B8657DC027688FC6DA /* IOSSessionView.swift */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		C964E9E1B324094D0B2DB4B1 /* Tether */ = {
+			isa = PBXGroup;
+			children = (
+				B952B7692A0F1650A28A41C9 /* Database */,
+				7AB2020654C5791C4A3007B1 /* DesignSystem */,
+				24840C110F06C7FFBB43CD6D /* FloatingWidget */,
+				18F64D6D81AB0F5D6369CA79 /* MenuBar */,
+				60F0DCA6106FF8312A39580B /* Models */,
+				DE9B9B45AC46DD0AF5845BEC /* Resources */,
+				84152FA1CB1B92F285E0B045 /* Services */,
+				BDB5FA5CA820B6494DDB6A07 /* Views */,
+				F8A63C381D0A3079C4F74F89 /* ContentView.swift */,
+				80B77CD8F1A8DCB081E33EC1 /* Tether.entitlements */,
+				64869ECA8C7396008FA83F38 /* TetherApp.swift */,
+			);
+			path = Tether;
+			sourceTree = "<group>";
+		};
+		D24CC09BB6949D57763A8FF8 /* TetherUITests */ = {
+			isa = PBXGroup;
+			children = (
+				77D58862CC275FEA3A770A0B /* TetherUITests.swift */,
+			);
+			path = TetherUITests;
+			sourceTree = "<group>";
+		};
+		DE9B9B45AC46DD0AF5845BEC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AD9B3C59F18C986266338486 /* Assets.xcassets */,
+				4836016429468CC30646459F /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DFD3FC8514EF757343FBEA86 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BE9398C97BBABBC36FF77A8E /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FFBC1EA91B5ABA557B935006 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				48132B478FECCF8EA8260C48 /* CalendarSidebarView.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		45C693A1C79CDAB203A19612 /* Tether */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9A637A0E4EA6503338E34F81 /* Build configuration list for PBXNativeTarget "Tether" */;
+			buildPhases = (
+				84364C43EE0F731B4D60D042 /* Sources */,
+				2E9501BBFD70CAADDF153614 /* Resources */,
+				EEE04766517343F27C1B53D1 /* Frameworks */,
+				260B1ED483949B70097AE72C /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9B04129DA29185A6C20BFA9E /* PBXTargetDependency */,
+			);
+			name = Tether;
+			packageProductDependencies = (
+				019FEC353252D381C5F33646 /* TetherKit */,
+			);
+			productName = Tether;
+			productReference = 2F2CA052180B01BD2A5B6260 /* Tether.app */;
+			productType = "com.apple.product-type.application";
+		};
+		565231A737204FF693BDA84E /* TetherSafari */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7C2F0C4E1ACC725631491438 /* Build configuration list for PBXNativeTarget "TetherSafari" */;
+			buildPhases = (
+				0F15CE05DF17DF65C36D8680 /* Sources */,
+				2926CDC993DC9DD1A186D427 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TetherSafari;
+			packageProductDependencies = (
+			);
+			productName = TetherSafari;
+			productReference = 8B2DF406FD67B3030DBF0D4D /* TetherSafari.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		611B19E8AA57FA45C9D015CB /* TetherIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9A654C6FA7AEE45C95DEC06 /* Build configuration list for PBXNativeTarget "TetherIOS" */;
+			buildPhases = (
+				59CFCF23D03491B4D8B04273 /* Sources */,
+				B9A7BEFF2BE2F1222736C3C6 /* Resources */,
+				769688ECB36EAACD530D507E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TetherIOS;
+			packageProductDependencies = (
+				DEF38DF50265DF947B09DFB0 /* TetherKit */,
+			);
+			productName = TetherIOS;
+			productReference = EEF590AFC23FB4BF26CCBED4 /* TetherIOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E4F45079B2C38E1290AE2E14 /* TetherUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6BB8C40B019318518B19A374 /* Build configuration list for PBXNativeTarget "TetherUITests" */;
+			buildPhases = (
+				0694B805F2B224C25BBAB56D /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9430F3224AB2DBF7A6CA56E2 /* PBXTargetDependency */,
+			);
+			name = TetherUITests;
+			packageProductDependencies = (
+			);
+			productName = TetherUITests;
+			productReference = 8F03D568A09D680B362F7F58 /* TetherUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		F36A2E7FE8A9AC1443A276D4 /* TetherTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6B16D91AE08F4A0CE424C434 /* Build configuration list for PBXNativeTarget "TetherTests" */;
+			buildPhases = (
+				039A6694A7BF0D902F1C2F43 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				79DDFD27BD184EF3E4194D11 /* PBXTargetDependency */,
+			);
+			name = TetherTests;
+			packageProductDependencies = (
+			);
+			productName = TetherTests;
+			productReference = 721E72C75E88643F5DF7F688 /* TetherTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D154414679B8355E89FB1B6A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					45C693A1C79CDAB203A19612 = {
+						ProvisioningStyle = Automatic;
+					};
+					565231A737204FF693BDA84E = {
+						ProvisioningStyle = Automatic;
+					};
+					611B19E8AA57FA45C9D015CB = {
+						ProvisioningStyle = Automatic;
+					};
+					E4F45079B2C38E1290AE2E14 = {
+						ProvisioningStyle = Automatic;
+						TestTargetID = 45C693A1C79CDAB203A19612;
+					};
+					F36A2E7FE8A9AC1443A276D4 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 017D4C49749D6CD76AC06D39 /* Build configuration list for PBXProject "Tether" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 2D89F588FC699EDD6E33403A;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				DBB132F786D3F1430CF216C0 /* XCLocalSwiftPackageReference "../TetherKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				45C693A1C79CDAB203A19612 /* Tether */,
+				611B19E8AA57FA45C9D015CB /* TetherIOS */,
+				565231A737204FF693BDA84E /* TetherSafari */,
+				F36A2E7FE8A9AC1443A276D4 /* TetherTests */,
+				E4F45079B2C38E1290AE2E14 /* TetherUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2E9501BBFD70CAADDF153614 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8336A6FBBB7A8F6D9A61D16 /* Assets.xcassets in Resources */,
+				E3BCFD0B71A87329BFDE2668 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9A7BEFF2BE2F1222736C3C6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69990062BE8D57BEBBD83B0A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		039A6694A7BF0D902F1C2F43 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3F431DEF400A6D9CD2CA2AE /* NLParsingServiceTests.swift in Sources */,
+				0D1A6621B6D11AC385C6A936 /* TetherTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0694B805F2B224C25BBAB56D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE9AE587A1033188C351ADD7 /* TetherUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F15CE05DF17DF65C36D8680 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2B83C19676769F3E018A741 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59CFCF23D03491B4D8B04273 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84AE298E836031F8E984E514 /* IOSChatInputView.swift in Sources */,
+				AE7DE533A056631B3FD00DB2 /* IOSCoachingView.swift in Sources */,
+				5C6BC252DCB4B1251A058FD2 /* IOSContentView.swift in Sources */,
+				FBCF96A30F5DDF2C15DB18CA /* IOSGroupsView.swift in Sources */,
+				71E482DB38154F8F62513208 /* IOSIntegrationsView.swift in Sources */,
+				AEF557F86EC1149C25549F78 /* IOSLeaderboardView.swift in Sources */,
+				2F99DA10777DB9B959C3A386 /* IOSLoginView.swift in Sources */,
+				E4CE575F57E7BC808F4A23B2 /* IOSParsedTaskCard.swift in Sources */,
+				5210FBD6700BBAD9F60427CF /* IOSSessionManager.swift in Sources */,
+				89080CAC43816A9F52B242FE /* IOSSessionView.swift in Sources */,
+				7325979D2A97BE333128A55D /* IOSSettingsView.swift in Sources */,
+				1879B50BBCA339D66D4CC261 /* IOSSocialView.swift in Sources */,
+				B650F3CFCE7A55AAAD39FC14 /* IOSStatsView.swift in Sources */,
+				EC9D10FF8580895A20B04C0C /* IOSTaskListView.swift in Sources */,
+				107DC9E453446EA0BA183985 /* ScreenTimeBlockingManager.swift in Sources */,
+				5128377E36DB2AB60807840D /* TetherIOSApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84364C43EE0F731B4D60D042 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4241B345D675209BDCDDF68A /* AccountSettingsView.swift in Sources */,
+				64F9F66B6EB08603AD1B6855 /* ActiveSessionView.swift in Sources */,
+				9A9D3FEE07FE54828A4297F2 /* AppMonitor.swift in Sources */,
+				D5AF0683FDFBA85826CA66F2 /* BlockOverlayView.swift in Sources */,
+				AB0813D8E0475879096FC52E /* BlockingManager.swift in Sources */,
+				868226B6476C2325ADDCEB87 /* BlocklistEditorView.swift in Sources */,
+				64B71BEA878C55435CF39C70 /* CalendarSidebarView.swift in Sources */,
+				2D30735DC167F3AE3EB2B010 /* ChatInputView.swift in Sources */,
+				A2DD8DD38903695EF02A998B /* CoachingView.swift in Sources */,
+				29C45E80C82592BC095310E9 /* ContentView.swift in Sources */,
+				DA5F7FF378C74B53C93AC41B /* EncourageView.swift in Sources */,
+				A76C3C106FA8AE0C64412A09 /* FloatingWidgetController.swift in Sources */,
+				542A25009F998538228D480B /* FloatingWidgetPanel.swift in Sources */,
+				40C9E560AC5F7AC94FCE5E22 /* FloatingWidgetView.swift in Sources */,
+				4E880BFBB6513A4FA2F701D0 /* FriendsListView.swift in Sources */,
+				1817C536EEAC8829781ADA38 /* GroupView.swift in Sources */,
+				12F0522FAC61FFD594E41F45 /* IntegrationsView.swift in Sources */,
+				B17A2A4DA63898AED5C46D17 /* LeaderboardView.swift in Sources */,
+				BEDD4060215B64088E150E7A /* LoginView.swift in Sources */,
+				7E4491E01DC0F12D26861783 /* ManualTaskForm.swift in Sources */,
+				22451C7FB3AAB5FD2BAC16E6 /* MenuBarManager.swift in Sources */,
+				C700DF161D374455CBAD793F /* MenuBarPopoverView.swift in Sources */,
+				C1743E48BB759F922892716A /* OnboardingView.swift in Sources */,
+				D1597DD2B9993AD02553FA3F /* ParsedTaskCard.swift in Sources */,
+				41FBA39E26A71882F255BDDD /* PlanningView.swift in Sources */,
+				7636A2DDD58A3585840B6918 /* PostSessionSummaryController.swift in Sources */,
+				9C8519010BC02844B3136F42 /* PostSessionSummaryPanel.swift in Sources */,
+				1A117E1556024CECF7EC60D2 /* PostSessionSummaryView.swift in Sources */,
+				9C67A845FA4C8E97872A925C /* SessionManager.swift in Sources */,
+				9FABCAC9C8AEBF398B7FBD1C /* SessionSummaryView.swift in Sources */,
+				EFC5DAE23206845512DA6F86 /* SessionView.swift in Sources */,
+				15B6D8E7601200912588E1A2 /* SettingsView.swift in Sources */,
+				5F350DD881F9DB262EFD60ED /* SidebarView.swift in Sources */,
+				9610B653309FF15A24A98DD7 /* SocialView.swift in Sources */,
+				E748A92174364572F008F296 /* StatsView.swift in Sources */,
+				13C089E340081A9AAE58B47C /* TaskRowView.swift in Sources */,
+				AC71CC7D161912EBABCC899A /* TetherApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		79DDFD27BD184EF3E4194D11 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 45C693A1C79CDAB203A19612 /* Tether */;
+			targetProxy = 75CA4AB2FC67D2008F369BC5 /* PBXContainerItemProxy */;
+		};
+		9430F3224AB2DBF7A6CA56E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 45C693A1C79CDAB203A19612 /* Tether */;
+			targetProxy = 63DBFD67FA1AB6F5F9305911 /* PBXContainerItemProxy */;
+		};
+		9B04129DA29185A6C20BFA9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 565231A737204FF693BDA84E /* TetherSafari */;
+			targetProxy = D3739BA53F2DFCF2CBF3CE51 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		13FFAEF83E3776EF6D951051 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TetherIOS/TetherIOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				INFOPLIST_KEY_CFBundleDisplayName = Tether;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Tether uses your calendar to suggest optimal focus times and avoid scheduling conflicts.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tether.ios;
+				PRODUCT_NAME = Tether;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		158B7230060205C7337A6242 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tether.uitests;
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = Tether;
+			};
+			name = Release;
+		};
+		261BA575DA21D2DF162E6990 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tether.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tether.app/Contents/MacOS/Tether";
+			};
+			name = Debug;
+		};
+		3FF7704E471FD2519B6000AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = TetherSafari/TetherSafari.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				INFOPLIST_KEY_CFBundleDisplayName = "Tether Focus Blocker";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Tether. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tether.app.safari;
+				PRODUCT_NAME = "Tether Safari";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		427747C8D4956C56850060B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TetherIOS/TetherIOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				INFOPLIST_KEY_CFBundleDisplayName = Tether;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Tether uses your calendar to suggest optimal focus times and avoid scheduling conflicts.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tether.ios;
+				PRODUCT_NAME = Tether;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		436F9F17F3459D7343957521 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Tether/Tether.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				INFOPLIST_KEY_CFBundleDisplayName = Tether;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Tether uses your calendar to suggest optimal focus times and avoid scheduling conflicts.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Tether. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tether.app;
+				PRODUCT_NAME = Tether;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+		A4E4DABBE84A839124A51ABB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tether.uitests;
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = Tether;
+			};
+			name = Debug;
+		};
+		D2784D8591C2AF5B0DF6929F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Tether/Tether.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				INFOPLIST_KEY_CFBundleDisplayName = Tether;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Tether uses your calendar to suggest optimal focus times and avoid scheduling conflicts.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Tether. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tether.app;
+				PRODUCT_NAME = Tether;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		E1FE9267F36E54A4080B91CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.2;
+			};
+			name = Debug;
+		};
+		EB087D9D5C4201A47C3DBE0E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.2;
+			};
+			name = Release;
+		};
+		F5CD59666AC1A86983FA493D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = TetherSafari/TetherSafari.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				INFOPLIST_KEY_CFBundleDisplayName = "Tether Focus Blocker";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Tether. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tether.app.safari;
+				PRODUCT_NAME = "Tether Safari";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F94AFBBFC3595A99B4FFFBE9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tether.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tether.app/Contents/MacOS/Tether";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		017D4C49749D6CD76AC06D39 /* Build configuration list for PBXProject "Tether" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E1FE9267F36E54A4080B91CD /* Debug */,
+				EB087D9D5C4201A47C3DBE0E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		6B16D91AE08F4A0CE424C434 /* Build configuration list for PBXNativeTarget "TetherTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				261BA575DA21D2DF162E6990 /* Debug */,
+				F94AFBBFC3595A99B4FFFBE9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		6BB8C40B019318518B19A374 /* Build configuration list for PBXNativeTarget "TetherUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A4E4DABBE84A839124A51ABB /* Debug */,
+				158B7230060205C7337A6242 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7C2F0C4E1ACC725631491438 /* Build configuration list for PBXNativeTarget "TetherSafari" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F5CD59666AC1A86983FA493D /* Debug */,
+				3FF7704E471FD2519B6000AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		9A637A0E4EA6503338E34F81 /* Build configuration list for PBXNativeTarget "Tether" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2784D8591C2AF5B0DF6929F /* Debug */,
+				436F9F17F3459D7343957521 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D9A654C6FA7AEE45C95DEC06 /* Build configuration list for PBXNativeTarget "TetherIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				427747C8D4956C56850060B6 /* Debug */,
+				13FFAEF83E3776EF6D951051 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		DBB132F786D3F1430CF216C0 /* XCLocalSwiftPackageReference "../TetherKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../TetherKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		019FEC353252D381C5F33646 /* TetherKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TetherKit;
+		};
+		DEF38DF50265DF947B09DFB0 /* TetherKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TetherKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = D154414679B8355E89FB1B6A /* Project object */;
+}

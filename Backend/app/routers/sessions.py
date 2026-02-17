@@ -60,6 +60,16 @@ async def update_session(
     return session
 
 
+@router.get("/active", response_model=SessionResponse | None)
+async def get_active_session(
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Return the user's currently active (incomplete) session, or null."""
+    session = await session_service.get_active_session(db, user.id)
+    return session
+
+
 @router.post("/{session_id}/events", response_model=list[SessionEventResponse], status_code=201)
 async def append_events(
     session_id: uuid.UUID,

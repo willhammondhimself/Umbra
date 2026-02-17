@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    DATABASE_URL: str = "postgresql+asyncpg://umbra:umbra_dev@localhost:5432/umbra"
+    DATABASE_URL: str = "postgresql+asyncpg://tether:tether_dev@localhost:5432/tether"
     REDIS_URL: str = "redis://localhost:6379/0"
 
     JWT_SECRET: str = "change-me-in-production"
@@ -17,8 +17,20 @@ class Settings(BaseSettings):
     APNS_KEY_ID: str = ""
     APNS_TEAM_ID: str = ""
     APNS_KEY_PATH: str = ""  # Path to .p8 key file
-    APNS_BUNDLE_ID: str = "com.umbra.ios"
+    APNS_BUNDLE_ID: str = "com.tether.ios"
     APNS_USE_SANDBOX: bool = True
+
+    # AI Coaching
+    OPENAI_API_KEY: str = ""
+    ANTHROPIC_API_KEY: str = ""
+    AI_PROVIDER: str = ""  # "openai" or "anthropic"
+    AI_MODEL: str = ""  # Override default model per provider
+
+    # Third-Party Integrations
+    SLACK_CLIENT_ID: str = ""
+    SLACK_CLIENT_SECRET: str = ""
+    TODOIST_CLIENT_ID: str = ""
+    NOTION_API_KEY: str = ""
 
     ENVIRONMENT: str = "development"
     RATE_LIMIT_PER_MINUTE: int = 100

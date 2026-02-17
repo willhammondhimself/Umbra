@@ -93,6 +93,19 @@ async def append_events_batch(
     return created
 
 
+async def get_active_session(
+    db: AsyncSession, user_id: uuid.UUID
+) -> Session | None:
+    """Return the user's current active (incomplete) session, or None."""
+    result = await db.execute(
+        select(Session)
+        .where(Session.user_id == user_id, Session.is_complete == False)
+        .order_by(Session.start_time.desc())
+        .limit(1)
+    )
+    return result.scalars().first()
+
+
 async def get_events_since(
     db: AsyncSession,
     session_id: uuid.UUID,

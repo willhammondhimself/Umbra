@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tether</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Login View -->
+  <div id="login-view" class="hidden">
+    <div class="header">
+      <div class="logo"></div>
+      <h1>Tether</h1>
+    </div>
+    <p class="subtitle">Sign in to sync your blocklist</p>
+
+    <div class="form-group">
+      <label>Server URL</label>
+      <input id="server-url" type="url" placeholder="https://api.tether.app" value="https://api.tether.app">
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input id="login-email" type="email" placeholder="you@example.com">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input id="login-password" type="password" placeholder="Password">
+    </div>
+
+    <div id="login-error" class="error hidden"></div>
+
+    <button id="login-btn" class="btn-primary">Sign In</button>
+  </div>
+
+  <!-- Status View -->
+  <div id="status-view" class="hidden">
+    <div class="header">
+      <div class="logo"></div>
+      <h1>Tether</h1>
+    </div>
+
+    <div class="status-card">
+      <div class="status-row">
+        <span class="status-label">Focus Session</span>
+        <span id="session-status" class="status-value status-inactive">Inactive</span>
+      </div>
+      <div class="status-row">
+        <span class="status-label">Blocked Sites</span>
+        <span id="blocked-count" class="blocked-count">0</span>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button id="refresh-btn" class="btn-primary">Refresh</button>
+      <button id="logout-btn" class="btn-secondary">Sign Out</button>
+    </div>
+
+    <div class="footer">Manage blocklist in the Tether app</div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -12,8 +12,8 @@ from datetime import datetime, timezone
 from locust import HttpUser, between, task
 
 
-class UmbraUser(HttpUser):
-    """Simulates a typical Umbra user workflow."""
+class TetherUser(HttpUser):
+    """Simulates a typical Tether user workflow."""
 
     wait_time = between(1, 3)
 

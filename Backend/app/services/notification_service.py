@@ -111,3 +111,19 @@ async def notify_friend_request(
         body=f"{name} wants to be your accountability partner!",
         apns_client=apns_client,
     )
+
+
+async def notify_streak_milestone(
+    db: AsyncSession,
+    user_id: uuid.UUID,
+    streak_days: int,
+    apns_client=None,
+):
+    """Send push notification for streak milestone."""
+    await send_push_notification(
+        db,
+        user_id,
+        title="Streak Milestone!",
+        body=f"You've maintained a {streak_days}-day focus streak! Keep it up!",
+        apns_client=apns_client,
+    )

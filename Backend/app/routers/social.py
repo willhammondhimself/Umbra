@@ -35,7 +35,9 @@ async def invite_friend(
     db: AsyncSession = Depends(get_db),
 ):
     try:
-        result = await social_service.send_invite(db, user.id, data.email, req.app.state.redis)
+        result = await social_service.send_invite(
+            db, user.id, data.email, req.app.state.redis, req.app.state.apns_client
+        )
         return result
     except ValueError as e:
         raise HTTPException(
@@ -83,11 +85,14 @@ async def group_leaderboard(
 @router.post("/social/encourage", status_code=201)
 async def encourage(
     data: EncourageRequest,
+    req: Request,
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
     try:
-        await social_service.send_encourage(db, user.id, data.to_user_id, data.message)
+        await social_service.send_encourage(
+            db, user.id, data.to_user_id, data.message, req.app.state.apns_client
+        )
         return {"status": "sent"}
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
@@ -101,7 +106,9 @@ async def ping(
     db: AsyncSession = Depends(get_db),
 ):
     try:
-        await social_service.send_ping(db, user.id, data.to_user_id, req.app.state.redis)
+        await social_service.send_ping(
+            db, user.id, data.to_user_id, req.app.state.redis, req.app.state.apns_client
+        )
         return {"status": "sent"}
     except ValueError as e:
         raise HTTPException(

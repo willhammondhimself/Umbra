@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tether</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 280px;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: #1a1a1e;
+      color: #e5e5e7;
+      padding: 16px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .header h1 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .logo {
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 6px;
+    }
+    .status-card {
+      background: #2a2a2e;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .status-label { font-size: 12px; color: #8e8e93; }
+    .status-value { font-size: 14px; font-weight: 500; }
+    .status-active { color: #34c759; }
+    .status-inactive { color: #8e8e93; }
+    .blocked-count {
+      font-size: 24px;
+      font-weight: 700;
+      color: #667eea;
+    }
+    .refresh-btn {
+      width: 100%;
+      padding: 10px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .refresh-btn:hover { background: #5a72d4; }
+    .refresh-btn:active { background: #4e66c8; }
+    .footer {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 11px;
+      color: #636366;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo"></div>
+    <h1>Tether</h1>
+  </div>
+
+  <div class="status-card">
+    <div class="status-row">
+      <span class="status-label">Focus Session</span>
+      <span id="session-status" class="status-value status-inactive">Inactive</span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">Blocked Sites</span>
+      <span id="blocked-count" class="blocked-count">0</span>
+    </div>
+  </div>
+
+  <button id="refresh-btn" class="refresh-btn">Refresh</button>
+
+  <div class="footer">Manage blocklist in the Tether app</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

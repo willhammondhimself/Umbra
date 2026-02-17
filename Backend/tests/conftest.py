@@ -127,6 +127,7 @@ async def client(db_engine, test_user: User) -> AsyncGenerator[AsyncClient, None
     app.dependency_overrides[get_db] = override_get_db
     app.dependency_overrides[get_current_user] = override_get_current_user
     app.state.redis = FakeRedis()
+    app.state.apns_client = None
 
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:

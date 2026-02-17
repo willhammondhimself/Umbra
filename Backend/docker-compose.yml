@@ -2,15 +2,15 @@ services:
   postgres:
     image: postgres:15-alpine
     environment:
-      POSTGRES_USER: umbra
-      POSTGRES_PASSWORD: umbra_dev
-      POSTGRES_DB: umbra
+      POSTGRES_USER: tether
+      POSTGRES_PASSWORD: tether_dev
+      POSTGRES_DB: tether
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U umbra"]
+      test: ["CMD-SHELL", "pg_isready -U tether"]
       interval: 5s
       timeout: 3s
       retries: 5
@@ -34,7 +34,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql+asyncpg://umbra:umbra_dev@postgres:5432/umbra
+      DATABASE_URL: postgresql+asyncpg://tether:tether_dev@postgres:5432/tether
       REDIS_URL: redis://redis:6379/0
       JWT_SECRET: dev-secret-change-in-production
       ENVIRONMENT: development
