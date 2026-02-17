@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 struct ActiveSessionView: View {
     @Bindable var sessionManager: SessionManager

@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 struct FriendsListView: View {
     @State private var friends: [FriendItem] = []

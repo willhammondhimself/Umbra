@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 struct GroupView: View {
     @State private var groups: [GroupItem] = []

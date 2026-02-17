@@ -1,6 +1,7 @@
 import Foundation
 import AppKit
 import Combine
+import UmbraKit
 
 enum SessionState: Equatable {
     case idle
@@ -67,6 +68,9 @@ final class SessionManager {
         // Activate blocking
         BlockingManager.shared.activate()
 
+        // Show floating widget
+        FloatingWidgetController.shared.showWidget()
+
         // Listen for system sleep/wake
         registerSleepWakeNotifications()
 
@@ -103,6 +107,7 @@ final class SessionManager {
         appMonitor.stopMonitoring()
         unregisterSleepWakeNotifications()
         BlockingManager.shared.deactivate()
+        FloatingWidgetController.shared.hideWidget()
 
         guard var session = currentSession else { return }
         session.endTime = Date()
@@ -198,9 +203,10 @@ final class SessionManager {
     private func handleAppSwitch(appName: String, bundleId: String) {
         currentApp = appName
         let isUmbra = bundleId == Bundle.main.bundleIdentifier
-        let isDistracting = distractingBundleIds.contains(bundleId)
+        let isExempted = BlockingManager.shared.sessionExemptions.contains(bundleId)
 
-        if isDistracting && !isUmbra {
+        if !isUmbra && !isExempted && !appMonitor.isIdle {
+            endDistraction()          // flush previous distraction event if switching apps
             startDistraction(appName: appName)
         } else {
             endDistraction()

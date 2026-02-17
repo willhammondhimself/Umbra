@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 struct PlanningView: View {
     @State private var tasks: [UmbraTask] = []
@@ -27,14 +28,15 @@ struct PlanningView: View {
                 Spacer()
 
                 // Filter
-                Picker("Filter", selection: $filterStatus) {
+                Picker("", selection: $filterStatus) {
                     Text("All").tag(nil as UmbraTask.Status?)
                     ForEach(UmbraTask.Status.allCases, id: \.self) { status in
                         Text(status.label).tag(status as UmbraTask.Status?)
                     }
                 }
                 .pickerStyle(.segmented)
-                .frame(maxWidth: 250)
+                .labelsHidden()
+                .frame(minWidth: 160, maxWidth: 250)
 
                 Button {
                     editingTask = nil

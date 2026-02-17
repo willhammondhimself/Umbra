@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 struct ParsedTaskCard: View {
     @Binding var parsedTask: ParsedTask

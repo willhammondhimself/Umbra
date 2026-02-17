@@ -2,20 +2,20 @@ name: Umbra
 options:
   bundleIdPrefix: com.umbra
   deploymentTarget:
-    macOS: "14.0"
-  xcodeVersion: "16.0"
+    macOS: "26.0"
+    iOS: "26.0"
+  xcodeVersion: "26.0"
   generateEmptyDirectories: true
   groupSortPosition: top
 
 packages:
-  GRDB:
-    url: https://github.com/groue/GRDB.swift
-    version: 7.4.1
+  UmbraKit:
+    path: ../UmbraKit
 
 settings:
   base:
-    SWIFT_VERSION: "5.9"
-    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    SWIFT_VERSION: "6.2"
+    MACOSX_DEPLOYMENT_TARGET: "26.0"
 
 targets:
   Umbra:
@@ -43,8 +43,8 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         SWIFT_EMIT_LOC_STRINGS: YES
     dependencies:
-      - package: GRDB
-        product: GRDB
+      - package: UmbraKit
+        product: UmbraKit
       - sdk: AuthenticationServices.framework
     entitlements:
       path: Umbra/Umbra.entitlements
@@ -52,6 +52,45 @@ targets:
         com.apple.security.app-sandbox: true
         com.apple.security.files.user-selected.read-write: true
         com.apple.security.network.client: true
+
+  UmbraIOS:
+    type: application
+    platform: iOS
+    sources:
+      - path: UmbraIOS
+        excludes:
+          - Resources/Assets.xcassets/AppIcon.appiconset
+    resources:
+      - path: UmbraIOS/Resources/Assets.xcassets
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.umbra.ios
+        PRODUCT_NAME: "Umbra"
+        INFOPLIST_GENERATION_MODE: GeneratedFile
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Umbra
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        IPHONEOS_DEPLOYMENT_TARGET: "26.0"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ENABLE_PREVIEWS: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_EMIT_LOC_STRINGS: YES
+    dependencies:
+      - package: UmbraKit
+        product: UmbraKit
+      - sdk: AuthenticationServices.framework
+      - sdk: FamilyControls.framework
+      - sdk: ManagedSettings.framework
+    entitlements:
+      path: UmbraIOS/UmbraIOS.entitlements
+      properties:
+        aps-environment: development
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups:
+          - group.com.umbra.shared
 
   UmbraTests:
     type: bundle.unit-test

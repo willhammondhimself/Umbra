@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 struct TaskRowView: View {
     let task: UmbraTask

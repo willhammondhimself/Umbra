@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 struct BlockOverlayView: View {
     let appName: String

@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 @main
 struct UmbraApp: App {

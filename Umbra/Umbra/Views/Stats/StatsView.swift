@@ -1,5 +1,6 @@
 import SwiftUI
 import Charts
+import UmbraKit
 
 enum TimeRange: String, CaseIterable {
     case today = "Today"
@@ -49,12 +50,13 @@ struct StatsView: View {
                 }
                 Spacer()
 
-                Picker("Time Range", selection: $selectedRange) {
+                Picker("", selection: $selectedRange) {
                     ForEach(TimeRange.allCases, id: \.self) { range in
                         Text(range.rawValue).tag(range)
                     }
                 }
                 .pickerStyle(.segmented)
+                .labelsHidden()
                 .frame(maxWidth: 350)
             }
             .padding()

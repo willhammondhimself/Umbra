@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 struct LeaderboardView: View {
     let groupId: UUID

@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 struct EncourageView: View {
     let friend: FriendItem

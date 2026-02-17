@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 struct SessionSummaryView: View {
     let session: Session

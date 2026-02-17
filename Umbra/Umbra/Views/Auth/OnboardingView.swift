@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 struct OnboardingView: View {
     @State private var authManager = AuthManager.shared

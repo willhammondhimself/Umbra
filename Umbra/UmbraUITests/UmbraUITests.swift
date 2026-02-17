@@ -1,5 +1,6 @@
 import XCTest
 
+@MainActor
 final class UmbraUITests: XCTestCase {
     let app = XCUIApplication()
 
@@ -13,7 +14,6 @@ final class UmbraUITests: XCTestCase {
     }
 
     func testTabsExist() throws {
-        // Verify all four tabs are present
         XCTAssertTrue(app.buttons["Plan"].exists || app.staticTexts["Plan"].exists)
     }
 }

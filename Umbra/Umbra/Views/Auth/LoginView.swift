@@ -1,5 +1,6 @@
 import AuthenticationServices
 import SwiftUI
+import UmbraKit
 
 struct LoginView: View {
     @State private var authManager = AuthManager.shared
@@ -55,6 +56,13 @@ struct LoginView: View {
 
             Spacer()
                 .frame(height: 40)
+
+            // Demo mode for local testing
+            Button("Demo Mode (No Auth)") {
+                authManager.setDemoMode()
+            }
+            .font(.caption)
+            .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {

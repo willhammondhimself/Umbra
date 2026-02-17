@@ -1,5 +1,6 @@
 import SwiftUI
 import AppKit
+import UmbraKit
 
 struct BlocklistEditorView: View {
     @State private var blockingManager = BlockingManager.shared

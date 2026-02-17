@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 struct SessionView: View {
     @State private var sessionManager = SessionManager.shared
@@ -13,11 +14,13 @@ struct SessionView: View {
             case .running, .paused:
                 ActiveSessionView(sessionManager: sessionManager)
 
-            case .summary(let session):
-                SessionSummaryView(session: session) {
-                    sessionManager.dismissSummary()
-                    loadPastSessions()
-                }
+            case .summary:
+                idleView
+                    .onAppear {
+                        if case .summary(let session) = sessionManager.state {
+                            PostSessionSummaryController.shared.show(session: session)
+                        }
+                    }
             }
         }
         .onAppear {

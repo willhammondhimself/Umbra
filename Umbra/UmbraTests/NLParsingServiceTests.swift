@@ -1,5 +1,6 @@
 import XCTest
 @testable import Umbra
+import UmbraKit
 
 final class NLParsingServiceTests: XCTestCase {
     let parser = NLParsingService()

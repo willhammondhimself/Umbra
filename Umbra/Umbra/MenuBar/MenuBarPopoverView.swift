@@ -1,4 +1,5 @@
 import SwiftUI
+import UmbraKit
 
 struct MenuBarPopoverView: View {
     @State private var sessionManager = SessionManager.shared
