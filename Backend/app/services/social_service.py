@@ -146,6 +146,58 @@ async def get_groups(db: AsyncSession, user_id: uuid.UUID) -> list[dict]:
     return groups
 
 
+async def create_group(db: AsyncSession, user_id: uuid.UUID, name: str):
+    """Create a new group and add creator as first member."""
+    group = Group(name=name, created_by=user_id)
+    db.add(group)
+    await db.flush()
+    await db.refresh(group)
+
+    # Add creator as first member
+    member = GroupMember(group_id=group.id, user_id=user_id)
+    db.add(member)
+    await db.flush()
+
+    # Return Group object directly - Pydantic will handle serialization
+    # but include member_count as separate data
+    result = {
+        "id": group.id,
+        "name": group.name,
+        "created_by": group.created_by,
+        "created_at": group.created_at,
+        "member_count": 1,
+    }
+    return result
+
+
+async def add_group_member(db: AsyncSession, group_id: uuid.UUID, user_id: uuid.UUID) -> bool:
+    """Add a user to a group. Returns True if successful."""
+    # Check if group exists
+    group_result = await db.execute(select(Group).where(Group.id == group_id))
+    if not group_result.scalar_one_or_none():
+        raise ValueError("Group not found")
+
+    # Check if user exists
+    user_result = await db.execute(select(User).where(User.id == user_id))
+    if not user_result.scalar_one_or_none():
+        raise ValueError("User not found")
+
+    # Check if already a member
+    member_result = await db.execute(
+        select(GroupMember).where(
+            and_(GroupMember.group_id == group_id, GroupMember.user_id == user_id)
+        )
+    )
+    if member_result.scalar_one_or_none():
+        raise ValueError("User is already a member of this group")
+
+    # Add member
+    member = GroupMember(group_id=group_id, user_id=user_id)
+    db.add(member)
+    await db.flush()
+    return True
+
+
 async def get_leaderboard(
     db: AsyncSession, group_id: uuid.UUID, user_id: uuid.UUID
 ) -> list[dict]:

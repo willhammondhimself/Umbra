@@ -7,8 +7,10 @@ from app.database import get_db
 from app.dependencies import get_current_user
 from app.models.user import User
 from app.schemas.social import (
+    AddGroupMemberRequest,
     EncourageRequest,
     FriendResponse,
+    GroupCreate,
     GroupResponse,
     InviteRequest,
     LeaderboardEntry,
@@ -66,6 +68,34 @@ async def list_groups(
     db: AsyncSession = Depends(get_db),
 ):
     return await social_service.get_groups(db, user.id)
+
+
+@router.post("/groups", status_code=201, response_model=GroupResponse)
+async def create_group(
+    data: GroupCreate,
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Create a new group with the current user as creator/first member."""
+    try:
+        return await social_service.create_group(db, user.id, data.name)
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+
+@router.post("/groups/{group_id}/members", status_code=201)
+async def add_group_member(
+    group_id: uuid.UUID,
+    data: AddGroupMemberRequest,
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Add a user to a group by user ID."""
+    try:
+        await social_service.add_group_member(db, group_id, data.user_id)
+        return {"status": "member_added"}
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 
 @router.get("/groups/{group_id}/leaderboard", response_model=list[LeaderboardEntry])

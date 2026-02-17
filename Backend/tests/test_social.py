@@ -215,3 +215,74 @@ async def test_ping_rate_limit(client, db_session, test_user, second_user):
     )
     assert response.status_code == 429
     assert "limit" in response.json()["detail"].lower()
+
+
+@pytest.mark.asyncio
+async def test_create_group(client):
+    response = await client.post("/groups", json={"name": "Study Buddies"})
+    assert response.status_code == 201
+    data = response.json()
+    assert data["name"] == "Study Buddies"
+    assert data["member_count"] == 1  # Creator is auto-added
+    assert "id" in data
+
+
+@pytest.mark.asyncio
+async def test_create_group_missing_name(client):
+    response = await client.post("/groups", json={})
+    assert response.status_code == 422  # Pydantic validation error
+
+
+@pytest.mark.asyncio
+async def test_list_groups_after_create(client):
+    # Create a group
+    create_response = await client.post("/groups", json={"name": "My Group"})
+    assert create_response.status_code == 201
+
+    # List groups
+    list_response = await client.get("/groups")
+    assert list_response.status_code == 200
+    groups = list_response.json()
+    assert len(groups) == 1
+    assert groups[0]["name"] == "My Group"
+
+
+@pytest.mark.asyncio
+async def test_add_group_member(client, db_session, test_user, second_user):
+    # Create a group as test_user
+    create_response = await client.post("/groups", json={"name": "Team"})
+    assert create_response.status_code == 201
+    group_id = create_response.json()["id"]
+
+    # Add second_user to the group
+    add_response = await client.post(
+        f"/groups/{group_id}/members",
+        json={"user_id": str(second_user.id)},
+    )
+    assert add_response.status_code == 201
+    assert add_response.json()["status"] == "member_added"
+
+
+@pytest.mark.asyncio
+async def test_add_group_member_duplicate(client, db_session, test_user, second_user):
+    from app.models.group_member import GroupMember
+    from app.models.group import Group
+
+    # Create a group with second_user already added
+    group = Group(name="Test Group", created_by=test_user.id)
+    db_session.add(group)
+    await db_session.flush()
+
+    member = GroupMember(group_id=group.id, user_id=second_user.id)
+    db_session.add(member)
+    await db_session.commit()
+
+    # Try to add second_user again
+    response = await client.post(
+        f"/groups/{group.id}/members",
+        json={"user_id": str(second_user.id)},
+    )
+    assert response.status_code == 400
+    assert "already" in response.json()["detail"].lower()
+
+
