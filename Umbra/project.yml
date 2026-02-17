@@ -45,6 +45,8 @@ targets:
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         GENERATE_INFOPLIST_FILE: YES
         SWIFT_EMIT_LOC_STRINGS: YES
+        INFOPLIST_KEY_NSSpeechRecognitionUsageDescription: "Umbra uses speech recognition to convert voice to task descriptions."
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: "Umbra needs microphone access for voice input during task planning."
     dependencies:
       - package: UmbraKit
         product: UmbraKit

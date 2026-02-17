@@ -26,6 +26,7 @@
 		409DF956180EF7A3E1A836A4 /* MenuBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FAACD3BA98D0037AF4EB8DE /* MenuBarManager.swift */; };
 		42BAE8811B0683F10B7CCD93 /* UmbraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA8D3785B71E9B016EE499D /* UmbraApp.swift */; };
 		4368949B6F889E3DF11BC2FB /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469EC2C4034B3C6312A20053 /* AuthenticationServices.framework */; };
+		4485AE1E9B0C10E4C714517F /* VoiceInputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D85B17A65E1ACEC1BD681D /* VoiceInputManager.swift */; };
 		47CEA7F84A44E6C6540BCA3E /* IOSSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95AE83EA17671A955DCFDC50 /* IOSSessionView.swift */; };
 		481E04CFEB62C41E63615B2C /* IOSSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590EFA28A9627C7048799385 /* IOSSettingsView.swift */; };
 		51F14D5CD827499D57E8AE7C /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A429343A6CFF03CFABD0EF8 /* StatsView.swift */; };
@@ -124,6 +125,7 @@
 		A0FBFC40127EEDC05FD7AA44 /* BlockOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockOverlayView.swift; sourceTree = "<group>"; };
 		A1946A4ABAA1212421A4CA3E /* NLParsingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLParsingServiceTests.swift; sourceTree = "<group>"; };
 		A536D37A09A86F7A02771DC9 /* IOSSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSSessionManager.swift; sourceTree = "<group>"; };
+		A6D85B17A65E1ACEC1BD681D /* VoiceInputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceInputManager.swift; sourceTree = "<group>"; };
 		A7952A053AAE298759F24E8D /* UmbraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UmbraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD1F34D037DDFB63C266AB6 /* FloatingWidgetPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingWidgetPanel.swift; sourceTree = "<group>"; };
 		AAE43C912676AD22FB097ABD /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				68DC8AC6255B1B630F9EC6D8 /* AppMonitor.swift */,
 				774AD89999D6188DE7890E47 /* BlockingManager.swift */,
 				FD1502E8F74A3DB392721AAE /* SessionManager.swift */,
+				A6D85B17A65E1ACEC1BD681D /* VoiceInputManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -218,20 +221,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		230CBC15F7A1D2DE8BCA9A59 /* DesignSystem */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DesignSystem;
-			sourceTree = "<group>";
-		};
-		30F8B895BDB64C85B2339EA0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		4030B22468D36B5F17CFBDD2 /* Planning */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,21 +238,11 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		4E7FD36D1AF7BABFF6870645 /* Database */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Database;
-			sourceTree = "<group>";
-		};
 		51A6302F2CC7284676577F86 /* Umbra */ = {
 			isa = PBXGroup;
 			children = (
-				4E7FD36D1AF7BABFF6870645 /* Database */,
-				230CBC15F7A1D2DE8BCA9A59 /* DesignSystem */,
 				5DB706D3B73A2962280AE684 /* FloatingWidget */,
 				F3ACD3807EA74468E3E1978E /* MenuBar */,
-				30F8B895BDB64C85B2339EA0 /* Models */,
 				EC15C9E4AED6C047F73A33C0 /* Resources */,
 				1487E5312A014A3FB9B92B90 /* Services */,
 				63570D7A04DCB529D9045F66 /* Views */,
@@ -720,6 +699,7 @@
 				51F14D5CD827499D57E8AE7C /* StatsView.swift in Sources */,
 				DA6634EE4266CEEBBBA17E59 /* TaskRowView.swift in Sources */,
 				42BAE8811B0683F10B7CCD93 /* UmbraApp.swift in Sources */,
+				4485AE1E9B0C10E4C714517F /* VoiceInputManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -948,6 +928,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Umbra;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Umbra. All rights reserved.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Umbra needs microphone access for voice input during task planning.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Umbra uses speech recognition to convert voice to task descriptions.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1023,6 +1005,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Umbra;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Umbra. All rights reserved.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Umbra needs microphone access for voice input during task planning.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Umbra uses speech recognition to convert voice to task descriptions.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

@@ -10,6 +10,7 @@ struct AccountSettingsView: View {
     @State private var isExporting = false
     @State private var exportError: String?
     @State private var deleteError: String?
+    @State private var visibilityError: String?
 
     var body: some View {
         Form {
@@ -27,10 +28,19 @@ struct AccountSettingsView: View {
                     Text("Groups").tag("groups")
                 }
                 .pickerStyle(.segmented)
+                .onChange(of: visibility) { oldValue, newValue in
+                    Task { await saveVisibility(newValue) }
+                }
 
                 Text("Controls who can see your stats on leaderboards.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
+
+                if let visibilityError {
+                    Text(visibilityError)
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                }
             }
 
             Section("Data") {
@@ -110,6 +120,19 @@ struct AccountSettingsView: View {
             authManager.logout()
         } catch {
             deleteError = "Delete failed: \(error.localizedDescription)"
+        }
+    }
+
+    private func saveVisibility(_ newValue: String) async {
+        visibilityError = nil
+        do {
+            struct VisibilityPayload: Encodable {
+                let visibility: String
+            }
+            try await APIClient.shared.requestVoid(.accountSettings, method: "PATCH", body: VisibilityPayload(visibility: newValue))
+        } catch {
+            visibilityError = "Failed to save visibility: \(error.localizedDescription)"
+            visibility = "private" // Reset on error
         }
     }
 }

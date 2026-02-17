@@ -44,6 +44,9 @@ public actor APIClient {
         case unregisterDevice(UUID)
         case accountExport
         case accountDelete
+        case accountSettings
+        case createGroup
+        case addGroupMember(UUID)
 
         public var path: String {
             switch self {
@@ -59,6 +62,8 @@ public actor APIClient {
             case .friendAccept(let id): "/friends/\(id)/accept"
             case .groups: "/groups"
             case .groupLeaderboard(let id): "/groups/\(id)/leaderboard"
+            case .createGroup: "/groups"
+            case .addGroupMember(let id): "/groups/\(id)/members"
             case .socialEncourage: "/social/encourage"
             case .socialPing: "/social/ping"
             case .authMe: "/auth/me"
@@ -67,6 +72,7 @@ public actor APIClient {
             case .unregisterDevice(let id): "/devices/\(id)"
             case .accountExport: "/auth/account/export"
             case .accountDelete: "/auth/account"
+            case .accountSettings: "/auth/account/settings"
             }
         }
     }

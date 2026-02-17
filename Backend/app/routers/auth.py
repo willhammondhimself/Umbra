@@ -119,6 +119,32 @@ async def export_account(
     return export
 
 
+@router.patch("/account/settings")
+async def update_account_settings(
+    settings: dict,
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Update user account settings (e.g., profile visibility)."""
+    db_user = await db.get(User, user.id)
+    if not db_user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found",
+        )
+
+    # Merge with existing settings
+    if db_user.settings_json is None:
+        db_user.settings_json = {}
+    db_user.settings_json.update(settings)
+
+    db.add(db_user)
+    await db.flush()
+    await db.refresh(db_user)
+
+    return db_user
+
+
 @router.delete("/account", status_code=204)
 async def delete_account(
     user: User = Depends(get_current_user),

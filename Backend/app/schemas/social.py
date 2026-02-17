@@ -24,13 +24,17 @@ class GroupCreate(BaseModel):
 
 
 class GroupResponse(BaseModel):
-    id: uuid.UUID
+    id: uuid.UUID | str
     name: str
-    created_by: uuid.UUID
+    created_by: uuid.UUID | str
     created_at: datetime
     member_count: int = 0
 
     model_config = {"from_attributes": True}
+
+
+class AddGroupMemberRequest(BaseModel):
+    user_id: uuid.UUID
 
 
 class LeaderboardEntry(BaseModel):

@@ -29,6 +29,8 @@ final class SessionManager {
     private var pauseStartUptime: TimeInterval = 0
     private var totalPausedDuration: TimeInterval = 0
     private var distractionStartUptime: TimeInterval?
+    private var isIdle: Bool = false
+    private var idleStartUptime: TimeInterval?
 
     private let appMonitor = AppMonitor()
     private var unsentEventCount = 0
@@ -168,10 +170,42 @@ final class SessionManager {
             focusedSeconds = elapsedSeconds - totalDistractionSeconds()
         }
 
+        // Monitor idle state transitions
+        updateIdleState()
+
         // Update current session in DB periodically (every 30s)
         if elapsedSeconds % 30 == 0 {
             persistCurrentState()
         }
+    }
+
+    private func updateIdleState() {
+        let appMonitorIsIdle = appMonitor.isIdle
+
+        // Transition from not idle to idle
+        if !isIdle && appMonitorIsIdle {
+            startIdle()
+        }
+        // Transition from idle to not idle
+        else if isIdle && !appMonitorIsIdle {
+            endIdle()
+        }
+    }
+
+    private func startIdle() {
+        guard !isIdle else { return }
+        isIdle = true
+        idleStartUptime = ProcessInfo.processInfo.systemUptime
+    }
+
+    private func endIdle() {
+        guard isIdle, let startUptime = idleStartUptime else { return }
+        isIdle = false
+        let duration = Int(ProcessInfo.processInfo.systemUptime - startUptime)
+        idleStartUptime = nil
+
+        // Log the idle event with its duration
+        _ = logEvent(.idle, duration: max(1, duration))
     }
 
     private func totalDistractionSeconds() -> Int {
@@ -228,13 +262,13 @@ final class SessionManager {
         let duration = Int(ProcessInfo.processInfo.systemUptime - startUptime)
         distractionStartUptime = nil
 
-        logEvent(.distraction, appName: currentApp, duration: max(1, duration))
+        _ = logEvent(.distraction, appName: currentApp, duration: max(1, duration))
     }
 
     // MARK: - Events
 
-    private func logEvent(_ type: SessionEvent.EventType, appName: String? = nil, duration: Int? = nil) {
-        guard let sessionId = currentSession?.id else { return }
+    private func logEvent(_ type: SessionEvent.EventType, appName: String? = nil, duration: Int? = nil) -> SessionEvent? {
+        guard let sessionId = currentSession?.id else { return nil }
         var event = SessionEvent(
             sessionId: sessionId,
             eventType: type,
@@ -250,8 +284,10 @@ final class SessionManager {
                 unsentEventCount = 0
                 SyncManager.shared.syncSessionEvents(session)
             }
+            return event
         } catch {
             UmbraLogger.session.error("Failed to log event: \(error.localizedDescription)")
+            return nil
         }
     }
 

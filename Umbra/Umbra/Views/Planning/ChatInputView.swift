@@ -1,13 +1,24 @@
 import SwiftUI
+import UmbraKit
 
 struct ChatInputView: View {
     @Binding var inputText: String
     var onSubmit: (String) -> Void
 
     @FocusState private var isFocused: Bool
+    @State private var voiceManager = VoiceInputManager()
 
     var body: some View {
         HStack(alignment: .bottom, spacing: 8) {
+            // Mic button
+            Button(action: toggleVoiceInput) {
+                Image(systemName: voiceManager.isRecording ? "mic.fill" : "mic")
+                    .font(.title2)
+                    .foregroundStyle(voiceManager.isRecording ? Color.accentColor : Color.secondary)
+            }
+            .buttonStyle(.plain)
+            .help("Voice input (tap to start, tap again to stop)")
+
             // Text input
             TextField("Describe your tasks...", text: $inputText, axis: .vertical)
                 .textFieldStyle(.plain)
@@ -40,6 +51,24 @@ struct ChatInputView: View {
         }
         .padding()
         .onAppear { isFocused = true }
+        .onChange(of: voiceManager.transcript) { _, newValue in
+            if !newValue.isEmpty && !voiceManager.isRecording {
+                inputText = newValue
+            }
+        }
+        .onChange(of: voiceManager.error) { _, newValue in
+            if let error = newValue {
+                UmbraLogger.general.error("Voice input error: \(error)")
+            }
+        }
+    }
+
+    private func toggleVoiceInput() {
+        if voiceManager.isRecording {
+            voiceManager.stopRecording()
+        } else {
+            voiceManager.startRecording()
+        }
     }
 
     private func submit() {
