@@ -1,0 +1,848 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		01C11C95B43FF618B84F48C6 /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91314A67D367991B0B284A9B /* AccountSettingsView.swift */; };
+		09B8E66393380FDE837E83F5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 525DDB1F03B7ED9F53E7D497 /* Localizable.strings */; };
+		159BC0064247DE5D7CD47E2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BB2B82FFFAFA4535EF0DC45 /* Assets.xcassets */; };
+		180F849D718A826F2EA8ED7F /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1502E8F74A3DB392721AAE /* SessionManager.swift */; };
+		1813CB92020DDE8EF0CEE136 /* ChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604EE5C406F579D750927B05 /* ChatInputView.swift */; };
+		187F0C0014127F199CED4330 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83993842CB9E68CABD02283 /* FriendsListView.swift */; };
+		19E53B5FEF8F9F3F06947180 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34464A71564F6A4786165978 /* LoginView.swift */; };
+		1C8C23AB0D426C10EB043965 /* UmbraTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2668B9482A404D6A4643C074 /* UmbraTask.swift */; };
+		21AD2327D4337DC6FEBAE748 /* UmbraUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8C579F562C0AC139540E37 /* UmbraUITests.swift */; };
+		2553D3D9D3629BD7F9E24562 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151E5C1ADCA905A56EA5A4B6 /* ContentView.swift */; };
+		30CF23FDD7CADD0E99C7D670 /* AppMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DC8AC6255B1B630F9EC6D8 /* AppMonitor.swift */; };
+		32A15729B6DF45A9A1691468 /* BlocklistEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D640C6A5477F5608ACB85217 /* BlocklistEditorView.swift */; };
+		3DB144601F12229E139C4BFE /* Migrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0D0EA205E17DB6415A7F8 /* Migrations.swift */; };
+		409DF956180EF7A3E1A836A4 /* MenuBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FAACD3BA98D0037AF4EB8DE /* MenuBarManager.swift */; };
+		42BAE8811B0683F10B7CCD93 /* UmbraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA8D3785B71E9B016EE499D /* UmbraApp.swift */; };
+		4368949B6F889E3DF11BC2FB /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469EC2C4034B3C6312A20053 /* AuthenticationServices.framework */; };
+		44C3107F263E828EA4BDD859 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18947C11AE880D1C61FE7474 /* User.swift */; };
+		4E1046926E6B697E550BBFD5 /* InsightsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BD178529E027D3FAB4E2D5 /* InsightsEngine.swift */; };
+		51F14D5CD827499D57E8AE7C /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A429343A6CFF03CFABD0EF8 /* StatsView.swift */; };
+		525015C8C468A22CB79E1C2E /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64B78F2F6F8E92479FBA5AF /* AuthManager.swift */; };
+		52DBEE149DF0482195C61B35 /* MenuBarPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE37E0C03F69FC8AF828CE5 /* MenuBarPopoverView.swift */; };
+		53D165050034D42972BF4E91 /* ParsedTaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEAB342618B2AE46A868B80 /* ParsedTaskCard.swift */; };
+		636E842138D0E87F97D0D1F3 /* BlockOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FBFC40127EEDC05FD7AA44 /* BlockOverlayView.swift */; };
+		68BF70FC789367C355F7798A /* BlocklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E0432EBCA64B0830C5EE38 /* BlocklistItem.swift */; };
+		6A477A5C5FF1F9CA00CE37DE /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E789DA18299F4D641C813DA /* Project.swift */; };
+		6C83ADDA5EFB02A6DECE1C0E /* ActiveSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113F5B81FDE4EB4A3ACCD279 /* ActiveSessionView.swift */; };
+		74B9667DED0795ED6BA6C7FE /* StatsAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91BD13FF33805445E2C5F47F /* StatsAggregator.swift */; };
+		777B73677024EC180BDCBA48 /* UmbraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A76490566F016F36F2FB3CB /* UmbraTests.swift */; };
+		7AB4AEC849E916FFF6BA0BE7 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7B9315A8FDD68F5B189278 /* APIClient.swift */; };
+		81E571CCA3600B2C64ED6A62 /* SessionSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AFD897909F96EA7E52EFE47 /* SessionSummaryView.swift */; };
+		82AA6310D6C4BECADA87B520 /* PlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD0F219107F5D311759EDCD /* PlanningView.swift */; };
+		8E6700F9A1F276D291A17CA8 /* ManualTaskForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF2A517FEBFD5AA4F4CCC2E /* ManualTaskForm.swift */; };
+		9A3965B2D692E1E12C04C753 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DC53A52A5EB02C6B1776BB /* SyncManager.swift */; };
+		A463C148402DA1BDB61669B7 /* NLParsingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1946A4ABAA1212421A4CA3E /* NLParsingServiceTests.swift */; };
+		AA0E7499716E7230993B1D4C /* EncourageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98244A2AF36A194DAD02AC1 /* EncourageView.swift */; };
+		B4A4A0CC36B0A60F5D488215 /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A49F15557A3CDDC5FCC380 /* GroupView.swift */; };
+		B72603432B00710CC72850FC /* SessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE43C912676AD22FB097ABD /* SessionView.swift */; };
+		C19C2FB10189153D015A0F13 /* SyncStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ECF03998433338A4A8E632 /* SyncStatus.swift */; };
+		C94AC36A233F7DD9D2F43AD6 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE406C7E047980E7024F92E5 /* OnboardingView.swift */; };
+		CEA2C7712AF01B403F1E26E6 /* BlockingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774AD89999D6188DE7890E47 /* BlockingManager.swift */; };
+		D128C411CBE2CD1E3D9E83CF /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6924AE7230813E43288C99 /* SocialView.swift */; };
+		D63B705626103604A1688791 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EAE042CB56CAE878F36A58 /* SettingsView.swift */; };
+		D8BC154245BB10F3DA0A0B8A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30E37524FDFE9BBDAF7B758 /* Session.swift */; };
+		DA6634EE4266CEEBBBA17E59 /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E88B740A1BE0180B20CBE5 /* TaskRowView.swift */; };
+		DB01F3E8AA25A92239BE63B6 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEAC54ECA9319F06243772B /* DatabaseManager.swift */; };
+		DEA95C5B01CF1742890E15DB /* SessionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF98237EFFA9DA36FEBBBA8E /* SessionEvent.swift */; };
+		EA8652C50729E67F23E0A5DA /* NLParsingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79CBD810015150B8E85DEF41 /* NLParsingService.swift */; };
+		F2A843749092E104BFCE572D /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF92068BE0462234ECCDB22 /* GRDB */; };
+		F4F8F5C3FCA4CA7FF1584CED /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3CCFFD7FEB567BD9E298FA /* LeaderboardView.swift */; };
+		F7F87EF3B8D25E3CD76913AF /* DataExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 496630877B4FADE983205105 /* DataExporter.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		188315B241903D9AF7F8F9F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4720C11896F6DDD044C540A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D91279C7D0329876476DE5D;
+			remoteInfo = Umbra;
+		};
+		22A1063CD82687CE9C9BEB16 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4720C11896F6DDD044C540A7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D91279C7D0329876476DE5D;
+			remoteInfo = Umbra;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		113F5B81FDE4EB4A3ACCD279 /* ActiveSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSessionView.swift; sourceTree = "<group>"; };
+		151E5C1ADCA905A56EA5A4B6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		18947C11AE880D1C61FE7474 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		2668B9482A404D6A4643C074 /* UmbraTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UmbraTask.swift; sourceTree = "<group>"; };
+		34464A71564F6A4786165978 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		3AA8D3785B71E9B016EE499D /* UmbraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UmbraApp.swift; sourceTree = "<group>"; };
+		469EC2C4034B3C6312A20053 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
+		496630877B4FADE983205105 /* DataExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExporter.swift; sourceTree = "<group>"; };
+		4A8C579F562C0AC139540E37 /* UmbraUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UmbraUITests.swift; sourceTree = "<group>"; };
+		525DDB1F03B7ED9F53E7D497 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		5BB2B82FFFAFA4535EF0DC45 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5DEAC54ECA9319F06243772B /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		5FAACD3BA98D0037AF4EB8DE /* MenuBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarManager.swift; sourceTree = "<group>"; };
+		604EE5C406F579D750927B05 /* ChatInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputView.swift; sourceTree = "<group>"; };
+		62E0432EBCA64B0830C5EE38 /* BlocklistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocklistItem.swift; sourceTree = "<group>"; };
+		68DC8AC6255B1B630F9EC6D8 /* AppMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMonitor.swift; sourceTree = "<group>"; };
+		69EAE042CB56CAE878F36A58 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		6BD0F219107F5D311759EDCD /* PlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanningView.swift; sourceTree = "<group>"; };
+		76A49F15557A3CDDC5FCC380 /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
+		774AD89999D6188DE7890E47 /* BlockingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockingManager.swift; sourceTree = "<group>"; };
+		79CBD810015150B8E85DEF41 /* NLParsingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLParsingService.swift; sourceTree = "<group>"; };
+		7E789DA18299F4D641C813DA /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		84ECF03998433338A4A8E632 /* SyncStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStatus.swift; sourceTree = "<group>"; };
+		8A429343A6CFF03CFABD0EF8 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		8AFD897909F96EA7E52EFE47 /* SessionSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSummaryView.swift; sourceTree = "<group>"; };
+		91314A67D367991B0B284A9B /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
+		91BD13FF33805445E2C5F47F /* StatsAggregator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsAggregator.swift; sourceTree = "<group>"; };
+		9A76490566F016F36F2FB3CB /* UmbraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UmbraTests.swift; sourceTree = "<group>"; };
+		9B6924AE7230813E43288C99 /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
+		9B94165A5DC7FADE5A6794C9 /* Umbra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Umbra.entitlements; sourceTree = "<group>"; };
+		A0FBFC40127EEDC05FD7AA44 /* BlockOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockOverlayView.swift; sourceTree = "<group>"; };
+		A1946A4ABAA1212421A4CA3E /* NLParsingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NLParsingServiceTests.swift; sourceTree = "<group>"; };
+		A1C0D0EA205E17DB6415A7F8 /* Migrations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Migrations.swift; sourceTree = "<group>"; };
+		A7952A053AAE298759F24E8D /* UmbraUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UmbraUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAE43C912676AD22FB097ABD /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
+		AAEAB342618B2AE46A868B80 /* ParsedTaskCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsedTaskCard.swift; sourceTree = "<group>"; };
+		AD3CCFFD7FEB567BD9E298FA /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
+		B04025A0340C1B29A6A65C63 /* UmbraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UmbraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B981862295C608D732E2513F /* Umbra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Umbra.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9BD178529E027D3FAB4E2D5 /* InsightsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsEngine.swift; sourceTree = "<group>"; };
+		CCF2A517FEBFD5AA4F4CCC2E /* ManualTaskForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualTaskForm.swift; sourceTree = "<group>"; };
+		CDE37E0C03F69FC8AF828CE5 /* MenuBarPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarPopoverView.swift; sourceTree = "<group>"; };
+		D640C6A5477F5608ACB85217 /* BlocklistEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocklistEditorView.swift; sourceTree = "<group>"; };
+		D98244A2AF36A194DAD02AC1 /* EncourageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncourageView.swift; sourceTree = "<group>"; };
+		DC7B9315A8FDD68F5B189278 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		E30E37524FDFE9BBDAF7B758 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		E64B78F2F6F8E92479FBA5AF /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		E6E88B740A1BE0180B20CBE5 /* TaskRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
+		E83993842CB9E68CABD02283 /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
+		F9DC53A52A5EB02C6B1776BB /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
+		FD1502E8F74A3DB392721AAE /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		FE406C7E047980E7024F92E5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		FF98237EFFA9DA36FEBBBA8E /* SessionEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEvent.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C5B889C00DD64D4D6318E226 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2A843749092E104BFCE572D /* GRDB in Frameworks */,
+				4368949B6F889E3DF11BC2FB /* AuthenticationServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1487E5312A014A3FB9B92B90 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				DC7B9315A8FDD68F5B189278 /* APIClient.swift */,
+				68DC8AC6255B1B630F9EC6D8 /* AppMonitor.swift */,
+				E64B78F2F6F8E92479FBA5AF /* AuthManager.swift */,
+				774AD89999D6188DE7890E47 /* BlockingManager.swift */,
+				496630877B4FADE983205105 /* DataExporter.swift */,
+				C9BD178529E027D3FAB4E2D5 /* InsightsEngine.swift */,
+				79CBD810015150B8E85DEF41 /* NLParsingService.swift */,
+				FD1502E8F74A3DB392721AAE /* SessionManager.swift */,
+				91BD13FF33805445E2C5F47F /* StatsAggregator.swift */,
+				F9DC53A52A5EB02C6B1776BB /* SyncManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		18DB82C0E37EB0CCF6813D11 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				D98244A2AF36A194DAD02AC1 /* EncourageView.swift */,
+				E83993842CB9E68CABD02283 /* FriendsListView.swift */,
+				76A49F15557A3CDDC5FCC380 /* GroupView.swift */,
+				AD3CCFFD7FEB567BD9E298FA /* LeaderboardView.swift */,
+				9B6924AE7230813E43288C99 /* SocialView.swift */,
+			);
+			path = Social;
+			sourceTree = "<group>";
+		};
+		22093AC236CC4094F32DD035 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B981862295C608D732E2513F /* Umbra.app */,
+				B04025A0340C1B29A6A65C63 /* UmbraTests.xctest */,
+				A7952A053AAE298759F24E8D /* UmbraUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		230CBC15F7A1D2DE8BCA9A59 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		30F8B895BDB64C85B2339EA0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				62E0432EBCA64B0830C5EE38 /* BlocklistItem.swift */,
+				7E789DA18299F4D641C813DA /* Project.swift */,
+				E30E37524FDFE9BBDAF7B758 /* Session.swift */,
+				FF98237EFFA9DA36FEBBBA8E /* SessionEvent.swift */,
+				84ECF03998433338A4A8E632 /* SyncStatus.swift */,
+				2668B9482A404D6A4643C074 /* UmbraTask.swift */,
+				18947C11AE880D1C61FE7474 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4E7FD36D1AF7BABFF6870645 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				5DEAC54ECA9319F06243772B /* DatabaseManager.swift */,
+				A1C0D0EA205E17DB6415A7F8 /* Migrations.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		51A6302F2CC7284676577F86 /* Umbra */ = {
+			isa = PBXGroup;
+			children = (
+				4E7FD36D1AF7BABFF6870645 /* Database */,
+				230CBC15F7A1D2DE8BCA9A59 /* DesignSystem */,
+				F3ACD3807EA74468E3E1978E /* MenuBar */,
+				30F8B895BDB64C85B2339EA0 /* Models */,
+				EC15C9E4AED6C047F73A33C0 /* Resources */,
+				1487E5312A014A3FB9B92B90 /* Services */,
+				63570D7A04DCB529D9045F66 /* Views */,
+				151E5C1ADCA905A56EA5A4B6 /* ContentView.swift */,
+				9B94165A5DC7FADE5A6794C9 /* Umbra.entitlements */,
+				3AA8D3785B71E9B016EE499D /* UmbraApp.swift */,
+			);
+			path = Umbra;
+			sourceTree = "<group>";
+		};
+		60B9A85A1E0116B70C24E8CD /* UmbraUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4A8C579F562C0AC139540E37 /* UmbraUITests.swift */,
+			);
+			path = UmbraUITests;
+			sourceTree = "<group>";
+		};
+		63570D7A04DCB529D9045F66 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A726454CA47A972C96B600C9 /* Auth */,
+				FA3E8AC0CF538636F18899F7 /* Blocking */,
+				F516B22175E566E85A98DE54 /* Planning */,
+				9CF67972A01E3A3E65F72E05 /* Session */,
+				AF342473F0B47EEA2D00A585 /* Settings */,
+				18DB82C0E37EB0CCF6813D11 /* Social */,
+				D1A59009E87D53D6D90B9376 /* Stats */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		69F1F70EC13DD81035CEE7A3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				469EC2C4034B3C6312A20053 /* AuthenticationServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9CF67972A01E3A3E65F72E05 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				113F5B81FDE4EB4A3ACCD279 /* ActiveSessionView.swift */,
+				8AFD897909F96EA7E52EFE47 /* SessionSummaryView.swift */,
+				AAE43C912676AD22FB097ABD /* SessionView.swift */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		A726454CA47A972C96B600C9 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				34464A71564F6A4786165978 /* LoginView.swift */,
+				FE406C7E047980E7024F92E5 /* OnboardingView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		AF342473F0B47EEA2D00A585 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				91314A67D367991B0B284A9B /* AccountSettingsView.swift */,
+				D640C6A5477F5608ACB85217 /* BlocklistEditorView.swift */,
+				69EAE042CB56CAE878F36A58 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		BCE899FCCCDA5AF6DF6B50DE = {
+			isa = PBXGroup;
+			children = (
+				51A6302F2CC7284676577F86 /* Umbra */,
+				CC8FC3ACA1C647F4E25FC190 /* UmbraTests */,
+				60B9A85A1E0116B70C24E8CD /* UmbraUITests */,
+				69F1F70EC13DD81035CEE7A3 /* Frameworks */,
+				22093AC236CC4094F32DD035 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CC8FC3ACA1C647F4E25FC190 /* UmbraTests */ = {
+			isa = PBXGroup;
+			children = (
+				A1946A4ABAA1212421A4CA3E /* NLParsingServiceTests.swift */,
+				9A76490566F016F36F2FB3CB /* UmbraTests.swift */,
+			);
+			path = UmbraTests;
+			sourceTree = "<group>";
+		};
+		D1A59009E87D53D6D90B9376 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				8A429343A6CFF03CFABD0EF8 /* StatsView.swift */,
+			);
+			path = Stats;
+			sourceTree = "<group>";
+		};
+		EC15C9E4AED6C047F73A33C0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5BB2B82FFFAFA4535EF0DC45 /* Assets.xcassets */,
+				525DDB1F03B7ED9F53E7D497 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F3ACD3807EA74468E3E1978E /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				5FAACD3BA98D0037AF4EB8DE /* MenuBarManager.swift */,
+				CDE37E0C03F69FC8AF828CE5 /* MenuBarPopoverView.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		F516B22175E566E85A98DE54 /* Planning */ = {
+			isa = PBXGroup;
+			children = (
+				604EE5C406F579D750927B05 /* ChatInputView.swift */,
+				CCF2A517FEBFD5AA4F4CCC2E /* ManualTaskForm.swift */,
+				AAEAB342618B2AE46A868B80 /* ParsedTaskCard.swift */,
+				6BD0F219107F5D311759EDCD /* PlanningView.swift */,
+				E6E88B740A1BE0180B20CBE5 /* TaskRowView.swift */,
+			);
+			path = Planning;
+			sourceTree = "<group>";
+		};
+		FA3E8AC0CF538636F18899F7 /* Blocking */ = {
+			isa = PBXGroup;
+			children = (
+				A0FBFC40127EEDC05FD7AA44 /* BlockOverlayView.swift */,
+			);
+			path = Blocking;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4D91279C7D0329876476DE5D /* Umbra */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D3D2414C58CB7D12B5DFB90 /* Build configuration list for PBXNativeTarget "Umbra" */;
+			buildPhases = (
+				A73B1DDC8C5DFC9830D16073 /* Sources */,
+				728731063F1C1194196E8AE6 /* Resources */,
+				C5B889C00DD64D4D6318E226 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Umbra;
+			packageProductDependencies = (
+				1BF92068BE0462234ECCDB22 /* GRDB */,
+			);
+			productName = Umbra;
+			productReference = B981862295C608D732E2513F /* Umbra.app */;
+			productType = "com.apple.product-type.application";
+		};
+		84A48AD84EDD0F0833A40D6E /* UmbraUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6F94934EB8D01C84C2381998 /* Build configuration list for PBXNativeTarget "UmbraUITests" */;
+			buildPhases = (
+				126361D8FD7E973F62592CEF /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B7BD9968F88BB664E6BC35A0 /* PBXTargetDependency */,
+			);
+			name = UmbraUITests;
+			packageProductDependencies = (
+			);
+			productName = UmbraUITests;
+			productReference = A7952A053AAE298759F24E8D /* UmbraUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		B8D0B24965B46AD2B88D903C /* UmbraTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 36457D6B8A7C6138C8ED01B8 /* Build configuration list for PBXNativeTarget "UmbraTests" */;
+			buildPhases = (
+				5467EE84C5C42FA222CB6232 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				44E1D8E091F1832E708E216D /* PBXTargetDependency */,
+			);
+			name = UmbraTests;
+			packageProductDependencies = (
+			);
+			productName = UmbraTests;
+			productReference = B04025A0340C1B29A6A65C63 /* UmbraTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4720C11896F6DDD044C540A7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					84A48AD84EDD0F0833A40D6E = {
+						TestTargetID = 4D91279C7D0329876476DE5D;
+					};
+				};
+			};
+			buildConfigurationList = 70E67E7D1F2DE8A1B6F9580A /* Build configuration list for PBXProject "Umbra" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = BCE899FCCCDA5AF6DF6B50DE;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				232C7B8E682175B0D5E5CD37 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
+			);
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4D91279C7D0329876476DE5D /* Umbra */,
+				B8D0B24965B46AD2B88D903C /* UmbraTests */,
+				84A48AD84EDD0F0833A40D6E /* UmbraUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		728731063F1C1194196E8AE6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				159BC0064247DE5D7CD47E2E /* Assets.xcassets in Resources */,
+				09B8E66393380FDE837E83F5 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		126361D8FD7E973F62592CEF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				21AD2327D4337DC6FEBAE748 /* UmbraUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5467EE84C5C42FA222CB6232 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A463C148402DA1BDB61669B7 /* NLParsingServiceTests.swift in Sources */,
+				777B73677024EC180BDCBA48 /* UmbraTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A73B1DDC8C5DFC9830D16073 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7AB4AEC849E916FFF6BA0BE7 /* APIClient.swift in Sources */,
+				01C11C95B43FF618B84F48C6 /* AccountSettingsView.swift in Sources */,
+				6C83ADDA5EFB02A6DECE1C0E /* ActiveSessionView.swift in Sources */,
+				30CF23FDD7CADD0E99C7D670 /* AppMonitor.swift in Sources */,
+				525015C8C468A22CB79E1C2E /* AuthManager.swift in Sources */,
+				636E842138D0E87F97D0D1F3 /* BlockOverlayView.swift in Sources */,
+				CEA2C7712AF01B403F1E26E6 /* BlockingManager.swift in Sources */,
+				32A15729B6DF45A9A1691468 /* BlocklistEditorView.swift in Sources */,
+				68BF70FC789367C355F7798A /* BlocklistItem.swift in Sources */,
+				1813CB92020DDE8EF0CEE136 /* ChatInputView.swift in Sources */,
+				2553D3D9D3629BD7F9E24562 /* ContentView.swift in Sources */,
+				F7F87EF3B8D25E3CD76913AF /* DataExporter.swift in Sources */,
+				DB01F3E8AA25A92239BE63B6 /* DatabaseManager.swift in Sources */,
+				AA0E7499716E7230993B1D4C /* EncourageView.swift in Sources */,
+				187F0C0014127F199CED4330 /* FriendsListView.swift in Sources */,
+				B4A4A0CC36B0A60F5D488215 /* GroupView.swift in Sources */,
+				4E1046926E6B697E550BBFD5 /* InsightsEngine.swift in Sources */,
+				F4F8F5C3FCA4CA7FF1584CED /* LeaderboardView.swift in Sources */,
+				19E53B5FEF8F9F3F06947180 /* LoginView.swift in Sources */,
+				8E6700F9A1F276D291A17CA8 /* ManualTaskForm.swift in Sources */,
+				409DF956180EF7A3E1A836A4 /* MenuBarManager.swift in Sources */,
+				52DBEE149DF0482195C61B35 /* MenuBarPopoverView.swift in Sources */,
+				3DB144601F12229E139C4BFE /* Migrations.swift in Sources */,
+				EA8652C50729E67F23E0A5DA /* NLParsingService.swift in Sources */,
+				C94AC36A233F7DD9D2F43AD6 /* OnboardingView.swift in Sources */,
+				53D165050034D42972BF4E91 /* ParsedTaskCard.swift in Sources */,
+				82AA6310D6C4BECADA87B520 /* PlanningView.swift in Sources */,
+				6A477A5C5FF1F9CA00CE37DE /* Project.swift in Sources */,
+				D8BC154245BB10F3DA0A0B8A /* Session.swift in Sources */,
+				DEA95C5B01CF1742890E15DB /* SessionEvent.swift in Sources */,
+				180F849D718A826F2EA8ED7F /* SessionManager.swift in Sources */,
+				81E571CCA3600B2C64ED6A62 /* SessionSummaryView.swift in Sources */,
+				B72603432B00710CC72850FC /* SessionView.swift in Sources */,
+				D63B705626103604A1688791 /* SettingsView.swift in Sources */,
+				D128C411CBE2CD1E3D9E83CF /* SocialView.swift in Sources */,
+				74B9667DED0795ED6BA6C7FE /* StatsAggregator.swift in Sources */,
+				51F14D5CD827499D57E8AE7C /* StatsView.swift in Sources */,
+				9A3965B2D692E1E12C04C753 /* SyncManager.swift in Sources */,
+				C19C2FB10189153D015A0F13 /* SyncStatus.swift in Sources */,
+				DA6634EE4266CEEBBBA17E59 /* TaskRowView.swift in Sources */,
+				42BAE8811B0683F10B7CCD93 /* UmbraApp.swift in Sources */,
+				1C8C23AB0D426C10EB043965 /* UmbraTask.swift in Sources */,
+				44C3107F263E828EA4BDD859 /* User.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		44E1D8E091F1832E708E216D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D91279C7D0329876476DE5D /* Umbra */;
+			targetProxy = 188315B241903D9AF7F8F9F1 /* PBXContainerItemProxy */;
+		};
+		B7BD9968F88BB664E6BC35A0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D91279C7D0329876476DE5D /* Umbra */;
+			targetProxy = 22A1063CD82687CE9C9BEB16 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		15B77D4270431D5D42CC8773 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.umbra.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Umbra.app/Contents/MacOS/Umbra";
+			};
+			name = Release;
+		};
+		1C6F909BDDFA70D7D4BB32A2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		2F658E0C03A725B2531826D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		5C9912F95CC50677E39EB360 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Umbra/Umbra.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				INFOPLIST_KEY_CFBundleDisplayName = Umbra;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Umbra. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.umbra.app;
+				PRODUCT_NAME = Umbra;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		84EC3ADC6C41C24EF1E6CAB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.umbra.uitests;
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = Umbra;
+			};
+			name = Release;
+		};
+		997E804C61E9A234C5E67F83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.umbra.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Umbra.app/Contents/MacOS/Umbra";
+			};
+			name = Debug;
+		};
+		A9977AACA28AA23602AF4D3D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.umbra.uitests;
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = Umbra;
+			};
+			name = Debug;
+		};
+		B4205A0B60283AC8ECCEE876 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Umbra/Umbra.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_GENERATION_MODE = GeneratedFile;
+				INFOPLIST_KEY_CFBundleDisplayName = Umbra;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright 2026 Umbra. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.umbra.app;
+				PRODUCT_NAME = Umbra;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0D3D2414C58CB7D12B5DFB90 /* Build configuration list for PBXNativeTarget "Umbra" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C9912F95CC50677E39EB360 /* Debug */,
+				B4205A0B60283AC8ECCEE876 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		36457D6B8A7C6138C8ED01B8 /* Build configuration list for PBXNativeTarget "UmbraTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				997E804C61E9A234C5E67F83 /* Debug */,
+				15B77D4270431D5D42CC8773 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		6F94934EB8D01C84C2381998 /* Build configuration list for PBXNativeTarget "UmbraUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9977AACA28AA23602AF4D3D /* Debug */,
+				84EC3ADC6C41C24EF1E6CAB1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		70E67E7D1F2DE8A1B6F9580A /* Build configuration list for PBXProject "Umbra" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2F658E0C03A725B2531826D7 /* Debug */,
+				1C6F909BDDFA70D7D4BB32A2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		232C7B8E682175B0D5E5CD37 /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift";
+			requirement = {
+				kind = exactVersion;
+				version = 7.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1BF92068BE0462234ECCDB22 /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 232C7B8E682175B0D5E5CD37 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 4720C11896F6DDD044C540A7 /* Project object */;
+}

@@ -1,0 +1,32 @@
+/* Tabs */
+"tab.plan" = "Plan";
+"tab.session" = "Session";
+"tab.stats" = "Stats";
+"tab.settings" = "Settings";
+
+/* Planning */
+"planning.title" = "Plan";
+"planning.subtitle" = "Describe what you want to accomplish";
+"planning.placeholder" = "Type or speak your plans";
+"planning.add_task" = "Add task manually";
+
+/* Session */
+"session.title" = "Session";
+"session.subtitle" = "Focus on what matters";
+"session.no_active" = "No active session";
+"session.start" = "Start Session";
+"session.pause" = "Pause";
+"session.resume" = "Resume";
+"session.stop" = "Stop";
+
+/* Stats */
+"stats.title" = "Stats";
+"stats.subtitle" = "Your productivity at a glance";
+"stats.no_data" = "No data yet";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.subtitle" = "Configure Umbra to work for you";
+
+/* General */
+"app.name" = "Umbra";

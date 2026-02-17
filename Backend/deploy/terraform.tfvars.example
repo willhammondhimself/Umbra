@@ -1,0 +1,7 @@
+aws_region      = "us-east-1"
+environment     = "staging"
+db_password     = "CHANGE_ME"
+jwt_secret      = "CHANGE_ME"
+apple_team_id   = "CHANGE_ME"
+google_client_id = "CHANGE_ME"
+certificate_arn = "arn:aws:acm:us-east-1:ACCOUNT_ID:certificate/CERT_ID"
