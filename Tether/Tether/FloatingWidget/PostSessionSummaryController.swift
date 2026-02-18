@@ -51,10 +51,8 @@ final class PostSessionSummaryController {
             context.timingFunction = CAMediaTimingFunction(name: .easeIn)
             panel.animator().alphaValue = 0
         }, completionHandler: { [weak self] in
-            Task { @MainActor [weak self] in
-                self?.panel?.orderOut(nil)
-                self?.panel = nil
-            }
+            self?.panel?.orderOut(nil)
+            self?.panel = nil
         })
     }
 

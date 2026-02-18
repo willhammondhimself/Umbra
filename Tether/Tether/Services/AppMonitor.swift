@@ -14,7 +14,7 @@ final class AppMonitor {
         lastBundleId = NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? ""
 
         pollTask?.cancel()
-        pollTask = Task { [weak self] in
+        pollTask = Task { @MainActor [weak self] in
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(1))
                 guard !Task.isCancelled else { break }

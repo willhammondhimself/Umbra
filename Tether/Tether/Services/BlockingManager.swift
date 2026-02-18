@@ -114,9 +114,7 @@ final class BlockingManager {
             queue: .main
         ) { [weak self] notification in
             guard let app = notification.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else { return }
-            Task { @MainActor in
-                self?.handleAppActivation(app)
-            }
+            self?.handleAppActivation(app)
         }
     }
 
@@ -218,7 +216,7 @@ final class BlockingManager {
         showOverlay(appName: appName, mode: .timedLock)
 
         countdownTask?.cancel()
-        countdownTask = Task { [weak self] in
+        countdownTask = Task { @MainActor [weak self] in
             while let self = self, self.timedLockCountdown > 0 {
                 try? await Task.sleep(for: .seconds(1))
                 guard !Task.isCancelled else { break }

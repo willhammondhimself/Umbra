@@ -29,9 +29,13 @@ targets:
       - path: Tether
         excludes:
           - Resources/Assets.xcassets/AppIcon.appiconset
+      - path: TetherMacOS
+        excludes:
+          - Assets.xcassets
     resources:
       - path: Tether/Resources/Assets.xcassets
       - path: Tether/Resources/Localizable.strings
+      - path: TetherMacOS/Assets.xcassets
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.willhammond.tether.app

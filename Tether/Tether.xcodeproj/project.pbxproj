@@ -44,6 +44,7 @@
 		89080CAC43816A9F52B242FE /* IOSSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E682A3B8657DC027688FC6DA /* IOSSessionView.swift */; };
 		94CF88005A7F172319F3A0E7 /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BC5E2B872620CA72F082497 /* ManagedSettings.framework */; };
 		9610B653309FF15A24A98DD7 /* SocialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D027B6B915ECC762787B9AF0 /* SocialView.swift */; };
+		9A64DF746883C7A222FB5361 /* TetherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386A6E05D4C2E6F193E75CA0 /* TetherApp.swift */; };
 		9A9D3FEE07FE54828A4297F2 /* AppMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1399647D7B8043CBCA9C0E5C /* AppMonitor.swift */; };
 		9C67A845FA4C8E97872A925C /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36388862F3BF95EC2707383 /* SessionManager.swift */; };
 		9C8519010BC02844B3136F42 /* PostSessionSummaryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62960B7877F41DA8A0FBA6C2 /* PostSessionSummaryPanel.swift */; };
@@ -52,7 +53,6 @@
 		A2DD8DD38903695EF02A998B /* CoachingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89056A921908EF666F82B8CA /* CoachingView.swift */; };
 		A76C3C106FA8AE0C64412A09 /* FloatingWidgetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E3E79DD7E1C0CA6B2AE5F1 /* FloatingWidgetController.swift */; };
 		AB0813D8E0475879096FC52E /* BlockingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7717D7016388ACB4BFA8C0C4 /* BlockingManager.swift */; };
-		AC71CC7D161912EBABCC899A /* TetherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64869ECA8C7396008FA83F38 /* TetherApp.swift */; };
 		AE7DE533A056631B3FD00DB2 /* IOSCoachingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA240A2C7954FCE531A879C /* IOSCoachingView.swift */; };
 		AEF557F86EC1149C25549F78 /* IOSLeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172A6105FA8AF98AF93F89F7 /* IOSLeaderboardView.swift */; };
 		B17A2A4DA63898AED5C46D17 /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6061971A7983CC3FA5D4D22E /* LeaderboardView.swift */; };
@@ -132,6 +132,7 @@
 		31B6CD0F01A70A82FC9FAF4C /* SessionSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionSummaryView.swift; sourceTree = "<group>"; };
 		3432C95C375D4457DD6F03E5 /* IOSLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSLoginView.swift; sourceTree = "<group>"; };
 		37E3E79DD7E1C0CA6B2AE5F1 /* FloatingWidgetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingWidgetController.swift; sourceTree = "<group>"; };
+		386A6E05D4C2E6F193E75CA0 /* TetherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherApp.swift; sourceTree = "<group>"; };
 		390E846B83960291F2ECD769 /* SessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionView.swift; sourceTree = "<group>"; };
 		407F5243BBFAEDFC2BA64227 /* IOSSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSSettingsView.swift; sourceTree = "<group>"; };
 		46B9F7FC8313990398668601 /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
@@ -142,7 +143,6 @@
 		5F569570B99C5F1073514C56 /* IOSTaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSTaskListView.swift; sourceTree = "<group>"; };
 		6061971A7983CC3FA5D4D22E /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
 		62960B7877F41DA8A0FBA6C2 /* PostSessionSummaryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostSessionSummaryPanel.swift; sourceTree = "<group>"; };
-		64869ECA8C7396008FA83F38 /* TetherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherApp.swift; sourceTree = "<group>"; };
 		68D244FF87E5121225C29DBE /* IntegrationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationsView.swift; sourceTree = "<group>"; };
 		6A06AE5AFDBF753F17235315 /* IOSChatInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSChatInputView.swift; sourceTree = "<group>"; };
 		6CD277E3D0453601B173FAFC /* MenuBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarManager.swift; sourceTree = "<group>"; };
@@ -282,6 +282,7 @@
 				3C547BB1F615B14482BCADFB /* Packages */,
 				C964E9E1B324094D0B2DB4B1 /* Tether */,
 				6F7674C43F58A72252378A9E /* TetherIOS */,
+				6BB10FCF9BFBDAF29954CDB0 /* TetherMacOS */,
 				37250B079254ED4375E51D67 /* TetherSafari */,
 				5F193DFA13F04BEE492F6FE2 /* TetherTests */,
 				D24CC09BB6949D57763A8FF8 /* TetherUITests */,
@@ -369,6 +370,14 @@
 				390E846B83960291F2ECD769 /* SessionView.swift */,
 			);
 			path = Session;
+			sourceTree = "<group>";
+		};
+		6BB10FCF9BFBDAF29954CDB0 /* TetherMacOS */ = {
+			isa = PBXGroup;
+			children = (
+				386A6E05D4C2E6F193E75CA0 /* TetherApp.swift */,
+			);
+			path = TetherMacOS;
 			sourceTree = "<group>";
 		};
 		6DED4B48FB0B632ECC8F5677 /* Frameworks */ = {
@@ -566,7 +575,6 @@
 				BDB5FA5CA820B6494DDB6A07 /* Views */,
 				F8A63C381D0A3079C4F74F89 /* ContentView.swift */,
 				80B77CD8F1A8DCB081E33EC1 /* Tether.entitlements */,
-				64869ECA8C7396008FA83F38 /* TetherApp.swift */,
 			);
 			path = Tether;
 			sourceTree = "<group>";
@@ -713,24 +721,24 @@
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					45C693A1C79CDAB203A19612 = {
-						DevelopmentTeam = 9L723ANBRS;
+						DevelopmentTeam = CT65B2T766;
 						ProvisioningStyle = Automatic;
 					};
 					565231A737204FF693BDA84E = {
-						DevelopmentTeam = 9L723ANBRS;
+						DevelopmentTeam = CT65B2T766;
 						ProvisioningStyle = Automatic;
 					};
 					611B19E8AA57FA45C9D015CB = {
-						DevelopmentTeam = 9L723ANBRS;
+						DevelopmentTeam = CT65B2T766;
 						ProvisioningStyle = Automatic;
 					};
 					E4F45079B2C38E1290AE2E14 = {
-						DevelopmentTeam = 9L723ANBRS;
+						DevelopmentTeam = CT65B2T766;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 45C693A1C79CDAB203A19612;
 					};
 					F36A2E7FE8A9AC1443A276D4 = {
-						DevelopmentTeam = 9L723ANBRS;
+						DevelopmentTeam = CT65B2T766;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -870,7 +878,7 @@
 				9610B653309FF15A24A98DD7 /* SocialView.swift in Sources */,
 				E748A92174364572F008F296 /* StatsView.swift in Sources */,
 				13C089E340081A9AAE58B47C /* TaskRowView.swift in Sources */,
-				AC71CC7D161912EBABCC899A /* TetherApp.swift in Sources */,
+				9A64DF746883C7A222FB5361 /* TetherApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1113,7 +1121,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 9L723ANBRS;
+				DEVELOPMENT_TEAM = CT65B2T766;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1180,7 +1188,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 9L723ANBRS;
+				DEVELOPMENT_TEAM = CT65B2T766;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

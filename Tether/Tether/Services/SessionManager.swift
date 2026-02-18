@@ -143,7 +143,7 @@ final class SessionManager {
 
     private func startTimer() {
         timerTask?.cancel()
-        timerTask = Task { [weak self] in
+        timerTask = Task { @MainActor [weak self] in
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(1))
                 guard !Task.isCancelled else { break }
@@ -263,11 +263,9 @@ final class SessionManager {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            Task { @MainActor [weak self] in
-                guard let self else { return }
-                if self.state == .running {
-                    self.pauseSession()
-                }
+            guard let self else { return }
+            if self.state == .running {
+                self.pauseSession()
             }
         }
         wsnc.addObserver(

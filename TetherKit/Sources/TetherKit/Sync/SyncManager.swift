@@ -13,7 +13,6 @@ public final class SyncManager {
 
     private var syncTimer: Task<Void, Never>?
     private let pathMonitor = NWPathMonitor()
-    private let monitorQueue = DispatchQueue(label: "com.willhammond.tether.network-monitor")
 
     private init() {
         startNetworkMonitoring()
@@ -31,7 +30,7 @@ public final class SyncManager {
                 }
             }
         }
-        pathMonitor.start(queue: monitorQueue)
+        pathMonitor.start(queue: .global(qos: .utility))
     }
 
     // MARK: - Periodic Sync (10s)

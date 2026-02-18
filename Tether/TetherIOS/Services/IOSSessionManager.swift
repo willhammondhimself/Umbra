@@ -130,7 +130,7 @@ final class IOSSessionManager {
 
     private func startTimer() {
         timerTask?.cancel()
-        timerTask = Task { [weak self] in
+        timerTask = Task { @MainActor [weak self] in
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(1))
                 guard !Task.isCancelled else { break }
