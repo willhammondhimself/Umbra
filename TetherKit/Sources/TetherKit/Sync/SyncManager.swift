@@ -30,14 +30,14 @@ public final class SyncManager {
                 }
             }
         }
-        pathMonitor.start(queue: .global(qos: .utility))
+        pathMonitor.start(queue: .main)
     }
 
     // MARK: - Periodic Sync (10s)
 
     private func startPeriodicSync() {
         syncTimer?.cancel()
-        syncTimer = Task { [weak self] in
+        syncTimer = Task { @MainActor [weak self] in
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(10))
                 guard !Task.isCancelled else { break }
@@ -52,7 +52,7 @@ public final class SyncManager {
         guard isOnline, !isSyncing else { return }
         guard AuthManager.shared.isAuthenticated else { return }
 
-        Task {
+        Task { @MainActor in
             await performSync()
         }
     }
@@ -188,21 +188,21 @@ public final class SyncManager {
 
     public func syncSession(_ session: Session) {
         guard isOnline, AuthManager.shared.isAuthenticated else { return }
-        Task {
+        Task { @MainActor in
             await uploadSession(session)
         }
     }
 
     public func syncSessionEvents(_ session: Session) {
         guard isOnline, AuthManager.shared.isAuthenticated else { return }
-        Task {
+        Task { @MainActor in
             await uploadPendingSessionEvents(for: session)
         }
     }
 
     public func syncSessionComplete(_ session: Session) {
         guard isOnline, AuthManager.shared.isAuthenticated else { return }
-        Task {
+        Task { @MainActor in
             await uploadSession(session)
             await uploadPendingSessionEvents(for: session)
         }

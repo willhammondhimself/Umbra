@@ -268,18 +268,36 @@ struct SafariExtensionStatusView: View {
         }
     }
 
+    private nonisolated func fetchExtensionState(
+        bundleId: String
+    ) async -> (SFSafariExtensionState?, (any Error)?) {
+        await withCheckedContinuation { continuation in
+            // SFSafariExtensionManager's callback is annotated NS_SWIFT_UI_ACTOR (@MainActor)
+            // in the SDK header, but Apple's XPC implementation invokes it on a background
+            // thread. Swift inserts _swift_task_checkIsolatedSwift at the start of any
+            // @MainActor closure body, so the assertion fires before any user code runs.
+            //
+            // Workaround: create a @Sendable closure (no isolation check injected), then
+            // unsafeBitCast to the @MainActor type the parameter expects. Both types have
+            // identical ABI (fn ptr + context ptr), and no conversion thunk is emitted at
+            // the call site since the types already match after the cast.
+            typealias MainActorCompletion = @MainActor (SFSafariExtensionState?, (any Error)?) -> Void
+            let nonisolatedCompletion: @Sendable (SFSafariExtensionState?, (any Error)?) -> Void = { state, error in
+                continuation.resume(returning: (state, error))
+            }
+            SFSafariExtensionManager.getStateOfSafariExtension(
+                withIdentifier: bundleId,
+                completionHandler: unsafeBitCast(nonisolatedCompletion, to: MainActorCompletion.self)
+            )
+        }
+    }
+
     private func refreshExtensionState() async {
         isChecking = true
         extensionErrorMessage = nil
 
-        let (state, error) = await withCheckedContinuation { continuation in
-            SFSafariExtensionManager.getStateOfSafariExtension(
-                withIdentifier: safariExtensionBundleIdentifier
-            ) { state, error in
-                continuation.resume(returning: (state, error))
-            }
-        }
-        // Back on @MainActor — safe to mutate @State vars
+        let (state, error) = await fetchExtensionState(bundleId: safariExtensionBundleIdentifier)
+        // Back on @MainActor after await — safe to mutate @State vars
         isChecking = false
         if let error {
             isEnabled = false

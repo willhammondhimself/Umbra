@@ -211,7 +211,7 @@ public final class AuthManager: NSObject {
 
     private func loadTokensFromKeychain() {
         if getAccessToken() != nil {
-            Task {
+            Task { @MainActor in
                 await fetchCurrentUser()
             }
         }

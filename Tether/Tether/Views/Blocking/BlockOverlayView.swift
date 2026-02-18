@@ -155,7 +155,7 @@ struct BlockOverlayView: View {
         isHolding = true
         holdProgress = 0
 
-        holdTask = Task {
+        holdTask = Task { @MainActor in
             let steps = 30
             for i in 1...steps {
                 try? await Task.sleep(for: .milliseconds(Int(holdDuration * 1000) / steps))
