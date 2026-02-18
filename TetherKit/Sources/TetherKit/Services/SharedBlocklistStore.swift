@@ -5,13 +5,13 @@ import Foundation
 public final class SharedBlocklistStore: Sendable {
     public static let shared = SharedBlocklistStore()
 
-    private let suiteName = "group.com.tether.shared"
+    private let suiteName = "group.com.willhammond.tether.shared"
     private let rulesKey = "safari_blocklist_rules"
     private let sessionActiveKey = "is_session_active"
     private let lastUpdatedKey = "blocklist_last_updated"
 
     /// Darwin notification name posted when rules change.
-    public static let rulesDidChangeNotification = "com.tether.blocklist.updated"
+    public static let rulesDidChangeNotification = "com.willhammond.tether.blocklist.updated"
 
     private var defaults: UserDefaults? {
         UserDefaults(suiteName: suiteName)

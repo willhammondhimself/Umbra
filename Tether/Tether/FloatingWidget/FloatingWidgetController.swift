@@ -1,5 +1,6 @@
 import AppKit
 import SwiftUI
+import Foundation
 
 /// Manages the floating session widget panel lifecycle.
 /// Shows during active sessions, hides when session ends.
@@ -48,8 +49,10 @@ final class FloatingWidgetController {
             context.timingFunction = CAMediaTimingFunction(name: .easeIn)
             panel.animator().alphaValue = 0
         }, completionHandler: { [weak self] in
-            self?.panel?.orderOut(nil)
-            self?.panel = nil
+            Task { @MainActor [weak self] in
+                self?.panel?.orderOut(nil)
+                self?.panel = nil
+            }
         })
     }
 
@@ -58,4 +61,5 @@ final class FloatingWidgetController {
         UserDefaults.standard.set(frame.origin.x, forKey: positionXKey)
         UserDefaults.standard.set(frame.origin.y, forKey: positionYKey)
     }
+
 }

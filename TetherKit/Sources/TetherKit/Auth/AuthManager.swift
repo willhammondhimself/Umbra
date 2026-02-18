@@ -35,6 +35,7 @@ public final class AuthManager: NSObject {
     public private(set) var isLoading = false
 
     private var baseURL: URL { ServerEnvironment.current.baseURL }
+    private var activeAuthorizationController: ASAuthorizationController?
 
     private override init() {
         super.init()
@@ -49,7 +50,13 @@ public final class AuthManager: NSObject {
 
         let controller = ASAuthorizationController(authorizationRequests: [request])
         controller.delegate = self
-        controller.performRequests()
+        activeAuthorizationController = controller
+
+        // Defer request kickoff so UI-interactive call sites do not synchronously block.
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            self.activeAuthorizationController?.performRequests()
+        }
     }
 
     // MARK: - Sign In with Google (via ASWebAuthenticationSession)
@@ -181,8 +188,8 @@ public final class AuthManager: NSObject {
 
     // MARK: - Keychain
 
-    private let accessTokenKey = "com.tether.accessToken"
-    private let refreshTokenKey = "com.tether.refreshToken"
+    private let accessTokenKey = "com.willhammond.tether.accessToken"
+    private let refreshTokenKey = "com.willhammond.tether.refreshToken"
 
     public func getAccessToken() -> String? {
         readKeychain(key: accessTokenKey)
@@ -263,6 +270,7 @@ extension AuthManager: ASAuthorizationControllerDelegate {
         }
 
         Task { @MainActor in
+            activeAuthorizationController = nil
             await exchangeToken(provider: "apple", identityToken: identityToken)
         }
     }
@@ -271,6 +279,9 @@ extension AuthManager: ASAuthorizationControllerDelegate {
         controller: ASAuthorizationController,
         didCompleteWithError error: Error
     ) {
+        Task { @MainActor in
+            activeAuthorizationController = nil
+        }
         TetherLogger.auth.error("Apple Sign In failed: \(error.localizedDescription)")
     }
 }

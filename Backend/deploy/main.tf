@@ -9,7 +9,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "umbra-terraform-state"
+    bucket = "tether-terraform-state"
     key    = "backend/terraform.tfstate"
     region = "us-east-1"
   }
@@ -20,7 +20,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project     = "umbra"
+      Project     = "tether"
       Environment = var.environment
       ManagedBy   = "terraform"
     }
@@ -33,7 +33,7 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 5.0"
 
-  name = "umbra-${var.environment}"
+  name = "tether-${var.environment}"
   cidr = "10.0.0.0/16"
 
   azs             = ["${var.aws_region}a", "${var.aws_region}b"]
@@ -49,7 +49,7 @@ module "vpc" {
 # ---------- Security Groups ----------
 
 resource "aws_security_group" "alb" {
-  name_prefix = "umbra-alb-"
+  name_prefix = "tether-alb-"
   vpc_id      = module.vpc.vpc_id
 
   ingress {
@@ -68,7 +68,7 @@ resource "aws_security_group" "alb" {
 }
 
 resource "aws_security_group" "ecs" {
-  name_prefix = "umbra-ecs-"
+  name_prefix = "tether-ecs-"
   vpc_id      = module.vpc.vpc_id
 
   ingress {
@@ -87,7 +87,7 @@ resource "aws_security_group" "ecs" {
 }
 
 resource "aws_security_group" "rds" {
-  name_prefix = "umbra-rds-"
+  name_prefix = "tether-rds-"
   vpc_id      = module.vpc.vpc_id
 
   ingress {
@@ -99,7 +99,7 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_security_group" "redis" {
-  name_prefix = "umbra-redis-"
+  name_prefix = "tether-redis-"
   vpc_id      = module.vpc.vpc_id
 
   ingress {
@@ -113,16 +113,16 @@ resource "aws_security_group" "redis" {
 # ---------- RDS (Postgres 15) ----------
 
 resource "aws_db_subnet_group" "main" {
-  name       = "umbra-${var.environment}"
+  name       = "tether-${var.environment}"
   subnet_ids = module.vpc.private_subnets
 }
 
 resource "aws_rds_cluster" "postgres" {
-  cluster_identifier = "umbra-${var.environment}"
+  cluster_identifier = "tether-${var.environment}"
   engine             = "aurora-postgresql"
   engine_version     = "15.4"
-  database_name      = "umbra"
-  master_username    = "umbra_admin"
+  database_name      = "tether"
+  master_username    = "tether_admin"
   master_password    = var.db_password
 
   db_subnet_group_name   = aws_db_subnet_group.main.name
@@ -149,13 +149,13 @@ resource "aws_rds_cluster_instance" "postgres" {
 # ---------- ElastiCache (Redis 7) ----------
 
 resource "aws_elasticache_subnet_group" "main" {
-  name       = "umbra-${var.environment}"
+  name       = "tether-${var.environment}"
   subnet_ids = module.vpc.private_subnets
 }
 
 resource "aws_elasticache_replication_group" "redis" {
-  replication_group_id = "umbra-${var.environment}"
-  description          = "Umbra Redis cluster"
+  replication_group_id = "tether-${var.environment}"
+  description          = "Tether Redis cluster"
   engine               = "redis"
   engine_version       = "7.0"
   node_type            = var.environment == "production" ? "cache.r7g.large" : "cache.t4g.micro"
@@ -172,7 +172,7 @@ resource "aws_elasticache_replication_group" "redis" {
 # ---------- ECR ----------
 
 resource "aws_ecr_repository" "api" {
-  name                 = "umbra-api"
+  name                 = "tether-api"
   image_tag_mutability = "IMMUTABLE"
 
   image_scanning_configuration {
@@ -183,7 +183,7 @@ resource "aws_ecr_repository" "api" {
 # ---------- ECS Fargate ----------
 
 resource "aws_ecs_cluster" "main" {
-  name = "umbra-${var.environment}"
+  name = "tether-${var.environment}"
 
   setting {
     name  = "containerInsights"
@@ -192,7 +192,7 @@ resource "aws_ecs_cluster" "main" {
 }
 
 resource "aws_iam_role" "ecs_execution" {
-  name = "umbra-ecs-execution-${var.environment}"
+  name = "tether-ecs-execution-${var.environment}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -210,7 +210,7 @@ resource "aws_iam_role_policy_attachment" "ecs_execution" {
 }
 
 resource "aws_iam_role" "ecs_task" {
-  name = "umbra-ecs-task-${var.environment}"
+  name = "tether-ecs-task-${var.environment}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -223,12 +223,12 @@ resource "aws_iam_role" "ecs_task" {
 }
 
 resource "aws_cloudwatch_log_group" "api" {
-  name              = "/ecs/umbra-api-${var.environment}"
+  name              = "/ecs/tether-api-${var.environment}"
   retention_in_days = 30
 }
 
 resource "aws_ecs_task_definition" "api" {
-  family                   = "umbra-api-${var.environment}"
+  family                   = "tether-api-${var.environment}"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = var.environment == "production" ? 1024 : 512
@@ -277,7 +277,7 @@ resource "aws_ecs_task_definition" "api" {
 }
 
 resource "aws_ecs_service" "api" {
-  name            = "umbra-api"
+  name            = "tether-api"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.api.arn
   desired_count   = var.environment == "production" ? 2 : 1
@@ -305,7 +305,7 @@ resource "aws_ecs_service" "api" {
 # ---------- ALB ----------
 
 resource "aws_lb" "main" {
-  name               = "umbra-${var.environment}"
+  name               = "tether-${var.environment}"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb.id]
@@ -313,7 +313,7 @@ resource "aws_lb" "main" {
 }
 
 resource "aws_lb_target_group" "api" {
-  name        = "umbra-api-${var.environment}"
+  name        = "tether-api-${var.environment}"
   port        = 8000
   protocol    = "HTTP"
   vpc_id      = module.vpc.vpc_id
@@ -344,19 +344,19 @@ resource "aws_lb_listener" "https" {
 # ---------- SSM Parameters (secrets) ----------
 
 resource "aws_ssm_parameter" "jwt_secret" {
-  name  = "/umbra/${var.environment}/jwt-secret"
+  name  = "/tether/${var.environment}/jwt-secret"
   type  = "SecureString"
   value = var.jwt_secret
 }
 
 resource "aws_ssm_parameter" "apple_team_id" {
-  name  = "/umbra/${var.environment}/apple-team-id"
+  name  = "/tether/${var.environment}/apple-team-id"
   type  = "SecureString"
   value = var.apple_team_id
 }
 
 resource "aws_ssm_parameter" "google_client_id" {
-  name  = "/umbra/${var.environment}/google-client-id"
+  name  = "/tether/${var.environment}/google-client-id"
   type  = "SecureString"
   value = var.google_client_id
 }

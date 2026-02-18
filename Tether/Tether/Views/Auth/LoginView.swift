@@ -1,4 +1,3 @@
-import AuthenticationServices
 import SwiftUI
 import TetherKit
 
@@ -27,14 +26,17 @@ struct LoginView: View {
 
             // Sign in buttons
             VStack(spacing: 16) {
-                SignInWithAppleButton(.signIn) { request in
-                    request.requestedScopes = [.email, .fullName]
-                } onCompletion: { _ in
-                    // Handled by AuthManager delegate
+                Button {
+                    authManager.signInWithApple()
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "apple.logo")
+                        Text("Sign in with Apple")
+                    }
+                    .frame(maxWidth: 280)
+                    .frame(height: 44)
                 }
-                .signInWithAppleButtonStyle(.white)
-                .frame(height: 44)
-                .frame(maxWidth: 280)
+                .buttonStyle(.borderedProminent)
 
                 Button {
                     authManager.signInWithGoogle()
@@ -65,8 +67,5 @@ struct LoginView: View {
             .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear {
-            authManager.signInWithApple()
-        }
     }
 }

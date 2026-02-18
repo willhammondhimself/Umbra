@@ -13,7 +13,7 @@ public final class SyncManager {
 
     private var syncTimer: Task<Void, Never>?
     private let pathMonitor = NWPathMonitor()
-    private let monitorQueue = DispatchQueue(label: "com.tether.network-monitor")
+    private let monitorQueue = DispatchQueue(label: "com.willhammond.tether.network-monitor")
 
     private init() {
         startNetworkMonitoring()
@@ -42,7 +42,7 @@ public final class SyncManager {
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(10))
                 guard !Task.isCancelled else { break }
-                await self?.triggerSync()
+                self?.triggerSync()
             }
         }
     }

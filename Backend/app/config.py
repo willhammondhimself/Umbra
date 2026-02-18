@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     APNS_KEY_ID: str = ""
     APNS_TEAM_ID: str = ""
     APNS_KEY_PATH: str = ""  # Path to .p8 key file
-    APNS_BUNDLE_ID: str = "com.tether.ios"
+    APNS_BUNDLE_ID: str = "com.willhammond.tether.ios"
     APNS_USE_SANDBOX: bool = True
 
     # AI Coaching

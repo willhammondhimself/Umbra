@@ -1,6 +1,6 @@
 name: Tether
 options:
-  bundleIdPrefix: com.tether
+  bundleIdPrefix: com.willhammond.tether
   deploymentTarget:
     macOS: "26.0"
     iOS: "26.0"
@@ -17,6 +17,7 @@ settings:
     SWIFT_VERSION: "6.2"
     MACOSX_DEPLOYMENT_TARGET: "26.0"
     CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: 9L723ANBRS
     MARKETING_VERSION: "1.0.0"
     CURRENT_PROJECT_VERSION: "1"
 
@@ -33,7 +34,7 @@ targets:
       - path: Tether/Resources/Localizable.strings
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.tether.app
+        PRODUCT_BUNDLE_IDENTIFIER: com.willhammond.tether.app
         PRODUCT_NAME: Tether
         INFOPLIST_GENERATION_MODE: GeneratedFile
         INFOPLIST_KEY_LSApplicationCategoryType: "public.app-category.productivity"
@@ -61,7 +62,7 @@ targets:
         com.apple.security.network.client: true
         com.apple.security.personal-information.calendars: true
         com.apple.security.application-groups:
-          - group.com.tether.shared
+          - group.com.willhammond.tether.shared
 
   TetherIOS:
     type: application
@@ -74,7 +75,7 @@ targets:
       - path: TetherIOS/Resources/Assets.xcassets
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.tether.ios
+        PRODUCT_BUNDLE_IDENTIFIER: com.willhammond.tether.ios
         PRODUCT_NAME: "Tether"
         INFOPLIST_GENERATION_MODE: GeneratedFile
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
@@ -102,7 +103,7 @@ targets:
         aps-environment: development
         com.apple.developer.family-controls: true
         com.apple.security.application-groups:
-          - group.com.tether.shared
+          - group.com.willhammond.tether.shared
 
   TetherSafari:
     type: app-extension
@@ -115,7 +116,7 @@ targets:
       - path: TetherSafari/Resources
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.tether.app.safari
+        PRODUCT_BUNDLE_IDENTIFIER: com.willhammond.tether.app.safari
         PRODUCT_NAME: "Tether Safari"
         INFOPLIST_GENERATION_MODE: GeneratedFile
         GENERATE_INFOPLIST_FILE: YES
@@ -130,7 +131,7 @@ targets:
       properties:
         com.apple.security.app-sandbox: true
         com.apple.security.application-groups:
-          - group.com.tether.shared
+          - group.com.willhammond.tether.shared
 
   TetherTests:
     type: bundle.unit-test
@@ -141,7 +142,7 @@ targets:
       - target: Tether
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.tether.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.willhammond.tether.tests
         GENERATE_INFOPLIST_FILE: YES
 
   TetherUITests:
@@ -153,6 +154,6 @@ targets:
       - target: Tether
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.tether.uitests
+        PRODUCT_BUNDLE_IDENTIFIER: com.willhammond.tether.uitests
         GENERATE_INFOPLIST_FILE: YES
         TEST_TARGET_NAME: Tether

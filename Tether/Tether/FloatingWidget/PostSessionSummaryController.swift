@@ -1,6 +1,7 @@
 import AppKit
 import SwiftUI
 import TetherKit
+import Foundation
 
 /// Manages the post-session summary popup lifecycle.
 @MainActor
@@ -50,8 +51,10 @@ final class PostSessionSummaryController {
             context.timingFunction = CAMediaTimingFunction(name: .easeIn)
             panel.animator().alphaValue = 0
         }, completionHandler: { [weak self] in
-            self?.panel?.orderOut(nil)
-            self?.panel = nil
+            Task { @MainActor [weak self] in
+                self?.panel?.orderOut(nil)
+                self?.panel = nil
+            }
         })
     }
 
@@ -81,4 +84,5 @@ final class PostSessionSummaryController {
             return 0
         }
     }
+
 }

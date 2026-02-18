@@ -10,7 +10,7 @@ const POLL_INTERVAL_MS = 30000;
 
 async function fetchRulesFromApp() {
   try {
-    const response = await browser.runtime.sendNativeMessage("com.tether.safari", {
+    const response = await browser.runtime.sendNativeMessage("com.willhammond.tether.safari", {
       action: "getRules"
     });
 

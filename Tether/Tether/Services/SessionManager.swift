@@ -1,6 +1,5 @@
 import Foundation
 import AppKit
-import Combine
 import os
 import TetherKit
 
@@ -264,15 +263,18 @@ final class SessionManager {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            if self?.state == .running {
-                self?.pauseSession()
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                if self.state == .running {
+                    self.pauseSession()
+                }
             }
         }
         wsnc.addObserver(
             forName: NSWorkspace.didWakeNotification,
             object: nil,
             queue: .main
-        ) { [weak self] _ in
+        ) { _ in
             // Session remains paused after wake; user must manually resume
         }
     }
@@ -297,4 +299,5 @@ final class SessionManager {
             TetherLogger.session.error("Failed to check incomplete sessions: \(error.localizedDescription)")
         }
     }
+
 }

@@ -26,7 +26,7 @@
 
 /* Settings */
 "settings.title" = "Settings";
-"settings.subtitle" = "Configure Umbra to work for you";
+"settings.subtitle" = "Configure Tether to work for you";
 
 /* General */
-"app.name" = "Umbra";
+"app.name" = "Tether";

@@ -713,19 +713,24 @@
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					45C693A1C79CDAB203A19612 = {
+						DevelopmentTeam = 9L723ANBRS;
 						ProvisioningStyle = Automatic;
 					};
 					565231A737204FF693BDA84E = {
+						DevelopmentTeam = 9L723ANBRS;
 						ProvisioningStyle = Automatic;
 					};
 					611B19E8AA57FA45C9D015CB = {
+						DevelopmentTeam = 9L723ANBRS;
 						ProvisioningStyle = Automatic;
 					};
 					E4F45079B2C38E1290AE2E14 = {
+						DevelopmentTeam = 9L723ANBRS;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 45C693A1C79CDAB203A19612;
 					};
 					F36A2E7FE8A9AC1443A276D4 = {
+						DevelopmentTeam = 9L723ANBRS;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -910,7 +915,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tether.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.willhammond.tether.ios;
 				PRODUCT_NAME = Tether;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -929,7 +934,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tether.uitests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.willhammond.tether.uitests;
 				SDKROOT = macosx;
 				TEST_TARGET_NAME = Tether;
 			};
@@ -946,7 +951,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tether.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.willhammond.tether.tests;
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tether.app/Contents/MacOS/Tether";
 			};
@@ -970,7 +975,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tether.app.safari;
+				PRODUCT_BUNDLE_IDENTIFIER = com.willhammond.tether.app.safari;
 				PRODUCT_NAME = "Tether Safari";
 				SDKROOT = macosx;
 			};
@@ -996,7 +1001,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tether.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = com.willhammond.tether.ios;
 				PRODUCT_NAME = Tether;
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1022,7 +1027,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tether.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.willhammond.tether.app;
 				PRODUCT_NAME = Tether;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1040,7 +1045,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tether.uitests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.willhammond.tether.uitests;
 				SDKROOT = macosx;
 				TEST_TARGET_NAME = Tether;
 			};
@@ -1064,7 +1069,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tether.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.willhammond.tether.app;
 				PRODUCT_NAME = Tether;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1108,6 +1113,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9L723ANBRS;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1174,6 +1180,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9L723ANBRS;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1214,7 +1221,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tether.app.safari;
+				PRODUCT_BUNDLE_IDENTIFIER = com.willhammond.tether.app.safari;
 				PRODUCT_NAME = "Tether Safari";
 				SDKROOT = macosx;
 			};
@@ -1231,7 +1238,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tether.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.willhammond.tether.tests;
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tether.app/Contents/MacOS/Tether";
 			};

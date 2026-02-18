@@ -2,6 +2,7 @@ import SwiftUI
 import EventKit
 import SafariServices
 import TetherKit
+import Foundation
 
 struct SettingsView: View {
     var body: some View {
@@ -218,8 +219,14 @@ struct CalendarSettingsView: View {
 // MARK: - Safari Extension Status
 
 struct SafariExtensionStatusView: View {
+    private var safariExtensionBundleIdentifier: String {
+        let baseBundleIdentifier = Bundle.main.bundleIdentifier ?? "com.willhammond.tether"
+        return "\(baseBundleIdentifier).safari"
+    }
+
     @State private var isEnabled = false
     @State private var isChecking = true
+    @State private var extensionErrorMessage: String?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -238,7 +245,7 @@ struct SafariExtensionStatusView: View {
 
                 Button("Open Safari Settings") {
                     SFSafariApplication.showPreferencesForExtension(
-                        withIdentifier: "com.tether.app.safari"
+                        withIdentifier: safariExtensionBundleIdentifier
                     )
                 }
                 .controlSize(.small)
@@ -249,21 +256,40 @@ struct SafariExtensionStatusView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+
+            if let extensionErrorMessage {
+                Text(extensionErrorMessage)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
         }
         .task {
-            await checkExtensionState()
+            await refreshExtensionState()
         }
     }
 
-    private func checkExtensionState() async {
+    private func refreshExtensionState() async {
         isChecking = true
-        defer { isChecking = false }
-        SFSafariExtensionManager.getStateOfSafariExtension(
-            withIdentifier: "com.tether.app.safari"
-        ) { state, _ in
-            DispatchQueue.main.async {
-                isEnabled = state?.isEnabled ?? false
+        extensionErrorMessage = nil
+
+        let (state, error) = await withCheckedContinuation { continuation in
+            SFSafariExtensionManager.getStateOfSafariExtension(
+                withIdentifier: safariExtensionBundleIdentifier
+            ) { state, error in
+                continuation.resume(returning: (state, error))
             }
+        }
+        // Back on @MainActor — safe to mutate @State vars
+        isChecking = false
+        if let error {
+            isEnabled = false
+            extensionErrorMessage = "Unable to check Safari extension status: \(error.localizedDescription)"
+        } else if let state {
+            isEnabled = state.isEnabled
+            extensionErrorMessage = nil
+        } else {
+            isEnabled = false
+            extensionErrorMessage = "Safari extension state is unavailable. Open Safari Settings to verify it is enabled."
         }
     }
 }
