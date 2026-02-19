@@ -1,5 +1,3 @@
-import json
-
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -11,8 +9,19 @@ from app.models.session import Session
 from app.models.session_event import SessionEvent
 from app.models.task import Task
 from app.models.user import User
-from app.schemas.auth import LoginRequest, RefreshRequest, SettingsUpdateRequest, TokenResponse, UserResponse
+from app.schemas.auth import (
+    EmailLoginRequest,
+    LoginRequest,
+    PasswordResetConfirm,
+    PasswordResetRequest,
+    RefreshRequest,
+    RegisterRequest,
+    SettingsUpdateRequest,
+    TokenResponse,
+    UserResponse,
+)
 from app.services import auth_service
+from app.services.email_service import send_password_reset_email, send_verification_email
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -52,6 +61,107 @@ async def login(request: LoginRequest, db: AsyncSession = Depends(get_db)):
 
     tokens = auth_service.issue_tokens(user.id)
     return TokenResponse(**tokens)
+
+
+# --- Email/Password Auth ---
+
+
+@router.post("/register", response_model=TokenResponse)
+async def register(request: RegisterRequest, db: AsyncSession = Depends(get_db)):
+    """Register a new account with email and password."""
+    try:
+        user = await auth_service.register_user(
+            db=db,
+            email=request.email,
+            password=request.password,
+            display_name=request.display_name,
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=str(e),
+        )
+
+    # Send verification email (non-blocking, don't fail registration)
+    token = auth_service.issue_email_verification_token(user.id)
+    await send_verification_email(user.email, token)
+
+    tokens = auth_service.issue_tokens(user.id)
+    return TokenResponse(**tokens)
+
+
+@router.post("/login/email", response_model=TokenResponse)
+async def login_email(request: EmailLoginRequest, db: AsyncSession = Depends(get_db)):
+    """Sign in with email and password."""
+    try:
+        user = await auth_service.login_with_email(
+            db=db,
+            email=request.email,
+            password=request.password,
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=str(e),
+        )
+
+    tokens = auth_service.issue_tokens(user.id)
+    return TokenResponse(**tokens)
+
+
+@router.get("/verify-email/{token}")
+async def verify_email(token: str, db: AsyncSession = Depends(get_db)):
+    """Verify email address from verification link."""
+    try:
+        user_id = auth_service.verify_special_token(token, "email_verify")
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+    user = await db.get(User, user_id)
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+    user.email_verified = True
+    await db.flush()
+    return {"status": "verified"}
+
+
+@router.post("/password-reset/request")
+async def request_password_reset(
+    request: PasswordResetRequest, db: AsyncSession = Depends(get_db)
+):
+    """Request a password reset email."""
+    result = await db.execute(select(User).where(User.email == request.email))
+    user = result.scalar_one_or_none()
+
+    # Always return success to avoid email enumeration
+    if user and user.auth_provider == "email":
+        token = auth_service.issue_password_reset_token(user.id)
+        await send_password_reset_email(user.email, token)
+
+    return {"status": "ok"}
+
+
+@router.post("/password-reset/confirm")
+async def confirm_password_reset(
+    request: PasswordResetConfirm, db: AsyncSession = Depends(get_db)
+):
+    """Reset password using reset token."""
+    try:
+        user_id = auth_service.verify_special_token(request.token, "password_reset")
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+    user = await db.get(User, user_id)
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+    user.password_hash = auth_service.hash_password(request.new_password)
+    await db.flush()
+    return {"status": "password_updated"}
+
+
+# --- OAuth + Common ---
 
 
 @router.post("/refresh", response_model=TokenResponse)

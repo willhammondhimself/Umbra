@@ -32,6 +32,20 @@ class Settings(BaseSettings):
     TODOIST_CLIENT_ID: str = ""
     NOTION_API_KEY: str = ""
 
+    # Observability
+    SENTRY_DSN: str = ""
+
+    # Email (SMTP)
+    SMTP_HOST: str = ""
+    SMTP_PORT: int = 587
+    SMTP_USERNAME: str = ""
+    SMTP_PASSWORD: str = ""
+    SMTP_FROM_EMAIL: str = "noreply@tether.app"
+    FRONTEND_URL: str = "https://tether.app"
+
+    # StoreKit / App Store
+    APP_STORE_SHARED_SECRET: str = ""
+
     ENVIRONMENT: str = "development"
     RATE_LIMIT_PER_MINUTE: int = 100
 

@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime, timedelta, timezone
 
+import bcrypt
 import httpx
 from jose import jwt
 from sqlalchemy import select
@@ -8,6 +9,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import settings
 from app.models.user import User
+
+
+def hash_password(password: str) -> str:
+    """Hash a password using bcrypt."""
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+
+def verify_password(password: str, hashed: str) -> bool:
+    """Verify a password against a bcrypt hash."""
+    return bcrypt.checkpw(password.encode("utf-8"), hashed.encode("utf-8"))
 
 # Apple JWKS endpoint
 APPLE_JWKS_URL = "https://appleid.apple.com/auth/keys"
@@ -158,3 +169,82 @@ async def refresh_tokens(refresh_token: str, redis_client) -> dict:
 
     user_id = payload["sub"]
     return issue_tokens(user_id)
+
+
+async def register_user(
+    db: AsyncSession,
+    email: str,
+    password: str,
+    display_name: str | None = None,
+) -> User:
+    """Register a new user with email/password."""
+    result = await db.execute(select(User).where(User.email == email))
+    existing = result.scalar_one_or_none()
+    if existing:
+        raise ValueError("An account with this email already exists")
+
+    user = User(
+        id=uuid.uuid4(),
+        email=email,
+        display_name=display_name or email.split("@")[0],
+        auth_provider="email",
+        auth_provider_id=f"email:{email}",
+        password_hash=hash_password(password),
+        email_verified=False,
+        settings_json={"visibility": "private"},
+    )
+    db.add(user)
+    await db.flush()
+    await db.refresh(user)
+    return user
+
+
+async def login_with_email(
+    db: AsyncSession,
+    email: str,
+    password: str,
+) -> User:
+    """Authenticate user with email/password."""
+    result = await db.execute(select(User).where(User.email == email))
+    user = result.scalar_one_or_none()
+
+    if user is None or user.password_hash is None:
+        raise ValueError("Invalid email or password")
+
+    if not verify_password(password, user.password_hash):
+        raise ValueError("Invalid email or password")
+
+    return user
+
+
+def issue_email_verification_token(user_id: str | uuid.UUID) -> str:
+    """Issue a short-lived token for email verification."""
+    payload = {
+        "sub": str(user_id),
+        "type": "email_verify",
+        "exp": datetime.now(timezone.utc) + timedelta(hours=24),
+    }
+    return jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
+
+
+def issue_password_reset_token(user_id: str | uuid.UUID) -> str:
+    """Issue a short-lived token for password reset."""
+    payload = {
+        "sub": str(user_id),
+        "type": "password_reset",
+        "exp": datetime.now(timezone.utc) + timedelta(hours=1),
+    }
+    return jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
+
+
+def verify_special_token(token: str, expected_type: str) -> str:
+    """Verify and decode a special-purpose token. Returns user_id."""
+    try:
+        payload = jwt.decode(token, settings.JWT_SECRET, algorithms=[settings.JWT_ALGORITHM])
+    except Exception:
+        raise ValueError("Invalid or expired token")
+
+    if payload.get("type") != expected_type:
+        raise ValueError("Invalid token type")
+
+    return payload["sub"]

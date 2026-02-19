@@ -31,6 +31,10 @@ class FakeRedis:
         if ex:
             self._ttls[key] = ex
 
+    async def setex(self, key: str, seconds: int, value: str) -> None:
+        self._store[key] = str(value)
+        self._ttls[key] = seconds
+
     async def incr(self, key: str) -> int:
         val = int(self._store.get(key, "0")) + 1
         self._store[key] = str(val)
@@ -78,6 +82,8 @@ async def test_user(db_session: AsyncSession) -> User:
         display_name="Test User",
         auth_provider="apple",
         auth_provider_id="apple_test_123",
+        password_hash=None,
+        email_verified=True,
         settings_json={"visibility": "private"},
         created_at=datetime.now(timezone.utc),
         updated_at=datetime.now(timezone.utc),
@@ -96,6 +102,8 @@ async def second_user(db_session: AsyncSession) -> User:
         display_name="Friend User",
         auth_provider="google",
         auth_provider_id="google_test_456",
+        password_hash=None,
+        email_verified=True,
         settings_json={"visibility": "friends"},
         created_at=datetime.now(timezone.utc),
         updated_at=datetime.now(timezone.utc),
