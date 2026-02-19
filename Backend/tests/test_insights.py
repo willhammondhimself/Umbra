@@ -220,8 +220,9 @@ async def test_goals_with_history(client):
             distraction_count=3,
         )
 
-    # Create sessions in the "current week" window (0-6 days ago)
-    for i in range(0, 4):
+    # Create sessions in the "current week" window (1-4 days ago to avoid
+    # timezone issues where days_ago=0 at hour=10 can be in the future)
+    for i in range(1, 5):
         await _create_completed_session(
             client,
             days_ago=i,
