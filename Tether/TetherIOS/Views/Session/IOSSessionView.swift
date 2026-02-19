@@ -111,6 +111,9 @@ struct IOSSessionView: View {
                                         .foregroundStyle(session.focusPercentage >= 80 ? Color.tetherFocused : Color.tetherPaused)
                                 }
                             }
+                            .accessibilityElement(children: .combine)
+                            .accessibilityLabel("Session on \(session.startTime.formatted(date: .abbreviated, time: .shortened))")
+                            .accessibilityValue("Duration \(session.formattedDuration), \(String(format: "%.0f", session.focusPercentage)) percent focused")
                         }
                     }
                 }
@@ -230,6 +233,9 @@ struct IOSActiveSessionView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Focused time")
+                .accessibilityValue(Session.formatSeconds(sessionManager.focusedSeconds))
 
                 VStack(spacing: 4) {
                     Text("\(sessionManager.distractionCount)")
@@ -239,6 +245,9 @@ struct IOSActiveSessionView: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Distractions")
+                .accessibilityValue("\(sessionManager.distractionCount)")
             }
 
             Spacer()
@@ -251,14 +260,18 @@ struct IOSActiveSessionView: View {
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.bordered)
+                    .buttonStyle(.tetherPressable)
                     .controlSize(.large)
+                    .accessibilityHint("Pause the current focus session")
                 } else if sessionManager.state == .paused {
                     Button(action: { sessionManager.resumeSession() }) {
                         Label("Resume", systemImage: "play.fill")
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.borderedProminent)
+                    .buttonStyle(.tetherPressable)
                     .controlSize(.large)
+                    .accessibilityHint("Resume the paused focus session")
                 }
 
                 Button(action: { sessionManager.stopSession() }) {
@@ -266,8 +279,10 @@ struct IOSActiveSessionView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.bordered)
+                .buttonStyle(.tetherPressable)
                 .controlSize(.large)
                 .tint(Color.tetherDistracted)
+                .accessibilityHint("End the focus session and view summary")
             }
             .padding(.horizontal)
             .padding(.bottom, 32)
@@ -309,6 +324,7 @@ struct IOSSummaryView: View {
                     onNewSession()
                 }
                 .buttonStyle(.borderedProminent)
+                .buttonStyle(.tetherPressable)
                 .controlSize(.large)
                 .frame(maxWidth: .infinity)
 
@@ -316,6 +332,7 @@ struct IOSSummaryView: View {
                     onDismiss()
                 }
                 .buttonStyle(.bordered)
+                .buttonStyle(.tetherPressable)
                 .controlSize(.large)
                 .frame(maxWidth: .infinity)
             }
@@ -340,6 +357,7 @@ struct IOSSummaryView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
+        .glassCard(cornerRadius: TetherRadius.button)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(label)
         .accessibilityValue(value)

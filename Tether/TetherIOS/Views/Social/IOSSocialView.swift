@@ -59,6 +59,7 @@ struct IOSFriendsListView: View {
                         Task { await sendInvite() }
                     }
                     .buttonStyle(.borderedProminent)
+                    .buttonStyle(.tetherPressable)
                     .controlSize(.small)
                     .disabled(inviteEmail.isEmpty || isInviting)
                 }
@@ -153,6 +154,7 @@ struct IOSFriendsListView: View {
                 .buttonStyle(.bordered)
                 .controlSize(.small)
                 .tint(Color.tetherFocused)
+                .accessibilityHint("Accept friend invite from \(friend.displayName ?? friend.email)")
             } else if friend.status == "accepted" {
                 Button {
                     selectedFriend = friend
@@ -241,11 +243,11 @@ struct IOSEncourageView: View {
                     .multilineTextAlignment(.center)
 
                 TextEditor(text: $message)
+                    .font(.body)
                     .frame(height: 120)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(.quaternary)
-                    )
+                    .scrollContentBackground(.hidden)
+                    .padding(8)
+                    .glassCard(cornerRadius: TetherRadius.small)
 
                 Spacer()
             }

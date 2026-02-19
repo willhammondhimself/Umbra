@@ -35,14 +35,19 @@ struct IOSSettingsView: View {
                         Text("Authorized")
                             .foregroundStyle(Color.tetherFocused)
                     }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("Screen Time")
+                    .accessibilityValue("Authorized")
 
                     Button("Select Apps to Block") {
                         showAppPicker = true
                     }
+                    .accessibilityHint("Opens the app picker to choose apps to block during focus sessions")
                 } else {
                     Button("Enable Screen Time Blocking") {
                         Task { await blockingManager.requestAuthorization() }
                     }
+                    .accessibilityHint("Requests Screen Time permission to block distracting apps")
 
                     Text("Screen Time blocking prevents you from opening distracting apps during focus sessions.")
                         .font(.caption)

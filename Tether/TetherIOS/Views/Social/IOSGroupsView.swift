@@ -115,6 +115,7 @@ struct IOSCreateGroupSheet: View {
                         }
                     }
                     .disabled(groupName.trimmingCharacters(in: .whitespaces).isEmpty || isCreating)
+                    .accessibilityHint("Creates a new accountability group")
                 }
             }
         }

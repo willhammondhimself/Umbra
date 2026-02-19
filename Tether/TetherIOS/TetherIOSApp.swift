@@ -6,15 +6,40 @@ import UserNotifications
 struct TetherIOSApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @State private var authManager = AuthManager.shared
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
 
     var body: some Scene {
         WindowGroup {
             Group {
-                if authManager.isAuthenticated {
-                    IOSContentView()
-                } else {
+                if !authManager.isAuthenticated {
                     IOSLoginView()
+                } else if !hasCompletedOnboarding {
+                    IOSOnboardingView(onComplete: { hasCompletedOnboarding = true })
+                } else {
+                    IOSContentView()
                 }
+            }
+            .onOpenURL { url in
+                handleUniversalLink(url)
+            }
+        }
+    }
+
+    private func handleUniversalLink(_ url: URL) {
+        // Handle tether.app/invite/{code} universal links
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+              let host = components.host,
+              host.contains("tether.app") else { return }
+
+        let path = components.path
+        if path.hasPrefix("/invite/") {
+            let code = String(path.dropFirst("/invite/".count))
+            guard !code.isEmpty else { return }
+            Task {
+                try? await APIClient.shared.requestVoid(
+                    .friendJoinLink(code),
+                    method: "POST"
+                )
             }
         }
     }
@@ -25,6 +50,14 @@ final class AppDelegate: NSObject, UIApplicationDelegate, @preconcurrency UNUser
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
+        // Initialize observability
+        CrashReportingService.shared.initialize(
+            dsn: "YOUR_SENTRY_DSN_HERE",
+            environment: ServerEnvironment.current == .production ? "production" : "development"
+        )
+        AnalyticsService.shared.initialize(appID: "YOUR_TELEMETRYDECK_APP_ID")
+        AnalyticsService.shared.track(.appLaunched, parameters: ["platform": "ios"])
+
         // Set notification delegate before requesting authorization
         UNUserNotificationCenter.current().delegate = self
 

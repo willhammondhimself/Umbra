@@ -94,12 +94,16 @@ struct IOSIntegrationsView: View {
                 }
                 .font(.caption)
                 .disabled(isImporting)
+                .accessibilityLabel("Import tasks from Todoist")
+                .accessibilityHint(isImporting ? "Import in progress" : "Imports your Todoist tasks into Tether")
             } else {
                 Button("Connect") {
                     pendingProvider = "todoist"
                     showTokenSheet = true
                 }
                 .font(.caption)
+                .accessibilityLabel("Connect Todoist")
+                .accessibilityHint("Enter your Todoist API token to enable task import")
             }
         }
     }
@@ -114,12 +118,16 @@ struct IOSIntegrationsView: View {
                 }
                 .font(.caption)
                 .disabled(isImporting)
+                .accessibilityLabel("Import tasks from Notion")
+                .accessibilityHint(isImporting ? "Import in progress" : "Imports your Notion tasks into Tether")
             } else {
                 Button("Connect") {
                     pendingProvider = "notion"
                     showTokenSheet = true
                 }
                 .font(.caption)
+                .accessibilityLabel("Connect Notion")
+                .accessibilityHint("Enter your Notion API token to enable task import")
             }
         }
     }

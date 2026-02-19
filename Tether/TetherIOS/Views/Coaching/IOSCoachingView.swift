@@ -75,7 +75,9 @@ struct IOSCoachingView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.regularMaterial, in: .rect(cornerRadius: 16))
+        .glassCard(cornerRadius: TetherRadius.sidebar)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Today's Insight: \(nudge?.nudge ?? "No insight available")")
     }
 
     // MARK: - Goals Section
@@ -112,7 +114,7 @@ struct IOSCoachingView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.regularMaterial, in: .rect(cornerRadius: 16))
+        .glassCard(cornerRadius: TetherRadius.sidebar)
     }
 
     @ViewBuilder
@@ -146,6 +148,8 @@ struct IOSCoachingView: View {
             }
         }
         .padding(.vertical, 3)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Goal \(index + 1): \(goal.goal). Target: \(goal.target). \(goal.reasoning)")
 
         if !isLast {
             Divider()
@@ -160,7 +164,7 @@ struct IOSCoachingView: View {
             .foregroundStyle(.secondary)
             .padding(.horizontal, 6)
             .padding(.vertical, 2)
-            .background(.quaternary, in: Capsule())
+            .glassPill()
     }
 
     // MARK: - Data Loading

@@ -1,4 +1,5 @@
 import SwiftUI
+import TetherKit
 
 struct IOSChatInputView: View {
     @Binding var inputText: String
@@ -16,21 +17,14 @@ struct IOSChatInputView: View {
                     submit()
                 }
                 .padding(10)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(.background)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(isFocused ? Color.accentColor.opacity(0.5) : Color.secondary.opacity(0.2), lineWidth: 1)
-                )
+                .glassCard(cornerRadius: TetherRadius.button)
 
             Button(action: submit) {
                 Image(systemName: "arrow.up.circle.fill")
                     .font(.title2)
                     .foregroundStyle(inputText.trimmingCharacters(in: .whitespaces).isEmpty ? Color.secondary : Color.accentColor)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.tetherPressable)
             .disabled(inputText.trimmingCharacters(in: .whitespaces).isEmpty)
             .accessibilityLabel("Parse tasks")
         }

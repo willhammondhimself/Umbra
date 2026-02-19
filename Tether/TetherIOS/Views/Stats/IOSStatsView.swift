@@ -135,6 +135,8 @@ struct IOSStatsView: View {
                                     .monospacedDigit()
                             }
                             .padding(.horizontal)
+                            .accessibilityElement(children: .combine)
+                            .accessibilityLabel("\(d.appName): \(d.count) times, \(d.totalSeconds / 60) minutes")
                         }
                     }
                 }
@@ -163,6 +165,8 @@ struct IOSStatsView: View {
                             }
                             .padding(.horizontal)
                             .padding(.vertical, 6)
+                            .accessibilityElement(children: .combine)
+                            .accessibilityLabel("\(insight.title): \(insight.message)")
                         }
                     }
                 }
@@ -215,6 +219,7 @@ struct IOSSummaryCard: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
+        .glassCard(cornerRadius: TetherRadius.button)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(title)
         .accessibilityValue(value)

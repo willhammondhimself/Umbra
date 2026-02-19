@@ -67,24 +67,19 @@ struct IOSParsedTaskCard: View {
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
+                .accessibilityLabel(isEditing ? "Done editing task" : "Edit task title")
 
                 Spacer()
 
                 Button("Add", action: onAccept)
                     .buttonStyle(.borderedProminent)
+                    .buttonStyle(.tetherPressable)
                     .controlSize(.small)
+                    .accessibilityLabel("Add \(parsedTask.title) to task list")
             }
         }
         .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(.background)
-                .shadow(color: .black.opacity(0.06), radius: 3, y: 2)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.accentColor.opacity(0.2), lineWidth: 1)
-        )
+        .tintedGlass(Color.accentColor.opacity(0.08), cornerRadius: TetherRadius.button)
     }
 
     private var priorityColor: Color {

@@ -44,12 +44,14 @@ struct IOSTaskListView: View {
                         acceptAllParsedTasks()
                     }
                     .buttonStyle(.borderedProminent)
+                    .buttonStyle(.tetherPressable)
                     .controlSize(.small)
 
                     Button("Discard All") {
-                        withAnimation { parsedTasks.removeAll() }
+                        withAnimation(.tetherQuick) { parsedTasks.removeAll() }
                     }
                     .buttonStyle(.bordered)
+                    .buttonStyle(.tetherPressable)
                     .controlSize(.small)
 
                     Spacer()
@@ -76,12 +78,15 @@ struct IOSTaskListView: View {
                     ForEach(tasks) { task in
                         HStack(spacing: 10) {
                             Button {
-                                toggleStatus(task)
+                                withAnimation(.tetherQuick) {
+                                    toggleStatus(task)
+                                }
                             } label: {
                                 Image(systemName: task.status == .done ? "checkmark.circle.fill" : "circle")
                                     .foregroundStyle(task.status == .done ? Color.tetherFocused : .secondary)
+                                    .contentTransition(.symbolEffect(.replace))
                             }
-                            .buttonStyle(.plain)
+                            .buttonStyle(.tetherPressable)
                             .accessibilityLabel(task.status == .done ? "Mark as to do" : "Mark as done")
                             .accessibilityValue(task.status == .done ? "Completed" : "To do")
 
