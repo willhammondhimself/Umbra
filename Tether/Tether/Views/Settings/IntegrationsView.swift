@@ -279,7 +279,7 @@ private struct WebhookRow: View {
                         .font(.caption2)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
-                        .background(.quaternary, in: .capsule)
+                        .glassPill()
                 }
             }
 
@@ -401,6 +401,7 @@ private struct AddWebhookSheet: View {
                 Button("Create", action: onSave)
                     .disabled(url.isEmpty || selectedEvents.isEmpty)
                     .buttonStyle(.borderedProminent)
+                    .buttonStyle(.tetherPressable)
             }
         }
         .padding()

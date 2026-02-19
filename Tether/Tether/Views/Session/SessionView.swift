@@ -65,33 +65,22 @@ struct SessionView: View {
             Divider()
 
             if pastSessions.isEmpty {
-                VStack(spacing: 16) {
-                    Image(systemName: "timer")
-                        .font(.system(size: 48))
-                        .foregroundStyle(.secondary)
-                    Text("No sessions yet")
-                        .font(.title3)
-                        .foregroundStyle(.secondary)
-                    Text("Start a focus session to track your productivity and block distractions.")
-                        .font(.body)
-                        .foregroundStyle(.tertiary)
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: 400)
-
-                    Button("Start Session") {
-                        startSessionWithConflictCheck()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
-                    .keyboardShortcut("s", modifiers: [.command, .shift])
+                TetherEmptyStateView(
+                    systemImage: "timer",
+                    title: "No sessions yet",
+                    subtitle: "Start a focus session to track your productivity and block distractions.",
+                    actionLabel: "Start Session"
+                ) {
+                    startSessionWithConflictCheck()
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .keyboardShortcut("s", modifiers: [.command, .shift])
             } else {
                 VStack(spacing: 16) {
                     Button("Start Session") {
                         startSessionWithConflictCheck()
                     }
                     .buttonStyle(.borderedProminent)
+                    .buttonStyle(.tetherPressable)
                     .controlSize(.large)
                     .keyboardShortcut("s", modifiers: [.command, .shift])
                     .padding(.top, 16)
@@ -169,6 +158,9 @@ struct SessionHistoryRow: View {
             }
         }
         .padding(.vertical, 2)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Session on \(session.startTime.formatted(date: .abbreviated, time: .shortened))")
+        .accessibilityValue("Duration \(session.formattedDuration), \(String(format: "%.0f", session.focusPercentage)) percent focused, \(session.distractionCount) distractions")
     }
 }
 

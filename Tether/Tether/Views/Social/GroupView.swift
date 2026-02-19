@@ -31,8 +31,10 @@ struct GroupView: View {
                         Spacer()
                         Image(systemName: "trophy")
                             .foregroundStyle(Color.accentColor)
+                            .accessibilityHidden(true)
                     }
                 }
+                .accessibilityLabel("\(group.name), \(group.memberCount) members")
             }
             .task {
                 await loadGroups()

@@ -22,6 +22,7 @@ struct GroupsContainerView: View {
                     Label("Create Group", systemImage: "plus.circle.fill")
                 }
                 .buttonStyle(.borderedProminent)
+                .buttonStyle(.tetherPressable)
                 .controlSize(.small)
             }
             .padding()

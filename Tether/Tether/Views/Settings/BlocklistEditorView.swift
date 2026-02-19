@@ -38,6 +38,7 @@ struct BlocklistEditorView: View {
                     Image(systemName: "shield.slash")
                         .font(.system(size: 36))
                         .foregroundStyle(.secondary)
+                        .accessibilityHidden(true)
                     Text("No blocked apps or websites")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
@@ -56,10 +57,13 @@ struct BlocklistEditorView: View {
                                 set: { _ in blockingManager.toggleItem(item) }
                             ))
                             .labelsHidden()
+                            .accessibilityLabel("\(item.displayName) blocking")
+                            .accessibilityValue(item.isEnabled ? "Enabled" : "Disabled")
 
                             // Icon
                             Image(systemName: item.isAppBlock ? "app.fill" : "globe")
                                 .foregroundStyle(item.isEnabled ? Color.accentColor : Color.secondary)
+                                .accessibilityHidden(true)
 
                             // Name
                             VStack(alignment: .leading) {
@@ -75,11 +79,11 @@ struct BlocklistEditorView: View {
                             // Mode badge
                             Text(item.blockMode.label)
                                 .font(.caption)
+                                .foregroundStyle(modeColor(item.blockMode))
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 2)
-                                .background(modeColor(item.blockMode).opacity(0.15))
-                                .foregroundStyle(modeColor(item.blockMode))
-                                .clipShape(Capsule())
+                                .glassPill()
+                                .accessibilityLabel("Block mode: \(item.blockMode.label)")
 
                             // Delete
                             Button {
@@ -167,6 +171,7 @@ struct BlocklistEditorView: View {
                     addItem()
                 }
                 .buttonStyle(.borderedProminent)
+                .buttonStyle(.tetherPressable)
                 .disabled(!canAdd)
                 .keyboardShortcut(.defaultAction)
             }

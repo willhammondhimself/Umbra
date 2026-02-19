@@ -48,6 +48,7 @@ struct SessionSummaryView: View {
 
             Button("Done", action: onDismiss)
                 .buttonStyle(.borderedProminent)
+                .buttonStyle(.tetherPressable)
                 .controlSize(.large)
                 .keyboardShortcut(.return, modifiers: [])
         }
@@ -74,6 +75,8 @@ struct SummaryStatView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
+        .padding(12)
+        .glassCard(cornerRadius: TetherRadius.button)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(label)
         .accessibilityValue(value)

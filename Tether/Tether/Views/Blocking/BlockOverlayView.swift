@@ -62,6 +62,7 @@ struct BlockOverlayView: View {
                 onDismiss()
             }
             .buttonStyle(.borderedProminent)
+            .buttonStyle(.tetherPressable)
             .controlSize(.large)
             .tint(.green)
 
@@ -69,6 +70,7 @@ struct BlockOverlayView: View {
                 onOverride("soft-override")
             }
             .buttonStyle(.bordered)
+            .buttonStyle(.tetherPressable)
             .tint(.white)
         }
     }

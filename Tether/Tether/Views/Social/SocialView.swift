@@ -32,6 +32,8 @@ struct SocialView: View {
                 .pickerStyle(.segmented)
                 .labelsHidden()
                 .frame(maxWidth: 280)
+                .accessibilityLabel("Social section")
+                .accessibilityValue(selectedTab.rawValue)
             }
             .padding()
 
@@ -256,9 +258,9 @@ struct ActivityRow: View {
                     }
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
-                    .background(.quaternary, in: Capsule())
+                    .glassPill()
                 }
-                .buttonStyle(.borderless)
+                .buttonStyle(.tetherPressable)
                 .accessibilityLabel("Thumbs up")
                 .accessibilityValue(thumbsUpCount > 0 ? "\(thumbsUpCount)" : "No reactions")
 
@@ -275,9 +277,9 @@ struct ActivityRow: View {
                     }
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
-                    .background(.quaternary, in: Capsule())
+                    .glassPill()
                 }
-                .buttonStyle(.borderless)
+                .buttonStyle(.tetherPressable)
                 .accessibilityLabel("Fire reaction")
                 .accessibilityValue(fireCount > 0 ? "\(fireCount)" : "No reactions")
 

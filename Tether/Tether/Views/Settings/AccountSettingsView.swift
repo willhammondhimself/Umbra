@@ -43,25 +43,30 @@ struct AccountSettingsView: View {
                             Spacer()
                             ProgressView()
                                 .controlSize(.small)
+                                .accessibilityLabel("Exporting data")
                         }
                     }
                 }
                 .disabled(isExporting)
+                .accessibilityHint(isExporting ? "Export in progress" : "Download your data as a JSON file")
 
                 if let exportError {
                     Text(exportError)
                         .font(.caption)
                         .foregroundStyle(.red)
+                        .accessibilityLabel("Export error: \(exportError)")
                 }
 
                 Button("Delete Account", role: .destructive) {
                     showDeleteConfirmation = true
                 }
+                .accessibilityHint("Permanently deletes your account and all data")
 
                 if let deleteError {
                     Text(deleteError)
                         .font(.caption)
                         .foregroundStyle(.red)
+                        .accessibilityLabel("Delete error: \(deleteError)")
                 }
             }
 

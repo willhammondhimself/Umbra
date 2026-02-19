@@ -20,15 +20,7 @@ struct ChatInputView: View {
                     submit()
                 }
                 .padding(10)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(.background)
-                        .shadow(color: .black.opacity(0.05), radius: 2, y: 1)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(isFocused ? Color.accentColor.opacity(0.5) : Color.secondary.opacity(0.2), lineWidth: 1)
-                )
+                .glassCard(cornerRadius: TetherRadius.button)
 
             // Microphone button
             Button(action: toggleRecording) {
@@ -57,7 +49,7 @@ struct ChatInputView: View {
                         .foregroundStyle(speechManager.isRecording ? Color.red : Color.secondary)
                 }
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.tetherPressable)
             .disabled(!speechManager.isAvailable && !speechManager.isRecording)
             .help(speechManager.isRecording ? "Stop dictation" : "Start dictation")
             .accessibilityLabel(speechManager.isRecording ? "Stop dictation" : "Start dictation")
@@ -69,7 +61,7 @@ struct ChatInputView: View {
                     .font(.title2)
                     .foregroundStyle(inputText.trimmingCharacters(in: .whitespaces).isEmpty ? Color.secondary : Color.accentColor)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.tetherPressable)
             .disabled(inputText.trimmingCharacters(in: .whitespaces).isEmpty)
             .keyboardShortcut(.return, modifiers: .command)
             .help("Parse tasks (Cmd+Return)")
@@ -78,7 +70,7 @@ struct ChatInputView: View {
         .padding()
         .onAppear {
             isFocused = true
-            Task { await speechManager.requestAuthorization() }
+            Task { @MainActor in await speechManager.requestAuthorization() }
         }
         .onChange(of: speechManager.isRecording) { wasRecording, isNowRecording in
             // When recording stops, append transcript to input

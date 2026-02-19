@@ -58,16 +58,20 @@ struct ActiveSessionView: View {
                             .frame(minWidth: 100)
                     }
                     .buttonStyle(.bordered)
+                    .buttonStyle(.tetherPressable)
                     .controlSize(.large)
                     .keyboardShortcut("p", modifiers: .command)
+                    .accessibilityHint("Pause the current focus session")
                 } else if sessionManager.state == .paused {
                     Button(action: { sessionManager.resumeSession() }) {
                         Label("Resume", systemImage: "play.fill")
                             .frame(minWidth: 100)
                     }
                     .buttonStyle(.borderedProminent)
+                    .buttonStyle(.tetherPressable)
                     .controlSize(.large)
                     .keyboardShortcut("p", modifiers: .command)
+                    .accessibilityHint("Resume the paused focus session")
                 }
 
                 Button(action: { sessionManager.stopSession() }) {
@@ -75,9 +79,11 @@ struct ActiveSessionView: View {
                         .frame(minWidth: 100)
                 }
                 .buttonStyle(.bordered)
+                .buttonStyle(.tetherPressable)
                 .controlSize(.large)
                 .tint(Color.tetherDistracted)
                 .keyboardShortcut("s", modifiers: [.command, .shift])
+                .accessibilityHint("End the focus session and view summary")
             }
 
             Spacer()

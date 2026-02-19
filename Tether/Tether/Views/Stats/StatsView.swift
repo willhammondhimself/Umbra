@@ -93,6 +93,8 @@ struct StatsView: View {
                 .pickerStyle(.segmented)
                 .labelsHidden()
                 .frame(maxWidth: 450)
+                .accessibilityLabel("Time range")
+                .accessibilityValue(selectedRange.title)
             }
             .padding()
 
@@ -102,10 +104,13 @@ struct StatsView: View {
                     Spacer()
                     DatePicker("From:", selection: $customStart, displayedComponents: .date)
                         .labelsHidden()
+                        .accessibilityLabel("Start date")
                     Text("to")
                         .foregroundStyle(.secondary)
+                        .accessibilityHidden(true)
                     DatePicker("To:", selection: $customEnd, displayedComponents: .date)
                         .labelsHidden()
+                        .accessibilityLabel("End date")
                 }
                 .padding(.horizontal)
                 .padding(.bottom, 8)
@@ -303,6 +308,8 @@ struct StatsView: View {
                             .monospacedDigit()
                     }
                     .padding(.vertical, 2)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("\(d.appName): \(d.count) times, \(d.totalSeconds / 60) minutes")
                     if d.id != distractors.last?.id {
                         Divider()
                     }
@@ -331,6 +338,8 @@ struct StatsView: View {
                 }
             }
         }
+        .padding()
+        .glassCard(cornerRadius: 12)
         .frame(maxWidth: .infinity)
     }
 
@@ -471,7 +480,7 @@ struct InsightCardView: View {
             }
         }
         .padding(10)
-        .background(RoundedRectangle(cornerRadius: 8).fill(insightColor.opacity(0.08)))
+        .tintedGlass(insightColor.opacity(0.15), cornerRadius: TetherRadius.small)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(insight.title): \(insight.message)")
     }

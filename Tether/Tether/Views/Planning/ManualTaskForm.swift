@@ -74,6 +74,8 @@ struct ManualTaskForm: View {
                 Button("Save") {
                     save()
                 }
+                .buttonStyle(.borderedProminent)
+                .buttonStyle(.tetherPressable)
                 .keyboardShortcut(.defaultAction)
                 .disabled(title.trimmingCharacters(in: .whitespaces).isEmpty)
             }

@@ -7,12 +7,14 @@ struct SidebarView: View {
     @Namespace private var sidebarAnimation
     @State private var hoverTask: Task<Void, Never>?
     @State private var isPinned = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     var body: some View {
         VStack(spacing: 8) {
             // Pin/unpin toggle
             Button {
-                withAnimation(.tetherSpring) {
+                withAnimation(reduceMotion ? .none : .tetherSpring) {
                     isPinned.toggle()
                     isExpanded = isPinned
                 }
@@ -22,7 +24,7 @@ struct SidebarView: View {
                     .foregroundStyle(.secondary)
                     .frame(width: 24, height: 24)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.tetherPressable)
             .help(isPinned ? "Collapse sidebar" : "Pin sidebar open")
             .accessibilityLabel(isPinned ? "Collapse sidebar" : "Pin sidebar open")
             .padding(.bottom, 4)
@@ -35,7 +37,7 @@ struct SidebarView: View {
         .padding(.vertical, 12)
         .padding(.horizontal, isExpanded ? 12 : 6)
         .frame(maxHeight: .infinity)
-        .glassEffect(in: .rect(cornerRadius: TetherRadius.sidebar))
+        .glassCard(cornerRadius: TetherRadius.sidebar)
         .onHover { hovering in
             guard !isPinned else { return }
             hoverTask?.cancel()
@@ -45,7 +47,7 @@ struct SidebarView: View {
                 }
                 guard !Task.isCancelled else { return }
                 await MainActor.run {
-                    withAnimation(.tetherSpring) {
+                    withAnimation(reduceMotion ? .none : .tetherSpring) {
                         isExpanded = hovering
                     }
                 }
@@ -58,7 +60,7 @@ struct SidebarView: View {
         let isSelected = selectedTab == tab
 
         Button {
-            withAnimation(.tetherSpring) {
+            withAnimation(reduceMotion ? .none : .tetherSpring) {
                 selectedTab = tab
             }
         } label: {
@@ -82,7 +84,7 @@ struct SidebarView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.tetherPressable)
         .accessibilityLabel(tab.title)
         .accessibilityValue(isSelected ? "Selected" : "")
         .accessibilityAddTraits(isSelected ? .isSelected : [])
@@ -90,7 +92,7 @@ struct SidebarView: View {
             if isSelected {
                 RoundedRectangle(cornerRadius: TetherRadius.button, style: .continuous)
                     .fill(Color.accentColor.opacity(0.12))
-                    .glassEffect(.regular.interactive(), in: .rect(cornerRadius: TetherRadius.button))
+                    .interactiveGlass(cornerRadius: TetherRadius.button)
                     .matchedGeometryEffect(id: "selectedTab", in: sidebarAnimation)
             }
         }

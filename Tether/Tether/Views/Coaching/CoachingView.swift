@@ -31,6 +31,7 @@ struct CoachingView: View {
                         .font(.body)
                 }
                 .buttonStyle(.bordered)
+                .buttonStyle(.tetherPressable)
                 .disabled(isLoading)
                 .accessibilityLabel("Refresh coaching insights")
             }
@@ -104,6 +105,8 @@ struct CoachingView: View {
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard(cornerRadius: TetherRadius.card)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Today's Insight: \(nudge?.nudge ?? "No insight available")")
     }
 
     // MARK: - Goals Section
@@ -174,6 +177,8 @@ struct CoachingView: View {
             }
         }
         .padding(.vertical, 4)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Goal \(index + 1): \(goal.goal). Target: \(goal.target). \(goal.reasoning)")
 
         if index < (goals?.goals.count ?? 0) - 1 {
             Divider()
@@ -236,6 +241,7 @@ struct CoachingView: View {
                             .frame(maxWidth: .infinity)
                             .frame(height: 20)
                             .help(String(format: "%@ %@: %.0f min", dayLabels[day], hourLabel(hour), minutes))
+                            .accessibilityLabel(String(format: "%@ %@: %.0f minutes focused", dayLabels[day], hourLabel(hour), minutes))
                     }
                 }
             }
@@ -267,7 +273,7 @@ struct CoachingView: View {
             .foregroundStyle(.secondary)
             .padding(.horizontal, 8)
             .padding(.vertical, 3)
-            .background(.quaternary, in: Capsule())
+            .glassPill()
     }
 
     // MARK: - Heatmap Helpers

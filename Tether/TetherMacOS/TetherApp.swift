@@ -10,9 +10,30 @@ struct TetherApp: App {
     var body: some Scene {
         WindowGroup {
             OnboardingView()
+                .onOpenURL { url in
+                    handleUniversalLink(url)
+                }
         }
         .windowStyle(.titleBar)
         .defaultSize(width: 900, height: 640)
+    }
+
+    private func handleUniversalLink(_ url: URL) {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+              let host = components.host,
+              host.contains("tether.app") else { return }
+
+        let path = components.path
+        if path.hasPrefix("/invite/") {
+            let code = String(path.dropFirst("/invite/".count))
+            guard !code.isEmpty else { return }
+            Task {
+                try? await APIClient.shared.requestVoid(
+                    .friendJoinLink(code),
+                    method: "POST"
+                )
+            }
+        }
     }
 }
 
@@ -21,7 +42,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, @preconcurrency UNUser
     let menuBarManager = MenuBarManager()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Initialize observability
+        CrashReportingService.shared.initialize(
+            dsn: "YOUR_SENTRY_DSN_HERE",
+            environment: ServerEnvironment.current == .production ? "production" : "development"
+        )
+        AnalyticsService.shared.initialize(appID: "YOUR_TELEMETRYDECK_APP_ID")
+        AnalyticsService.shared.track(.appLaunched, parameters: ["platform": "macos"])
+
         menuBarManager.setup()
+
+        // Check for crashed/incomplete sessions
+        SessionManager.shared.checkForIncompleteSession()
 
         // Set notification delegate before requesting authorization
         UNUserNotificationCenter.current().delegate = self
@@ -51,6 +83,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, @preconcurrency UNUser
 
     func application(_ application: NSApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         TetherLogger.general.error("Failed to register for remote notifications: \(error.localizedDescription)")
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        SessionManager.shared.persistOnTermination()
     }
 
     // MARK: - UNUserNotificationCenterDelegate

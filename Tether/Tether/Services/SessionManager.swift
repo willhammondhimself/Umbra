@@ -283,19 +283,63 @@ final class SessionManager {
 
     // MARK: - Recovery
 
+    private(set) var incompleteSession: Session?
+    var hasIncompleteSession: Bool { incompleteSession != nil }
+
     func checkForIncompleteSession() {
         do {
             if let incomplete = try DatabaseManager.shared.fetchIncompleteSession() {
-                // Offer to resume or discard
-                currentSession = incomplete
-                state = .summary(incomplete) // Show as summary so user can see what happened
-
-                // Sync any unsent events from the crashed session
-                SyncManager.shared.syncSessionEvents(incomplete)
+                incompleteSession = incomplete
             }
         } catch {
             TetherLogger.session.error("Failed to check incomplete sessions: \(error.localizedDescription)")
         }
+    }
+
+    func resumeIncompleteSession() {
+        guard var session = incompleteSession else { return }
+        incompleteSession = nil
+        currentSession = session
+
+        let elapsed = session.durationSeconds
+        elapsedSeconds = elapsed
+        focusedSeconds = session.focusedSeconds
+        distractionCount = session.distractionCount
+        totalPausedDuration = 0
+        distractionStartUptime = nil
+        sessionStartUptime = ProcessInfo.processInfo.systemUptime - TimeInterval(elapsed)
+        state = .running
+
+        logEvent(.resume)
+        startTimer()
+        appMonitor.startMonitoring { [weak self] appName, bundleId in
+            self?.handleAppSwitch(appName: appName, bundleId: bundleId)
+        }
+        BlockingManager.shared.activate()
+        FloatingWidgetController.shared.showWidget()
+        registerSleepWakeNotifications()
+
+        SyncManager.shared.syncSessionEvents(session)
+    }
+
+    func discardIncompleteSession() {
+        guard var session = incompleteSession else { return }
+        incompleteSession = nil
+
+        // Mark as complete with whatever data was saved
+        session.endTime = Date()
+        session.isComplete = true
+        do {
+            try DatabaseManager.shared.saveSession(&session)
+        } catch {
+            TetherLogger.session.error("Failed to discard session: \(error.localizedDescription)")
+        }
+
+        SyncManager.shared.syncSessionComplete(session)
+    }
+
+    func persistOnTermination() {
+        persistCurrentState()
     }
 
 }

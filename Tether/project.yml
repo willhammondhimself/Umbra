@@ -58,9 +58,15 @@ targets:
         product: TetherKit
       - sdk: AuthenticationServices.framework
       - sdk: EventKit.framework
+      - sdk: LocalAuthentication.framework
       - sdk: Speech.framework
       - target: TetherSafari
         embed: true
+      # TetherNetworkExtension and StoreKit.framework require paid Apple Developer Program.
+      # Uncomment after enrollment:
+      # - sdk: StoreKit.framework
+      # - target: TetherNetworkExtension
+      #   embed: true
     entitlements:
       path: Tether/Tether.entitlements
       properties:
@@ -100,14 +106,17 @@ targets:
         INFOPLIST_KEY_NSCalendarsUsageDescription: "Tether uses your calendar to suggest optimal focus times and avoid scheduling conflicts."
         INFOPLIST_KEY_NSSpeechRecognitionUsageDescription: "Tether uses speech recognition to let you dictate tasks hands-free."
         INFOPLIST_KEY_NSMicrophoneUsageDescription: "Tether needs microphone access for voice-to-text task planning."
+        INFOPLIST_KEY_NSFaceIDUsageDescription: "Tether uses Face ID to protect your account and data."
     dependencies:
       - package: TetherKit
         product: TetherKit
       - sdk: AuthenticationServices.framework
       - sdk: EventKit.framework
       - sdk: FamilyControls.framework
+      - sdk: LocalAuthentication.framework
       - sdk: ManagedSettings.framework
       - sdk: Speech.framework
+      - sdk: StoreKit.framework
     entitlements:
       path: TetherIOS/TetherIOS.entitlements
       properties:
@@ -141,6 +150,31 @@ targets:
       path: TetherSafari/TetherSafari.entitlements
       properties:
         com.apple.security.app-sandbox: true
+        com.apple.security.application-groups:
+          - group.com.willhammond.tether.shared
+
+  TetherNetworkExtension:
+    type: system-extension
+    platform: macOS
+    sources:
+      - path: TetherNetworkExtension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.willhammond.tether.app.network-extension
+        PRODUCT_NAME: "Tether Network Extension"
+        INFOPLIST_GENERATION_MODE: GeneratedFile
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_ENTITLEMENTS: TetherNetworkExtension/TetherNetworkExtension.entitlements
+        SYSTEM_EXTENSION_API_VERSION: 1
+    dependencies:
+      - sdk: NetworkExtension.framework
+    entitlements:
+      path: TetherNetworkExtension/TetherNetworkExtension.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+        com.apple.developer.networking.networkextension:
+          - dns-proxy
         com.apple.security.application-groups:
           - group.com.willhammond.tether.shared
 

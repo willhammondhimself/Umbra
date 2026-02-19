@@ -45,7 +45,7 @@ struct FloatingWidgetView: View {
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
-        .glassEffect(in: .capsule)
+        .glassEffect(.regular, in: .capsule)
         .frame(width: 220, height: 48)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Session timer")
@@ -147,7 +147,7 @@ struct FloatingWidgetView: View {
         }
         .padding(16)
         .frame(width: 280, height: 360)
-        .glassEffect(in: .rect(cornerRadius: TetherRadius.card))
+        .glassEffect(.regular, in: .rect(cornerRadius: TetherRadius.card))
     }
 
     // MARK: - Helpers

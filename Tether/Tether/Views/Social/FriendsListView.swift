@@ -36,6 +36,7 @@ struct FriendsListView: View {
                     Task { await sendInvite() }
                 }
                 .buttonStyle(.borderedProminent)
+                .buttonStyle(.tetherPressable)
                 .disabled(inviteEmail.isEmpty || isInviting)
 
                 Button {
@@ -142,6 +143,7 @@ struct FriendsListView: View {
                 .buttonStyle(.bordered)
                 .controlSize(.small)
                 .tint(Color.tetherFocused)
+                .accessibilityHint("Accept friend invite from \(friend.displayName ?? friend.email)")
             } else if friend.status == "accepted" {
                 Button {
                     selectedFriend = friend

@@ -9,12 +9,17 @@ struct TaskRowView: View {
     var body: some View {
         HStack(spacing: 12) {
             // Status toggle
-            Button(action: onToggleStatus) {
+            Button(action: {
+                withAnimation(.tetherQuick) {
+                    onToggleStatus()
+                }
+            }) {
                 Image(systemName: statusIcon)
                     .font(.title3)
                     .foregroundStyle(statusColor)
+                    .contentTransition(.symbolEffect(.replace))
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.tetherPressable)
             .help(task.status == .done ? "Mark as to do" : "Mark as done")
             .accessibilityLabel(task.status == .done ? "Mark as to do" : "Mark as done")
             .accessibilityValue(task.status == .done ? "Completed" : task.status == .inProgress ? "In progress" : "To do")
@@ -53,6 +58,7 @@ struct TaskRowView: View {
             .opacity(0.5)
             .help("Delete task")
             .accessibilityLabel("Delete \(task.title)")
+            .accessibilityHint("Permanently removes this task")
         }
         .padding(.vertical, 4)
     }

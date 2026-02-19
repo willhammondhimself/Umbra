@@ -7,6 +7,8 @@ struct PlanningView: View {
     @State private var showingTaskForm = false
     @State private var editingTask: TetherTask?
     @State private var filterStatus: TetherTask.Status?
+    @State private var isLoading = true
+    @State private var loadError: String?
 
     // Chat / NL parsing
     @State private var chatInput = ""
@@ -46,7 +48,7 @@ struct PlanningView: View {
                     Image(systemName: "plus.circle.fill")
                         .font(.title2)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.tetherPressable)
                 .help("Add task manually (Cmd+N)")
                 .keyboardShortcut("n", modifiers: .command)
                 .accessibilityLabel("Add task manually")
@@ -56,7 +58,7 @@ struct PlanningView: View {
             // Chat input
             ChatInputView(inputText: $chatInput) { text in
                 Task {
-                    let results = await parsingService.parseWithLLM(text)
+                    let results = await parsingService.parseWithLLM(text) ?? parsingService.parse(text)
                     withAnimation(.tetherQuick) {
                         parsedTasks.append(contentsOf: results)
                     }
@@ -90,13 +92,17 @@ struct PlanningView: View {
                         acceptAllParsedTasks()
                     }
                     .buttonStyle(.borderedProminent)
+                    .buttonStyle(.tetherPressable)
                     .controlSize(.small)
+                    .accessibilityHint("Add all \(parsedTasks.count) extracted tasks to your task list")
 
                     Button("Discard All") {
-                        withAnimation { parsedTasks.removeAll() }
+                        withAnimation(.tetherQuick) { parsedTasks.removeAll() }
                     }
                     .buttonStyle(.bordered)
+                    .buttonStyle(.tetherPressable)
                     .controlSize(.small)
+                    .accessibilityHint("Remove all extracted tasks without saving")
 
                     Spacer()
 
@@ -110,8 +116,14 @@ struct PlanningView: View {
 
             Divider()
 
-            // Task list
-            if filteredTasks.isEmpty {
+            // Task list with loading/error/empty states
+            if isLoading {
+                TetherLoadingView(message: "Loading tasks...")
+            } else if let error = loadError {
+                TetherErrorStateView(message: error) {
+                    loadTasks()
+                }
+            } else if filteredTasks.isEmpty {
                 emptyState
             } else {
                 List {
@@ -158,26 +170,17 @@ struct PlanningView: View {
     }
 
     private var emptyState: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "text.badge.plus")
-                .font(.system(size: 48))
-                .foregroundStyle(.secondary)
-            Text("No tasks yet")
-                .font(.title3)
-                .foregroundStyle(.secondary)
-            Text("Type your plans above and Tether will extract tasks, or press \(Image(systemName: "command")) N to add manually.")
-                .font(.body)
-                .foregroundStyle(.tertiary)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: 400)
-
-            Button("Add Task") {
-                editingTask = nil
-                showingTaskForm = true
-            }
-            .buttonStyle(.borderedProminent)
+        TetherEmptyStateView(
+            systemImage: "text.badge.plus",
+            title: filterStatus != nil ? "No \(filterStatus!.label.lowercased()) tasks" : "No tasks yet",
+            subtitle: filterStatus != nil
+                ? "Try changing the filter or add a new task."
+                : "Type your plans above and Tether will extract tasks, or press \u{2318}N to add manually.",
+            actionLabel: "Add Task"
+        ) {
+            editingTask = nil
+            showingTaskForm = true
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     // MARK: - Parsed Task Actions
@@ -249,9 +252,14 @@ struct PlanningView: View {
     // MARK: - Task Actions
 
     private func loadTasks() {
+        isLoading = true
+        loadError = nil
         do {
             tasks = try DatabaseManager.shared.fetchTasks()
+            isLoading = false
         } catch {
+            loadError = error.localizedDescription
+            isLoading = false
             TetherLogger.general.error("Failed to load tasks: \(error.localizedDescription)")
         }
     }

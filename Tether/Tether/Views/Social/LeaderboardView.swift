@@ -44,6 +44,9 @@ struct LeaderboardView: View {
                         }
                     }
                     .padding(.vertical, 4)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("Rank \(entry.rank): \(entry.displayName ?? "Anonymous")")
+                    .accessibilityValue("\(formatFocusTime(entry.focusedSeconds)), \(entry.sessionCount) sessions")
                 }
             }
         }
@@ -54,15 +57,17 @@ struct LeaderboardView: View {
 
     @ViewBuilder
     private func rankBadge(_ rank: Int) -> some View {
-        ZStack {
-            Circle()
-                .fill(rank <= 3 ? Color.accentColor.opacity(0.2) : Color.gray.opacity(0.1))
-                .frame(width: 32, height: 32)
-            Text("\(rank)")
-                .font(.caption.bold())
-                .foregroundStyle(rank <= 3 ? Color.accentColor : .secondary)
-        }
-        .accessibilityLabel("Rank \(rank)")
+        Text("\(rank)")
+            .font(.caption.bold())
+            .foregroundStyle(rank <= 3 ? Color.accentColor : .secondary)
+            .frame(width: 32, height: 32)
+            .if(rank <= 3) { view in
+                view.tintedGlass(Color.accentColor.opacity(0.15), cornerRadius: 16)
+            }
+            .if(rank > 3) { view in
+                view.glassCard(cornerRadius: 16)
+            }
+            .accessibilityLabel("Rank \(rank)")
     }
 
     private func formatFocusTime(_ seconds: Int) -> String {

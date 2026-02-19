@@ -80,6 +80,7 @@ struct PostSessionSummaryView: View {
                     onDismiss()
                 }
                 .buttonStyle(.bordered)
+                .buttonStyle(.tetherPressable)
                 .controlSize(.large)
                 .keyboardShortcut(.escape, modifiers: [])
 
@@ -87,6 +88,7 @@ struct PostSessionSummaryView: View {
                     onNewSession()
                 }
                 .buttonStyle(.borderedProminent)
+                .buttonStyle(.tetherPressable)
                 .controlSize(.large)
                 .keyboardShortcut(.return, modifiers: [])
             }
@@ -94,7 +96,7 @@ struct PostSessionSummaryView: View {
         .padding(.top, 36)
         .padding([.bottom, .leading, .trailing], 28)
         .frame(width: 480, height: 480)
-        .glassEffect(in: .rect(cornerRadius: TetherRadius.card))
+        .glassEffect(.regular, in: .rect(cornerRadius: TetherRadius.card))
         .task {
             await loadAISummary()
         }
@@ -138,7 +140,7 @@ struct PostSessionSummaryView: View {
         }
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.accentColor.opacity(0.06), in: .rect(cornerRadius: TetherRadius.small))
+        .tintedGlass(Color.accentColor.opacity(0.1), cornerRadius: TetherRadius.small)
     }
 
     // MARK: - AI Summary Loading
@@ -183,7 +185,7 @@ struct PostSessionSummaryView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
-        .glassEffect(in: .rect(cornerRadius: TetherRadius.button))
+        .glassEffect(.regular, in: .rect(cornerRadius: TetherRadius.button))
         .accessibilityElement(children: .combine)
         .accessibilityLabel(label)
         .accessibilityValue(value)

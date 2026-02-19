@@ -126,6 +126,7 @@ struct CalendarSidebarView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
+                .buttonStyle(.tetherPressable)
                 .controlSize(.regular)
             }
             .padding()
@@ -162,6 +163,7 @@ struct CalendarSidebarView: View {
                 }
             }
             .buttonStyle(.borderedProminent)
+            .buttonStyle(.tetherPressable)
             .disabled(isRequestingAccess)
 
             if calendarService.authorizationStatus == .denied {
@@ -355,6 +357,7 @@ struct ScheduleFocusSheet: View {
                     dismiss()
                 }
                 .buttonStyle(.borderedProminent)
+                .buttonStyle(.tetherPressable)
                 .keyboardShortcut(.defaultAction)
                 .disabled(title.trimmingCharacters(in: .whitespaces).isEmpty)
             }

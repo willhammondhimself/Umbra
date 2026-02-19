@@ -47,6 +47,8 @@ struct ParsedTaskCard: View {
                 .pickerStyle(.menu)
                 .labelsHidden()
                 .fixedSize()
+                .accessibilityLabel("Priority")
+                .accessibilityValue(parsedTask.priority.label)
 
                 // Estimate
                 if let est = parsedTask.estimateMinutes {
@@ -70,22 +72,18 @@ struct ParsedTaskCard: View {
                 .buttonStyle(.plain)
                 .font(.caption)
                 .foregroundStyle(Color.accentColor)
+                .accessibilityLabel(isEditing ? "Done editing task" : "Edit task title")
 
                 Button("Add", action: onAccept)
                     .buttonStyle(.borderedProminent)
+                    .buttonStyle(.tetherPressable)
                     .controlSize(.small)
+                    .accessibilityLabel("Add \(parsedTask.title) to task list")
+                    .accessibilityHint("Save this extracted task")
             }
         }
         .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 10)
-                .fill(.background)
-                .shadow(color: .black.opacity(0.06), radius: 3, y: 2)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(Color.accentColor.opacity(0.2), lineWidth: 1)
-        )
+        .tintedGlass(Color.accentColor.opacity(0.08), cornerRadius: TetherRadius.button)
     }
 
     private func formatMinutes(_ minutes: Int) -> String {

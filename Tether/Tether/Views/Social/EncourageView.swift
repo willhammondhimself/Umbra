@@ -15,11 +15,11 @@ struct EncourageView: View {
                 .font(.title3.bold())
 
             TextEditor(text: $message)
+                .font(.body)
                 .frame(height: 100)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(.quaternary)
-                )
+                .scrollContentBackground(.hidden)
+                .padding(8)
+                .glassCard(cornerRadius: TetherRadius.small)
 
             HStack {
                 Button("Cancel") {
@@ -31,8 +31,10 @@ struct EncourageView: View {
                     Task { await send() }
                 }
                 .buttonStyle(.borderedProminent)
+                .buttonStyle(.tetherPressable)
                 .disabled(message.isEmpty || isSending)
                 .keyboardShortcut(.defaultAction)
+                .accessibilityHint("Send encouragement message to \(friend.displayName ?? friend.email)")
             }
         }
         .padding(24)
