@@ -8,6 +8,7 @@ from app.models.project import Project
 from app.models.session import Session
 from app.models.session_event import SessionEvent
 from app.models.social_event import SocialEvent
+from app.models.subscription import Subscription
 from app.models.task import Task
 from app.models.user import User
 from app.models.webhook import Webhook
@@ -23,6 +24,7 @@ __all__ = [
     "Session",
     "SessionEvent",
     "SocialEvent",
+    "Subscription",
     "Task",
     "User",
     "Webhook",
