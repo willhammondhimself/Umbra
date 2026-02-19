@@ -1,5 +1,19 @@
 import SwiftUI
 
+// MARK: - Conditional View Modifier
+
+extension View {
+    /// Applies a modifier only when the condition is true.
+    @ViewBuilder
+    public func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
+}
+
 // MARK: - Glass Card Modifier
 
 public struct GlassCardModifier: ViewModifier {
@@ -12,7 +26,7 @@ public struct GlassCardModifier: ViewModifier {
                 .background(.regularMaterial, in: .rect(cornerRadius: cornerRadius))
         } else {
             content
-                .glassEffect(in: .rect(cornerRadius: cornerRadius))
+                .glassEffect(.regular, in: .rect(cornerRadius: cornerRadius))
         }
     }
 }
@@ -28,7 +42,7 @@ public struct GlassPillModifier: ViewModifier {
                 .background(.regularMaterial, in: .capsule)
         } else {
             content
-                .glassEffect(in: .capsule)
+                .glassEffect(.regular, in: .capsule)
         }
     }
 }
@@ -50,7 +64,7 @@ public struct InteractiveGlassModifier: ViewModifier {
     }
 }
 
-// MARK: - Prominent Glass Modifier
+// MARK: - Prominent Glass Modifier (uses tinted accent for visual weight)
 
 public struct ProminentGlassModifier: ViewModifier {
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
@@ -62,7 +76,7 @@ public struct ProminentGlassModifier: ViewModifier {
                 .background(.thickMaterial, in: .rect(cornerRadius: cornerRadius))
         } else {
             content
-                .glassEffect(in: .rect(cornerRadius: cornerRadius))
+                .glassEffect(.regular.tint(Color.accentColor.opacity(0.15)), in: .rect(cornerRadius: cornerRadius))
         }
     }
 }
@@ -107,5 +121,90 @@ extension View {
 
     public func tintedGlass(_ tint: Color, cornerRadius: CGFloat = 16) -> some View {
         modifier(TintedGlassModifier(tint: tint, cornerRadius: cornerRadius))
+    }
+}
+
+// MARK: - Reusable Empty State View
+
+public struct TetherEmptyStateView: View {
+    let systemImage: String
+    let title: String
+    let subtitle: String
+    let actionLabel: String?
+    let action: (() -> Void)?
+
+    public init(
+        systemImage: String,
+        title: String,
+        subtitle: String,
+        actionLabel: String? = nil,
+        action: (() -> Void)? = nil
+    ) {
+        self.systemImage = systemImage
+        self.title = title
+        self.subtitle = subtitle
+        self.actionLabel = actionLabel
+        self.action = action
+    }
+
+    public var body: some View {
+        ContentUnavailableView {
+            Label(title, systemImage: systemImage)
+        } description: {
+            Text(subtitle)
+        } actions: {
+            if let actionLabel, let action {
+                Button(actionLabel, action: action)
+                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(.tetherPressable)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+// MARK: - Reusable Error State View
+
+public struct TetherErrorStateView: View {
+    let message: String
+    let retryAction: () -> Void
+
+    public init(message: String, retryAction: @escaping () -> Void) {
+        self.message = message
+        self.retryAction = retryAction
+    }
+
+    public var body: some View {
+        ContentUnavailableView {
+            Label("Something Went Wrong", systemImage: "exclamationmark.triangle")
+        } description: {
+            Text(message)
+        } actions: {
+            Button("Try Again", action: retryAction)
+                .buttonStyle(.borderedProminent)
+                .buttonStyle(.tetherPressable)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+// MARK: - Reusable Loading State View
+
+public struct TetherLoadingView: View {
+    let message: String
+
+    public init(message: String = "Loading...") {
+        self.message = message
+    }
+
+    public var body: some View {
+        VStack(spacing: 12) {
+            ProgressView()
+                .controlSize(.large)
+            Text(message)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }

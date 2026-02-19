@@ -52,30 +52,41 @@ public final class SpeechRecognitionManager {
     /// Requests authorization for speech recognition and microphone access.
     /// Call this before the first recording attempt.
     public func requestAuthorization() async {
-        // Request speech recognition permission
+        // Request speech recognition permission.
+        // NOTE: SFSpeechRecognizer.requestAuthorization's completion handler is
+        // annotated @MainActor in SDK headers but Apple's XPC invokes it on a
+        // background thread. Swift 6.2 inserts a runtime isolation check that
+        // triggers _dispatch_assert_queue_fail / BRK #0x1. Work around by
+        // passing a nonisolated closure via unsafeBitCast (same pattern as
+        // SafariExtensionStatusView).
         await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-            SFSpeechRecognizer.requestAuthorization { [weak self] status in
+            typealias MainActorCompletion = @MainActor (SFSpeechRecognizerAuthorizationStatus) -> Void
+            let nonisolatedCompletion: @Sendable (SFSpeechRecognizerAuthorizationStatus) -> Void = { [weak self] status in
                 Task { @MainActor in
-                    self?.authorizationStatus = status
+                    guard let self else { return }
+                    self.authorizationStatus = status
                     switch status {
                     case .authorized:
-                        self?.logger.info("Speech recognition authorized")
-                        self?.error = nil
+                        self.logger.info("Speech recognition authorized")
+                        self.error = nil
                     case .denied:
-                        self?.logger.notice("Speech recognition denied by user")
-                        self?.error = "Speech recognition access denied. Enable it in System Settings > Privacy & Security."
+                        self.logger.notice("Speech recognition denied by user")
+                        self.error = "Speech recognition access denied. Enable it in System Settings > Privacy & Security."
                     case .restricted:
-                        self?.logger.notice("Speech recognition restricted on this device")
-                        self?.error = "Speech recognition is restricted on this device."
+                        self.logger.notice("Speech recognition restricted on this device")
+                        self.error = "Speech recognition is restricted on this device."
                     case .notDetermined:
-                        self?.logger.notice("Speech recognition authorization not determined")
-                        self?.error = nil
+                        self.logger.notice("Speech recognition authorization not determined")
+                        self.error = nil
                     @unknown default:
-                        self?.error = "Unknown speech recognition authorization status."
+                        self.error = "Unknown speech recognition authorization status."
                     }
-                    continuation.resume()
                 }
+                continuation.resume()
             }
+            SFSpeechRecognizer.requestAuthorization(
+                unsafeBitCast(nonisolatedCompletion, to: MainActorCompletion.self)
+            )
         }
     }
 
@@ -112,36 +123,54 @@ public final class SpeechRecognitionManager {
         let inputNode = audioEngine.inputNode
         let recordingFormat = inputNode.outputFormat(forBus: 0)
 
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { [weak self] buffer, _ in
-            self?.recognitionRequest?.append(buffer)
+        // Capture request locally — the audio tap callback runs on a real-time
+        // audio thread and must not access actor-isolated properties. append()
+        // is thread-safe per Apple docs.
+        let capturedRequest = request
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
+            capturedRequest.append(buffer)
         }
 
-        recognitionTask = recognizer.recognitionTask(with: request) { [weak self] result, taskError in
+        // NOTE: recognitionTask(with:resultHandler:)'s handler is annotated
+        // @MainActor in SDK headers but Apple's XPC invokes it on a background
+        // thread — same issue as requestAuthorization above.
+        typealias MainActorResultHandler = @MainActor (SFSpeechRecognitionResult?, (any Error)?) -> Void
+        let nonisolatedHandler: @Sendable (SFSpeechRecognitionResult?, (any Error)?) -> Void = { [weak self] result, taskError in
+            // Extract Sendable values before crossing isolation boundary —
+            // SFSpeechRecognitionResult is not Sendable.
+            let transcriptText = result?.bestTranscription.formattedString
+            let isFinal = result?.isFinal ?? false
+            let errorDesc = taskError?.localizedDescription
+            let nsError = taskError.map { $0 as NSError }
+
             Task { @MainActor in
                 guard let self else { return }
 
-                if let result {
-                    self.transcript = result.bestTranscription.formattedString
+                if let transcriptText {
+                    self.transcript = transcriptText
 
-                    if result.isFinal {
-                        self.logger.info("Final transcript received: \(self.transcript.prefix(80))...")
+                    if isFinal {
+                        self.logger.info("Final transcript received: \(transcriptText.prefix(80))...")
                         self.cleanupAudioSession()
                         self.isRecording = false
                     }
                 }
 
-                if let taskError {
+                if let errorDesc {
                     // Don't treat cancellation as an error
-                    let nsError = taskError as NSError
-                    if nsError.domain != "kAFAssistantErrorDomain" || nsError.code != 216 {
-                        self.error = taskError.localizedDescription
-                        self.logger.error("Recognition error: \(taskError.localizedDescription)")
+                    if nsError?.domain != "kAFAssistantErrorDomain" || nsError?.code != 216 {
+                        self.error = errorDesc
+                        self.logger.error("Recognition error: \(errorDesc)")
                     }
                     self.cleanupAudioSession()
                     self.isRecording = false
                 }
             }
         }
+        recognitionTask = recognizer.recognitionTask(
+            with: request,
+            resultHandler: unsafeBitCast(nonisolatedHandler, to: MainActorResultHandler.self)
+        )
 
         do {
             audioEngine.prepare()

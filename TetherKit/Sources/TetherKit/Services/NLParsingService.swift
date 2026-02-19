@@ -1,5 +1,8 @@
 import Foundation
 import NaturalLanguage
+#if canImport(FoundationModels)
+import FoundationModels
+#endif
 
 public struct ParsedTask: Sendable {
     public var title: String
@@ -45,6 +48,33 @@ struct LLMParsedTask: Codable, Sendable {
     }
 }
 
+// MARK: - Foundation Models Generable Types
+
+#if canImport(FoundationModels)
+@available(macOS 26, iOS 26, *)
+@Generable(description: "A single task extracted from natural language input")
+struct FoundationModelParsedTask: Sendable {
+    @Guide(description: "The task title or name, a concise action item")
+    var title: String
+
+    @Guide(description: "Estimated time in minutes to complete the task, or nil if not mentioned")
+    var estimateMinutes: Int?
+
+    @Guide(description: "Priority level as a string: urgent, high, medium, or low")
+    var priority: String?
+
+    @Guide(description: "The project name this task belongs to, or nil if not mentioned")
+    var projectName: String?
+}
+
+@available(macOS 26, iOS 26, *)
+@Generable(description: "A list of tasks extracted from natural language input")
+struct FoundationModelTaskList: Sendable {
+    @Guide(description: "The list of parsed tasks extracted from the input text", .maximumCount(20))
+    var tasks: [FoundationModelParsedTask]
+}
+#endif
+
 // MARK: - Priority String Mapping
 
 extension TetherTask.Priority {
@@ -62,6 +92,8 @@ extension TetherTask.Priority {
 
 public struct NLParsingService: Sendable {
 
+    public static let shared = NLParsingService()
+
     public init() {}
 
     // MARK: - Public API
@@ -71,9 +103,54 @@ public struct NLParsingService: Sendable {
         return segments.compactMap { parseSegment($0) }
     }
 
-    /// Parse natural language into tasks using the backend LLM endpoint,
-    /// falling back to local regex-based parsing if the API is unavailable.
-    public func parseWithLLM(_ input: String) async -> [ParsedTask] {
+    /// Primary entry point: parse input into TetherTask objects.
+    /// Uses a multi-tier parsing chain:
+    /// 1. Backend LLM (Claude/GPT via API) — when online
+    /// 2. Apple Intelligence (Foundation Models) — on-device LLM when offline
+    /// 3. Regex fallback — always available
+    @MainActor
+    public func parseTasks(from input: String) async -> [TetherTask] {
+        // Tier 1: Backend LLM
+        if let parsed = await parseWithLLM(input), !parsed.isEmpty {
+            return parsed.map { p in
+                TetherTask(
+                    title: p.title,
+                    estimateMinutes: p.estimateMinutes,
+                    priority: p.priority
+                )
+            }
+        }
+
+        // Tier 2: Apple Intelligence (Foundation Models)
+        #if canImport(FoundationModels)
+        if #available(macOS 26, iOS 26, *) {
+            if let parsed = await parseWithFoundationModels(input), !parsed.isEmpty {
+                return parsed.map { p in
+                    TetherTask(
+                        title: p.title,
+                        estimateMinutes: p.estimateMinutes,
+                        priority: p.priority
+                    )
+                }
+            }
+        }
+        #endif
+
+        // Tier 3: Regex fallback
+        let parsed = parse(input)
+        return parsed.map { p in
+            TetherTask(
+                title: p.title,
+                estimateMinutes: p.estimateMinutes,
+                priority: p.priority
+            )
+        }
+    }
+
+    /// Parse natural language into tasks using the backend LLM endpoint.
+    /// Returns nil if the API call fails or the backend did not use LLM parsing,
+    /// allowing the caller to try the next tier in the parsing chain.
+    public func parseWithLLM(_ input: String) async -> [ParsedTask]? {
         do {
             let body = ["text": input]
             let response: LLMParseResponse = try await APIClient.shared.request(
@@ -93,10 +170,56 @@ public struct NLParsingService: Sendable {
                 }
             }
         } catch {
-            // Fall back to local parsing
+            // Network or API error — return nil so caller can try next tier
         }
-        return parse(input)
+        return nil
     }
+
+    // MARK: - Foundation Models (Apple Intelligence)
+
+    /// Parse natural language into tasks using Apple's on-device Foundation Models.
+    /// Returns nil if Foundation Models is unavailable or generation fails.
+    #if canImport(FoundationModels)
+    @available(macOS 26, iOS 26, *)
+    private func parseWithFoundationModels(_ input: String) async -> [ParsedTask]? {
+        let model = SystemLanguageModel.default
+        guard model.isAvailable else { return nil }
+
+        do {
+            let session = LanguageModelSession {
+                """
+                You are a task extraction assistant. Given natural language input, \
+                extract individual tasks with their title, estimated time in minutes, \
+                priority (urgent, high, medium, or low), and project name if mentioned. \
+                If no estimate is given, leave it as nil. If no priority is mentioned, \
+                use medium. If no project is mentioned, leave it as nil. \
+                Extract every actionable task from the input.
+                """
+            }
+
+            let response = try await session.respond(
+                to: "Extract tasks from the following input:\n\n\(input)",
+                generating: FoundationModelTaskList.self
+            )
+
+            let tasks = response.content.tasks
+            guard !tasks.isEmpty else { return nil }
+
+            return tasks.map { fmTask in
+                let priority = TetherTask.Priority.from(string: fmTask.priority ?? "medium")
+                return ParsedTask(
+                    title: fmTask.title,
+                    estimateMinutes: fmTask.estimateMinutes,
+                    priority: priority,
+                    projectName: fmTask.projectName
+                )
+            }
+        } catch {
+            // Foundation Models generation failed — return nil so caller can try regex fallback
+            return nil
+        }
+    }
+    #endif
 
     // MARK: - Segmentation
 

@@ -43,6 +43,13 @@ public actor APIClient {
         case socialPing
         case authMe
         case authRefresh
+        case authRegister
+        case authLoginEmail
+        case authVerifyEmail(String)
+        case authPasswordResetRequest
+        case authPasswordResetConfirm
+        case subscriptionVerify
+        case subscriptionStatus
         case registerDevice
         case unregisterDevice(UUID)
         case accountExport
@@ -87,6 +94,13 @@ public actor APIClient {
             case .socialPing: "/social/ping"
             case .authMe: "/auth/me"
             case .authRefresh: "/auth/refresh"
+            case .authRegister: "/auth/register"
+            case .authLoginEmail: "/auth/login/email"
+            case .authVerifyEmail(let token): "/auth/verify-email/\(token)"
+            case .authPasswordResetRequest: "/auth/password-reset/request"
+            case .authPasswordResetConfirm: "/auth/password-reset/confirm"
+            case .subscriptionVerify: "/subscriptions/verify"
+            case .subscriptionStatus: "/subscriptions/status"
             case .registerDevice: "/devices/register"
             case .unregisterDevice(let id): "/devices/\(id)"
             case .accountExport: "/auth/account/export"

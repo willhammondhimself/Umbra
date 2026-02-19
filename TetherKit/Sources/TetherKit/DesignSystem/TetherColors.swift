@@ -22,3 +22,25 @@ extension Color {
         return .tetherFocused
     }
 }
+
+// MARK: - Glass Surface Colors
+
+extension ShapeStyle where Self == Color {
+    /// Primary text color on glass surfaces
+    public static var tetherOnGlassPrimary: Color { .primary }
+    /// Secondary text color on glass surfaces
+    public static var tetherOnGlassSecondary: Color { .secondary }
+}
+
+// MARK: - Gradient Presets
+
+extension LinearGradient {
+    public static let tetherFocusGradient = LinearGradient(
+        colors: [.tetherFocused.opacity(0.8), .tetherFocused],
+        startPoint: .topLeading, endPoint: .bottomTrailing
+    )
+    public static let tetherAccentGradient = LinearGradient(
+        colors: [Color.accentColor.opacity(0.8), Color.accentColor],
+        startPoint: .topLeading, endPoint: .bottomTrailing
+    )
+}
