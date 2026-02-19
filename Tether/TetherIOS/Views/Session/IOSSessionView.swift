@@ -206,7 +206,7 @@ struct IOSActiveSessionView: View {
 
             // Timer
             Text(Session.formatSeconds(sessionManager.elapsedSeconds))
-                .font(.system(size: 64, weight: .light, design: .monospaced))
+                .font(TetherFont.timerHero)
                 .contentTransition(.numericText())
                 .accessibilityLabel("Session timer")
                 .accessibilityValue(Session.formatSeconds(sessionManager.elapsedSeconds))
@@ -302,7 +302,7 @@ struct IOSSummaryView: View {
             Spacer()
 
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 56))
+                .font(TetherFont.iconHeroSmall)
                 .foregroundStyle(Color.tetherFocused)
 
             Text("Session Complete")
@@ -356,7 +356,7 @@ struct IOSSummaryView: View {
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 12)
+        .padding(.vertical, TetherSpacing.md)
         .glassCard(cornerRadius: TetherRadius.button)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(label)

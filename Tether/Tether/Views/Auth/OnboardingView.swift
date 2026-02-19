@@ -111,7 +111,7 @@ struct OnboardingFlowView: View {
     private var welcomeStep: some View {
         VStack(spacing: 20) {
             Image(systemName: "hand.wave.fill")
-                .font(.system(size: 56))
+                .font(TetherFont.iconHeroSmall)
                 .foregroundStyle(Color.accentColor)
                 .accessibilityHidden(true)
 
@@ -137,7 +137,7 @@ struct OnboardingFlowView: View {
     private var brainDumpStep: some View {
         VStack(spacing: 20) {
             Image(systemName: "brain.head.profile.fill")
-                .font(.system(size: 48))
+                .font(TetherFont.iconHeroSmall)
                 .foregroundStyle(Color.accentColor)
 
             Text("What's on your mind today?")
@@ -152,7 +152,7 @@ struct OnboardingFlowView: View {
                 .font(.body)
                 .frame(height: 120)
                 .scrollContentBackground(.hidden)
-                .padding(8)
+                .padding(TetherSpacing.sm)
                 .glassCard(cornerRadius: TetherRadius.small)
 
             if isParsing {
@@ -184,7 +184,7 @@ struct OnboardingFlowView: View {
     private var blocklistStep: some View {
         VStack(spacing: 20) {
             Image(systemName: "shield.checkered")
-                .font(.system(size: 48))
+                .font(TetherFont.iconHeroSmall)
                 .foregroundStyle(Color.accentColor)
 
             Text("Set Up Your Blocklist")
@@ -262,7 +262,7 @@ struct OnboardingFlowView: View {
     private var readyStep: some View {
         VStack(spacing: 24) {
             Image(systemName: "bolt.circle.fill")
-                .font(.system(size: 56))
+                .font(TetherFont.iconHeroSmall)
                 .foregroundStyle(Color.accentColor)
                 .accessibilityHidden(true)
 
@@ -303,10 +303,10 @@ struct OnboardingFlowView: View {
                 let parsed = await NLParsingService.shared.parseTasks(from: brainDumpText)
                 parsedTasks = parsed
                 isParsing = false
-                withAnimation(reduceMotion ? .none : .default) { currentStep += 1 }
+                withMotionAwareAnimation(.tetherQuick, reduceMotion: reduceMotion) { currentStep += 1 }
             }
         } else {
-            withAnimation(reduceMotion ? .none : .default) { currentStep += 1 }
+            withMotionAwareAnimation(.tetherQuick, reduceMotion: reduceMotion) { currentStep += 1 }
         }
     }
 

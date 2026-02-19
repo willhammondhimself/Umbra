@@ -249,7 +249,7 @@ struct StatsView: View {
             )
         }
         .padding()
-        .glassCard(cornerRadius: 12)
+        .glassCard(cornerRadius: TetherRadius.button)
     }
 
     // MARK: - Focus Chart
@@ -278,7 +278,7 @@ struct StatsView: View {
             }
         }
         .padding()
-        .glassCard(cornerRadius: 12)
+        .glassCard(cornerRadius: TetherRadius.button)
     }
 
     // MARK: - Distractors
@@ -317,7 +317,7 @@ struct StatsView: View {
             }
         }
         .padding()
-        .glassCard(cornerRadius: 12)
+        .glassCard(cornerRadius: TetherRadius.button)
         .frame(maxWidth: .infinity)
     }
 
@@ -339,7 +339,7 @@ struct StatsView: View {
             }
         }
         .padding()
-        .glassCard(cornerRadius: 12)
+        .glassCard(cornerRadius: TetherRadius.button)
         .frame(maxWidth: .infinity)
     }
 
@@ -453,7 +453,7 @@ struct SummaryCard: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .glassCard(cornerRadius: 12)
+        .glassCard(cornerRadius: TetherRadius.button)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(title)")
         .accessibilityValue(value)

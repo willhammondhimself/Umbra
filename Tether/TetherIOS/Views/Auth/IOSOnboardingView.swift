@@ -26,7 +26,7 @@ struct IOSOnboardingView: View {
                 }
             }
             .padding(.horizontal)
-            .padding(.top, 12)
+            .padding(.top, TetherSpacing.md)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Onboarding progress")
             .accessibilityValue("Step \(currentStep + 1) of \(totalSteps)")
@@ -43,7 +43,7 @@ struct IOSOnboardingView: View {
             HStack {
                 if currentStep > 0 {
                     Button("Back") {
-                        withAnimation(reduceMotion ? .none : .default) { currentStep -= 1 }
+                        withMotionAwareAnimation(.tetherQuick, reduceMotion: reduceMotion) { currentStep -= 1 }
                     }
                     .accessibilityHint("Go to previous step")
                 }
@@ -52,7 +52,7 @@ struct IOSOnboardingView: View {
 
                 if currentStep < totalSteps - 1 {
                     Button("Skip") {
-                        withAnimation(reduceMotion ? .none : .default) { currentStep += 1 }
+                        withMotionAwareAnimation(.tetherQuick, reduceMotion: reduceMotion) { currentStep += 1 }
                     }
                     .foregroundStyle(.secondary)
                     .accessibilityHint("Skip this step")
@@ -69,23 +69,27 @@ struct IOSOnboardingView: View {
     }
 
     private var welcomeStep: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: TetherSpacing.xl) {
             Spacer()
-            Image(systemName: "hand.wave.fill")
-                .font(.system(size: 56))
-                .foregroundStyle(Color.accentColor)
-                .accessibilityHidden(true)
-            Text("Welcome to Tether!")
-                .font(.largeTitle.bold())
-            Text("Your productivity accountability coach.")
-                .font(.body)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-            if SubscriptionManager.shared.isTrialActive {
-                Label("14-day Pro trial active", systemImage: "sparkles")
-                    .font(.subheadline)
+            VStack(spacing: TetherSpacing.md) {
+                Image(systemName: "hand.wave.fill")
+                    .font(TetherFont.iconHeroSmall)
                     .foregroundStyle(Color.accentColor)
+                    .accessibilityHidden(true)
+                Text("Welcome to Tether!")
+                    .font(.largeTitle.bold())
+                Text("Your productivity accountability coach.")
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                if SubscriptionManager.shared.isTrialActive {
+                    Label("14-day Pro trial active", systemImage: "sparkles")
+                        .font(.subheadline)
+                        .foregroundStyle(Color.accentColor)
+                }
             }
+            .padding(TetherSpacing.xxl)
+            .glassCard(cornerRadius: TetherRadius.card)
             Spacer()
         }
         .padding()
@@ -102,7 +106,7 @@ struct IOSOnboardingView: View {
             TextEditor(text: $brainDumpText)
                 .frame(height: 150)
                 .scrollContentBackground(.hidden)
-                .padding(8)
+                .padding(TetherSpacing.sm)
                 .glassCard(cornerRadius: TetherRadius.small)
 
             if isParsing {
@@ -166,7 +170,7 @@ struct IOSOnboardingView: View {
         VStack(spacing: 24) {
             Spacer()
             Image(systemName: "bolt.circle.fill")
-                .font(.system(size: 56))
+                .font(TetherFont.iconHeroSmall)
                 .foregroundStyle(Color.accentColor)
                 .accessibilityHidden(true)
             Text("You're All Set!")
@@ -196,10 +200,10 @@ struct IOSOnboardingView: View {
             Task {
                 parsedTasks = await NLParsingService.shared.parseTasks(from: brainDumpText)
                 isParsing = false
-                withAnimation(reduceMotion ? .none : .default) { currentStep += 1 }
+                withMotionAwareAnimation(.tetherQuick, reduceMotion: reduceMotion) { currentStep += 1 }
             }
         } else {
-            withAnimation(reduceMotion ? .none : .default) { currentStep += 1 }
+            withMotionAwareAnimation(.tetherQuick, reduceMotion: reduceMotion) { currentStep += 1 }
         }
     }
 

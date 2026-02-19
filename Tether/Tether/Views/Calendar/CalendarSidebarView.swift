@@ -140,7 +140,7 @@ struct CalendarSidebarView: View {
             Spacer()
 
             Image(systemName: "calendar.badge.clock")
-                .font(.system(size: 40))
+                .font(TetherFont.iconHeroSmall)
                 .foregroundStyle(.secondary)
 
             Text("Calendar Access")

@@ -37,7 +37,7 @@ struct EncourageView: View {
                 .accessibilityHint("Send encouragement message to \(friend.displayName ?? friend.email)")
             }
         }
-        .padding(24)
+        .padding(TetherSpacing.xxl)
         .frame(width: 400)
     }
 

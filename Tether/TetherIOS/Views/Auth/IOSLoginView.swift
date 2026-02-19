@@ -19,7 +19,7 @@ struct IOSLoginView: View {
 
             VStack(spacing: 12) {
                 Image(systemName: "shield.checkered")
-                    .font(.system(size: 72))
+                    .font(TetherFont.iconHero)
                     .foregroundStyle(Color.accentColor)
                     .accessibilityHidden(true)
 
@@ -37,11 +37,15 @@ struct IOSLoginView: View {
 
             Spacer()
 
-            if showEmailForm {
-                emailFormView
-            } else {
-                oauthButtonsView
+            Group {
+                if showEmailForm {
+                    emailFormView
+                } else {
+                    oauthButtonsView
+                }
             }
+            .padding(TetherSpacing.xxl)
+            .glassCard(cornerRadius: TetherRadius.card)
 
             if authManager.isLoading {
                 ProgressView()
@@ -51,7 +55,7 @@ struct IOSLoginView: View {
             if let error = authManager.authError {
                 Text(error)
                     .font(.caption)
-                    .foregroundStyle(.red)
+                    .foregroundStyle(Color.tetherError)
                     .padding(.horizontal)
                     .accessibilityLabel("Error: \(error)")
             }
@@ -65,7 +69,7 @@ struct IOSLoginView: View {
             }
             .font(.footnote)
             .foregroundStyle(.secondary)
-            .padding(.bottom, 16)
+            .padding(.bottom, TetherSpacing.lg)
             #endif
         }
         .sheet(isPresented: $showForgotPassword) {
@@ -150,7 +154,7 @@ struct IOSLoginView: View {
 
             HStack {
                 Button(isRegistering ? "Sign In Instead" : "Create Account") {
-                    withAnimation(reduceMotion ? .none : .default) { isRegistering.toggle() }
+                    withMotionAwareAnimation(.tetherQuick, reduceMotion: reduceMotion) { isRegistering.toggle() }
                 }
                 .font(.footnote)
 
@@ -165,7 +169,7 @@ struct IOSLoginView: View {
             }
 
             Button("Back") {
-                withAnimation(reduceMotion ? .none : .default) { showEmailForm = false }
+                withMotionAwareAnimation(.tetherQuick, reduceMotion: reduceMotion) { showEmailForm = false }
             }
             .font(.footnote)
             .foregroundStyle(.secondary)
@@ -177,7 +181,7 @@ struct IOSLoginView: View {
             VStack(spacing: 24) {
                 if resetSent {
                     Label("Check your email for a reset link.", systemImage: "checkmark.circle")
-                        .foregroundStyle(.green)
+                        .foregroundStyle(Color.tetherSuccess)
                         .padding()
                 } else {
                     TextField("Email", text: $resetEmail)

@@ -10,7 +10,7 @@ struct ActiveSessionView: View {
 
             // Timer display
             Text(Session.formatSeconds(sessionManager.elapsedSeconds))
-                .font(.system(size: 72, weight: .light, design: .monospaced))
+                .font(TetherFont.timerHero)
                 .foregroundStyle(sessionManager.isDistracted ? Color.tetherDistracted : .primary)
                 .contentTransition(.numericText())
                 .accessibilityLabel("Session timer")
@@ -112,7 +112,7 @@ struct StatBadge: View {
                 .foregroundStyle(.secondary)
         }
         .padding(12)
-        .glassCard(cornerRadius: 12)
+        .glassCard(cornerRadius: TetherRadius.button)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(label)
         .accessibilityValue(value)

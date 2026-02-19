@@ -10,7 +10,7 @@ struct SessionSummaryView: View {
             Spacer()
 
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 56))
+                .font(TetherFont.iconHeroSmall)
                 .foregroundStyle(Color.tetherFocused)
 
             Text("Session Complete")
