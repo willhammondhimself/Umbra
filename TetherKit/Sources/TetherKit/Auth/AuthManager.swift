@@ -66,6 +66,108 @@ public final class AuthManager: NSObject {
         isLoading = false
     }
 
+    // MARK: - Email/Password Auth
+
+    public private(set) var authError: String?
+
+    public func signInWithEmail(email: String, password: String) async {
+        isLoading = true
+        authError = nil
+        defer { isLoading = false }
+
+        let url = baseURL.appendingPathComponent("auth/login/email")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let body = ["email": email, "password": password]
+
+        do {
+            request.httpBody = try JSONEncoder().encode(body)
+            let (data, response) = try await URLSession.shared.data(for: request)
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                authError = "Invalid server response"
+                return
+            }
+
+            if httpResponse.statusCode == 401 {
+                authError = "Invalid email or password"
+                return
+            }
+
+            guard httpResponse.statusCode == 200 else {
+                authError = "Sign in failed (error \(httpResponse.statusCode))"
+                return
+            }
+
+            let tokenResponse = try JSONDecoder().decode(TokenResponse.self, from: data)
+            saveTokensToKeychain(access: tokenResponse.accessToken, refresh: tokenResponse.refreshToken)
+            await fetchCurrentUser()
+        } catch {
+            authError = "Network error: \(error.localizedDescription)"
+            TetherLogger.auth.error("Email sign in failed: \(error.localizedDescription)")
+        }
+    }
+
+    public func registerWithEmail(email: String, password: String, displayName: String?) async {
+        isLoading = true
+        authError = nil
+        defer { isLoading = false }
+
+        let url = baseURL.appendingPathComponent("auth/register")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        var body: [String: String] = ["email": email, "password": password]
+        if let displayName, !displayName.isEmpty {
+            body["display_name"] = displayName
+        }
+
+        do {
+            request.httpBody = try JSONEncoder().encode(body)
+            let (data, response) = try await URLSession.shared.data(for: request)
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                authError = "Invalid server response"
+                return
+            }
+
+            if httpResponse.statusCode == 409 {
+                authError = "An account with this email already exists"
+                return
+            }
+
+            guard (200...299).contains(httpResponse.statusCode) else {
+                authError = "Registration failed (error \(httpResponse.statusCode))"
+                return
+            }
+
+            let tokenResponse = try JSONDecoder().decode(TokenResponse.self, from: data)
+            saveTokensToKeychain(access: tokenResponse.accessToken, refresh: tokenResponse.refreshToken)
+            await fetchCurrentUser()
+        } catch {
+            authError = "Network error: \(error.localizedDescription)"
+            TetherLogger.auth.error("Email registration failed: \(error.localizedDescription)")
+        }
+    }
+
+    public func requestPasswordReset(email: String) async -> Bool {
+        let url = baseURL.appendingPathComponent("auth/password-reset/request")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try? JSONEncoder().encode(["email": email])
+
+        do {
+            let (_, response) = try await URLSession.shared.data(for: request)
+            return (response as? HTTPURLResponse)?.statusCode == 200
+        } catch {
+            return false
+        }
+    }
+
     // MARK: - Token Exchange with Backend
 
     private func exchangeToken(provider: String, identityToken: String) async {
@@ -161,6 +263,7 @@ public final class AuthManager: NSObject {
             saveTokensToKeychain(access: tokenResponse.accessToken, refresh: tokenResponse.refreshToken)
             return true
         } catch {
+            TetherLogger.auth.error("Token refresh failed: \(error.localizedDescription)")
             return false
         }
     }
@@ -192,7 +295,11 @@ public final class AuthManager: NSObject {
     private let refreshTokenKey = "com.willhammond.tether.refreshToken"
 
     public func getAccessToken() -> String? {
-        readKeychain(key: accessTokenKey)
+        let token = readKeychain(key: accessTokenKey)
+        if token == nil {
+            TetherLogger.auth.notice("No access token in keychain")
+        }
+        return token
     }
 
     private func getRefreshToken() -> String? {
