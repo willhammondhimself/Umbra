@@ -13,6 +13,8 @@ struct ActiveSessionView: View {
                 .font(.system(size: 72, weight: .light, design: .monospaced))
                 .foregroundStyle(sessionManager.isDistracted ? Color.tetherDistracted : .primary)
                 .contentTransition(.numericText())
+                .accessibilityLabel("Session timer")
+                .accessibilityValue(Session.formatSeconds(sessionManager.elapsedSeconds))
 
             // Status
             HStack(spacing: 16) {
@@ -105,5 +107,8 @@ struct StatBadge: View {
         }
         .padding(12)
         .glassCard(cornerRadius: 12)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(label)
+        .accessibilityValue(value)
     }
 }

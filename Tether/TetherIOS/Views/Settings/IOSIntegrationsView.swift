@@ -65,10 +65,12 @@ struct IOSIntegrationsView: View {
                     Circle()
                         .fill(Color.green)
                         .frame(width: 8, height: 8)
+                        .accessibilityHidden(true)
                     Text("Connected")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
+                .accessibilityLabel("Slack connected. Tap to disconnect")
                 .onTapGesture {
                     Task { await disconnectIntegration(integration.id) }
                 }

@@ -19,6 +19,26 @@ struct ContentView: View {
                 .animation(.tetherSpring, value: selectedTab)
         }
         .frame(minWidth: 700, minHeight: 500)
+        .background {
+            // Keyboard shortcuts for sidebar navigation (Cmd+1 through Cmd+6)
+            Group {
+                Button("") { selectedTab = .plan }
+                    .keyboardShortcut("1", modifiers: .command)
+                Button("") { selectedTab = .session }
+                    .keyboardShortcut("2", modifiers: .command)
+                Button("") { selectedTab = .stats }
+                    .keyboardShortcut("3", modifiers: .command)
+                Button("") { selectedTab = .coach }
+                    .keyboardShortcut("4", modifiers: .command)
+                Button("") { selectedTab = .social }
+                    .keyboardShortcut("5", modifiers: .command)
+                Button("") { selectedTab = .settings }
+                    .keyboardShortcut("6", modifiers: .command)
+            }
+            .frame(width: 0, height: 0)
+            .opacity(0)
+            .allowsHitTesting(false)
+        }
     }
 }
 

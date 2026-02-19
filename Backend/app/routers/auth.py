@@ -11,7 +11,7 @@ from app.models.session import Session
 from app.models.session_event import SessionEvent
 from app.models.task import Task
 from app.models.user import User
-from app.schemas.auth import LoginRequest, RefreshRequest, TokenResponse, UserResponse
+from app.schemas.auth import LoginRequest, RefreshRequest, SettingsUpdateRequest, TokenResponse, UserResponse
 from app.services import auth_service
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -72,6 +72,20 @@ async def refresh(request: RefreshRequest, req: Request):
 async def get_me(user: User = Depends(get_current_user)):
     """Return the currently authenticated user."""
     return user
+
+
+@router.patch("/settings")
+async def update_settings(
+    data: SettingsUpdateRequest,
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Update user settings (visibility, preferences)."""
+    current_settings = user.settings_json or {}
+    current_settings.update(data.settings_json)
+    user.settings_json = current_settings
+    await db.flush()
+    return {"status": "updated"}
 
 
 @router.get("/account/export")

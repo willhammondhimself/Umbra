@@ -33,8 +33,11 @@ public actor APIClient {
         case stats(String)
         case friends
         case friendInvite
+        case friendInviteLink
+        case friendJoinLink(String)
         case friendAccept(UUID)
         case groups
+        case createGroup
         case groupLeaderboard(UUID)
         case socialEncourage
         case socialPing
@@ -56,6 +59,12 @@ public actor APIClient {
         case integrationById(UUID)
         case todoistImport
         case notionImport
+        case tasksParse
+        case updateSettings
+        // Session reactions & activity feed
+        case sessionReactions(UUID)
+        case reactToSession(UUID)
+        case socialActivity
 
         public var path: String {
             switch self {
@@ -68,8 +77,11 @@ public actor APIClient {
             case .stats(let period): "/stats?period=\(period)"
             case .friends: "/friends"
             case .friendInvite: "/friends/invite"
+            case .friendInviteLink: "/friends/invite-link"
+            case .friendJoinLink(let code): "/friends/join/\(code)"
             case .friendAccept(let id): "/friends/\(id)/accept"
             case .groups: "/groups"
+            case .createGroup: "/groups"
             case .groupLeaderboard(let id): "/groups/\(id)/leaderboard"
             case .socialEncourage: "/social/encourage"
             case .socialPing: "/social/ping"
@@ -90,6 +102,11 @@ public actor APIClient {
             case .integrationById(let id): "/integrations/\(id)"
             case .todoistImport: "/integrations/todoist/import"
             case .notionImport: "/integrations/notion/import"
+            case .tasksParse: "/tasks/parse"
+            case .updateSettings: "/auth/settings"
+            case .sessionReactions(let id): "/sessions/\(id)/reactions"
+            case .reactToSession(let id): "/sessions/\(id)/react"
+            case .socialActivity: "/social/activity"
             }
         }
     }

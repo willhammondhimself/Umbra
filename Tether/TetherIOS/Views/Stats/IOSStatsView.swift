@@ -215,5 +215,8 @@ struct IOSSummaryCard: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(title)
+        .accessibilityValue(value)
     }
 }

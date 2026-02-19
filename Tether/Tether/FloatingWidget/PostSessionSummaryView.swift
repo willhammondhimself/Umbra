@@ -65,6 +65,8 @@ struct PostSessionSummaryView: View {
                         .foregroundStyle(Color.tetherStreak)
                 }
                 .padding(.vertical, 2)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("\(streak) day streak")
             }
 
             // AI Coach Summary
@@ -182,5 +184,8 @@ struct PostSessionSummaryView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
         .glassEffect(in: .rect(cornerRadius: TetherRadius.button))
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(label)
+        .accessibilityValue(value)
     }
 }

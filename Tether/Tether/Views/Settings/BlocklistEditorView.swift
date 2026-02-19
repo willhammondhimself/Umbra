@@ -29,6 +29,7 @@ struct BlocklistEditorView: View {
                     Image(systemName: "plus")
                 }
                 .help("Add blocked app or website")
+                .accessibilityLabel("Add to blocklist")
             }
             .padding()
 
@@ -89,6 +90,7 @@ struct BlocklistEditorView: View {
                                     .foregroundStyle(.secondary)
                             }
                             .buttonStyle(.plain)
+                            .accessibilityLabel("Remove \(item.displayName) from blocklist")
                         }
                     }
                 }

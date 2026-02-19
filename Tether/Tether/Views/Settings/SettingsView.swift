@@ -48,6 +48,12 @@ struct SettingsView: View {
 
                     Divider()
 
+                    // Privacy settings
+                    PrivacySettingsView()
+                        .padding()
+
+                    Divider()
+
                     // Third-party integrations
                     IntegrationsView()
                 }
@@ -93,10 +99,13 @@ struct CalendarSettingsView: View {
                         Circle()
                             .fill(Color.green)
                             .frame(width: 8, height: 8)
+                            .accessibilityHidden(true)
                         Text("Connected")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("Calendar connected")
                 } else {
                     Button("Connect") {
                         Task {
@@ -237,6 +246,7 @@ struct SafariExtensionStatusView: View {
                 Circle()
                     .fill(isEnabled ? Color.green : Color.orange)
                     .frame(width: 8, height: 8)
+                    .accessibilityHidden(true)
                 Text(isEnabled ? "Enabled" : "Not Enabled")
                     .font(.subheadline)
                     .foregroundStyle(isEnabled ? .primary : .secondary)
@@ -310,6 +320,146 @@ struct SafariExtensionStatusView: View {
             extensionErrorMessage = "Safari extension state is unavailable. Open Safari Settings to verify it is enabled."
         }
     }
+}
+
+// MARK: - Privacy Settings
+
+struct PrivacySettingsView: View {
+    @State private var visibility: VisibilityLevel = .privateOnly
+    @State private var isSaving = false
+    @State private var isLoading = true
+
+    enum VisibilityLevel: String, CaseIterable {
+        case privateOnly = "private"
+        case friends = "friends"
+        case group = "group"
+
+        var label: String {
+            switch self {
+            case .privateOnly: "Private"
+            case .friends: "All Friends"
+            case .group: "Group Only"
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .privateOnly: "Your focus stats are hidden from everyone"
+            case .friends: "All your friends can see your stats and activity"
+            case .group: "Only members of your groups can see your stats"
+            }
+        }
+
+        var icon: String {
+            switch self {
+            case .privateOnly: "lock.fill"
+            case .friends: "person.2.fill"
+            case .group: "person.3.fill"
+            }
+        }
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Label("Privacy", systemImage: "hand.raised.fill")
+                .font(.headline)
+
+            Text("Control who can see your focus activity and stats on leaderboards.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            if isLoading {
+                ProgressView()
+                    .controlSize(.small)
+            } else {
+                ForEach(VisibilityLevel.allCases, id: \.self) { level in
+                    HStack(spacing: 12) {
+                        Image(systemName: level == visibility ? "checkmark.circle.fill" : "circle")
+                            .foregroundStyle(level == visibility ? Color.accentColor : .secondary)
+                            .font(.title3)
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            HStack(spacing: 6) {
+                                Image(systemName: level.icon)
+                                    .font(.caption)
+                                Text(level.label)
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
+                            }
+                            Text(level.description)
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+
+                        Spacer()
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        guard !isSaving else { return }
+                        withAnimation {
+                            visibility = level
+                        }
+                        Task { await saveVisibility(level) }
+                    }
+                    .padding(.vertical, 4)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("\(level.label): \(level.description)")
+                    .accessibilityValue(level == visibility ? "Selected" : "")
+                    .accessibilityAddTraits(level == visibility ? .isSelected : [])
+                    .accessibilityAddTraits(.isButton)
+                }
+
+                if visibility != .privateOnly {
+                    HStack(spacing: 6) {
+                        Image(systemName: "info.circle")
+                            .font(.caption)
+                        Text("Others will see your focused time, session count, and streak on shared leaderboards.")
+                            .font(.caption)
+                    }
+                    .foregroundStyle(.secondary)
+                    .padding(.top, 4)
+                }
+            }
+        }
+        .task {
+            await loadVisibility()
+        }
+    }
+
+    private func loadVisibility() async {
+        isLoading = true
+        defer { isLoading = false }
+        do {
+            let settings: PrivacyUserSettings = try await APIClient.shared.request(.authMe)
+            if let vis = settings.settingsJson?["visibility"] {
+                visibility = VisibilityLevel(rawValue: vis) ?? .privateOnly
+            }
+        } catch {
+            // Default to private if we can't load
+            visibility = .privateOnly
+        }
+    }
+
+    private func saveVisibility(_ level: VisibilityLevel) async {
+        isSaving = true
+        defer { isSaving = false }
+        do {
+            let body = ["settings_json": ["visibility": level.rawValue]]
+            try await APIClient.shared.requestVoid(
+                .updateSettings, method: "PATCH", body: body
+            )
+        } catch {
+            TetherLogger.general.error("Failed to save visibility: \(error.localizedDescription)")
+        }
+    }
+}
+
+/// Lightweight decode of the /auth/me response for reading user settings.
+/// Note: No CodingKeys needed -- APIClient's decoder uses .convertFromSnakeCase.
+private struct PrivacyUserSettings: Codable, Sendable {
+    let id: UUID
+    let email: String
+    let settingsJson: [String: String]?
 }
 
 #Preview {

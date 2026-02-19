@@ -32,6 +32,7 @@ struct CalendarSidebarView: View {
                     .buttonStyle(.plain)
                     .foregroundStyle(.secondary)
                     .help("Refresh calendar data")
+                    .accessibilityLabel("Refresh calendar")
                 }
             }
             .padding(.horizontal)
@@ -209,6 +210,7 @@ struct CalendarEventRow: View {
             RoundedRectangle(cornerRadius: 2, style: .continuous)
                 .fill(Color(cgColor: event.calendar.cgColor))
                 .frame(width: 4, height: 36)
+                .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(event.title ?? "Untitled")
@@ -223,6 +225,8 @@ struct CalendarEventRow: View {
             Spacer()
         }
         .padding(.vertical, 2)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(event.title ?? "Untitled"), \(timeRange)")
     }
 
     private var timeRange: String {
@@ -268,6 +272,7 @@ struct FreeBlockRow: View {
             .buttonStyle(.plain)
             .foregroundStyle(Color.accentColor)
             .help("Schedule focus session in this block")
+            .accessibilityLabel("Schedule focus session, \(durationText), \(timeRange)")
         }
         .padding(.vertical, 2)
     }

@@ -47,16 +47,19 @@ struct PlanningView: View {
                         .font(.title2)
                 }
                 .buttonStyle(.plain)
-                .help("Add task manually")
+                .help("Add task manually (Cmd+N)")
                 .keyboardShortcut("n", modifiers: .command)
+                .accessibilityLabel("Add task manually")
             }
             .padding()
 
             // Chat input
             ChatInputView(inputText: $chatInput) { text in
-                let results = parsingService.parse(text)
-                withAnimation(.tetherQuick) {
-                    parsedTasks.append(contentsOf: results)
+                Task {
+                    let results = await parsingService.parseWithLLM(text)
+                    withAnimation(.tetherQuick) {
+                        parsedTasks.append(contentsOf: results)
+                    }
                 }
             }
 

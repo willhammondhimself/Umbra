@@ -16,6 +16,8 @@ struct TaskRowView: View {
             }
             .buttonStyle(.plain)
             .help(task.status == .done ? "Mark as to do" : "Mark as done")
+            .accessibilityLabel(task.status == .done ? "Mark as to do" : "Mark as done")
+            .accessibilityValue(task.status == .done ? "Completed" : task.status == .inProgress ? "In progress" : "To do")
 
             // Task content
             VStack(alignment: .leading, spacing: 2) {
@@ -50,6 +52,7 @@ struct TaskRowView: View {
             .buttonStyle(.plain)
             .opacity(0.5)
             .help("Delete task")
+            .accessibilityLabel("Delete \(task.title)")
         }
         .padding(.vertical, 4)
     }

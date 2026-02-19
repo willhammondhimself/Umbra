@@ -166,6 +166,7 @@ struct IOSCalendarEventRow: View {
             Circle()
                 .fill(Color(cgColor: event.calendar.cgColor))
                 .frame(width: 10, height: 10)
+                .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(event.title ?? "Untitled")
@@ -177,6 +178,8 @@ struct IOSCalendarEventRow: View {
                     .monospacedDigit()
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(event.title ?? "Untitled"), \(timeRange)")
     }
 
     private var timeRange: String {
@@ -202,6 +205,8 @@ struct IOSActiveSessionView: View {
             Text(Session.formatSeconds(sessionManager.elapsedSeconds))
                 .font(.system(size: 64, weight: .light, design: .monospaced))
                 .contentTransition(.numericText())
+                .accessibilityLabel("Session timer")
+                .accessibilityValue(Session.formatSeconds(sessionManager.elapsedSeconds))
 
             // Status
             if sessionManager.state == .paused {
@@ -335,5 +340,8 @@ struct IOSSummaryView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(label)
+        .accessibilityValue(value)
     }
 }

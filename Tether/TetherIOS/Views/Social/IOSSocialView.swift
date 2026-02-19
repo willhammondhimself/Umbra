@@ -77,6 +77,7 @@ struct IOSFriendsListView: View {
                                 .font(.caption2)
                         }
                         .buttonStyle(.borderless)
+                        .accessibilityLabel("Dismiss error")
                     }
                     .foregroundStyle(Color.tetherDistracted)
                 }
@@ -160,6 +161,7 @@ struct IOSFriendsListView: View {
                     Image(systemName: "heart.fill")
                         .foregroundStyle(Color.tetherDistracted)
                 }
+                .accessibilityLabel("Send encouragement to \(friend.displayName ?? friend.email)")
 
                 Button {
                     Task { await sendPing(to: friend) }
@@ -167,6 +169,7 @@ struct IOSFriendsListView: View {
                     Image(systemName: "bell.fill")
                         .foregroundStyle(Color.tetherPaused)
                 }
+                .accessibilityLabel("Send ping to \(friend.displayName ?? friend.email)")
             }
         }
     }

@@ -48,3 +48,43 @@ class EncourageRequest(BaseModel):
 
 class PingRequest(BaseModel):
     to_user_id: uuid.UUID
+
+
+class InviteLinkResponse(BaseModel):
+    invite_code: str
+    invite_url: str
+
+
+class ReactionRequest(BaseModel):
+    reaction_type: str = Field(pattern=r"^(thumbs_up|fire)$")
+
+
+class ReactionResponse(BaseModel):
+    id: uuid.UUID
+    user_id: uuid.UUID
+    display_name: str | None
+    reaction_type: str
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class ActivityReaction(BaseModel):
+    id: uuid.UUID
+    user_id: uuid.UUID
+    display_name: str | None
+    reaction_type: str
+
+    model_config = {"from_attributes": True}
+
+
+class ActivityItem(BaseModel):
+    id: uuid.UUID  # session id
+    user_id: uuid.UUID
+    display_name: str | None
+    start_time: datetime
+    duration_seconds: int
+    focused_seconds: int
+    reactions: list[ActivityReaction] = []
+
+    model_config = {"from_attributes": True}

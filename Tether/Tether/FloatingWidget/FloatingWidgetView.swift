@@ -47,6 +47,9 @@ struct FloatingWidgetView: View {
         .padding(.vertical, 10)
         .glassEffect(in: .capsule)
         .frame(width: 220, height: 48)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Session timer")
+        .accessibilityValue("\(Session.formatSeconds(sessionManager.elapsedSeconds)), \(sessionManager.distractionCount) distractions")
     }
 
     // MARK: - Expanded View (~300x400)
@@ -103,6 +106,9 @@ struct FloatingWidgetView: View {
                                 .strikethrough(task.status == .done)
                                 .foregroundStyle(task.status == .done ? .secondary : .primary)
                         }
+                        .accessibilityElement(children: .combine)
+                        .accessibilityLabel(task.title)
+                        .accessibilityValue(task.status == .done ? "Completed" : "To do")
                     }
                 }
             }
@@ -118,6 +124,7 @@ struct FloatingWidgetView: View {
                     }
                     .buttonStyle(.bordered)
                     .controlSize(.small)
+                    .accessibilityLabel("Pause session")
                 } else if sessionManager.state == .paused {
                     Button(action: { sessionManager.resumeSession() }) {
                         Image(systemName: "play.fill")
@@ -125,6 +132,7 @@ struct FloatingWidgetView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.small)
+                    .accessibilityLabel("Resume session")
                 }
 
                 Button(action: { sessionManager.stopSession() }) {
@@ -134,6 +142,7 @@ struct FloatingWidgetView: View {
                 .buttonStyle(.bordered)
                 .controlSize(.small)
                 .tint(.red)
+                .accessibilityLabel("Stop session")
             }
         }
         .padding(16)

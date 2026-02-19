@@ -32,6 +32,7 @@ struct CoachingView: View {
                 }
                 .buttonStyle(.bordered)
                 .disabled(isLoading)
+                .accessibilityLabel("Refresh coaching insights")
             }
             .padding()
 

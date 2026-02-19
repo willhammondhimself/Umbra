@@ -16,6 +16,7 @@ struct IOSSettingsView: View {
                         Spacer()
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundStyle(Color.tetherFocused)
+                            .accessibilityHidden(true)
                     }
 
                     Button(role: .destructive) {

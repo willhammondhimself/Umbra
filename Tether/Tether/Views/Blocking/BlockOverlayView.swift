@@ -49,6 +49,8 @@ struct BlockOverlayView: View {
                 }
             }
             .padding(40)
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel("\(appName) is blocked. Stay focused on your current task.")
         }
     }
 
@@ -133,6 +135,9 @@ struct BlockOverlayView: View {
                 .fontWeight(.semibold)
                 .foregroundStyle(.white)
         }
+        .accessibilityLabel("Override block")
+        .accessibilityHint("Press and hold for 3 seconds to override the block")
+        .accessibilityValue(holdProgress > 0 ? "\(Int(holdProgress * 100)) percent" : "Not started")
         .gesture(
             LongPressGesture(minimumDuration: holdDuration)
                 .onChanged { _ in

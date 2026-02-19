@@ -17,6 +17,49 @@ public struct ParsedTask: Sendable {
     }
 }
 
+// MARK: - LLM Response Types
+
+struct LLMParseResponse: Codable, Sendable {
+    let tasks: [LLMParsedTask]
+    let usedLlm: Bool
+
+    enum CodingKeys: String, CodingKey {
+        case tasks
+        case usedLlm = "used_llm"
+    }
+}
+
+struct LLMParsedTask: Codable, Sendable {
+    let title: String
+    let estimateMinutes: Int?
+    let priority: String?
+    let projectName: String?
+    let dueDate: String?
+
+    enum CodingKeys: String, CodingKey {
+        case title
+        case estimateMinutes = "estimate_minutes"
+        case priority
+        case projectName = "project_name"
+        case dueDate = "due_date"
+    }
+}
+
+// MARK: - Priority String Mapping
+
+extension TetherTask.Priority {
+    /// Create a Priority from a lowercase string returned by the LLM API.
+    public static func from(string: String) -> TetherTask.Priority {
+        switch string.lowercased() {
+        case "urgent": .urgent
+        case "high": .high
+        case "medium": .medium
+        case "low": .low
+        default: .medium
+        }
+    }
+}
+
 public struct NLParsingService: Sendable {
 
     public init() {}
@@ -26,6 +69,33 @@ public struct NLParsingService: Sendable {
     public func parse(_ input: String) -> [ParsedTask] {
         let segments = splitIntoSegments(input)
         return segments.compactMap { parseSegment($0) }
+    }
+
+    /// Parse natural language into tasks using the backend LLM endpoint,
+    /// falling back to local regex-based parsing if the API is unavailable.
+    public func parseWithLLM(_ input: String) async -> [ParsedTask] {
+        do {
+            let body = ["text": input]
+            let response: LLMParseResponse = try await APIClient.shared.request(
+                .tasksParse, method: "POST", body: body
+            )
+            if response.usedLlm && !response.tasks.isEmpty {
+                return response.tasks.map { llmTask in
+                    let priority = TetherTask.Priority.from(string: llmTask.priority ?? "medium")
+                    let dueDate: Date? = llmTask.dueDate.flatMap { ISO8601DateFormatter().date(from: $0) }
+                    return ParsedTask(
+                        title: llmTask.title,
+                        estimateMinutes: llmTask.estimateMinutes,
+                        priority: priority,
+                        projectName: llmTask.projectName,
+                        dueDate: dueDate
+                    )
+                }
+            }
+        } catch {
+            // Fall back to local parsing
+        }
+        return parse(input)
     }
 
     // MARK: - Segmentation

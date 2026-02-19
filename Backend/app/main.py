@@ -78,6 +78,7 @@ from app.routers.insights import router as insights_router  # noqa: E402
 from app.routers.blocklist import router as blocklist_router  # noqa: E402
 from app.routers.webhooks import router as webhooks_router  # noqa: E402
 from app.routers.integrations import router as integrations_router  # noqa: E402
+from app.routers.parsing import router as parsing_router  # noqa: E402
 
 app.include_router(auth_router)
 app.include_router(projects_router)
@@ -90,6 +91,7 @@ app.include_router(insights_router)
 app.include_router(blocklist_router)
 app.include_router(webhooks_router)
 app.include_router(integrations_router)
+app.include_router(parsing_router)
 
 
 @app.get("/health")

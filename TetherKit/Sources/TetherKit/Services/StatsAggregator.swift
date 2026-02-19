@@ -170,6 +170,19 @@ public struct StatsAggregator {
         return streak
     }
 
+    // MARK: - Comparison Stats
+
+    public func comparisonStats(for range: (start: Date, end: Date)) throws -> (current: PeriodStats, previous: PeriodStats) {
+        let duration = range.end.timeIntervalSince(range.start)
+        let previousStart = range.start.addingTimeInterval(-duration)
+        let previousEnd = range.start
+
+        let current = try stats(from: range.start, to: range.end)
+        let previous = try stats(from: previousStart, to: previousEnd)
+
+        return (current, previous)
+    }
+
     private static let dateFormatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "yyyy-MM-dd"

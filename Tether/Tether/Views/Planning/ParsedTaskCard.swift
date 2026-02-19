@@ -25,6 +25,7 @@ struct ParsedTaskCard: View {
                 }
                 .buttonStyle(.plain)
                 .help("Discard")
+                .accessibilityLabel("Discard extracted task")
             }
 
             if isEditing {

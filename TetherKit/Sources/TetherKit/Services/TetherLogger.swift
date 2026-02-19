@@ -9,4 +9,5 @@ public enum TetherLogger {
     public static let social = Logger(subsystem: "com.willhammond.tether.app", category: "social")
     public static let general = Logger(subsystem: "com.willhammond.tether.app", category: "general")
     public static let calendar = Logger(subsystem: "com.willhammond.tether.app", category: "calendar")
+    public static let speech = Logger(subsystem: "com.willhammond.tether.app", category: "speech")
 }

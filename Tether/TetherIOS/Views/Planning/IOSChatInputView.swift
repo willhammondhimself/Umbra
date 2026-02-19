@@ -32,6 +32,7 @@ struct IOSChatInputView: View {
             }
             .buttonStyle(.plain)
             .disabled(inputText.trimmingCharacters(in: .whitespaces).isEmpty)
+            .accessibilityLabel("Parse tasks")
         }
         .padding(.horizontal)
         .padding(.vertical, 8)

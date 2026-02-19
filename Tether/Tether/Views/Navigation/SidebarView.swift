@@ -24,6 +24,7 @@ struct SidebarView: View {
             }
             .buttonStyle(.plain)
             .help(isPinned ? "Collapse sidebar" : "Pin sidebar open")
+            .accessibilityLabel(isPinned ? "Collapse sidebar" : "Pin sidebar open")
             .padding(.bottom, 4)
 
             ForEach(AppTab.allCases, id: \.self) { tab in
@@ -82,6 +83,9 @@ struct SidebarView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(tab.title)
+        .accessibilityValue(isSelected ? "Selected" : "")
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
         .background {
             if isSelected {
                 RoundedRectangle(cornerRadius: TetherRadius.button, style: .continuous)

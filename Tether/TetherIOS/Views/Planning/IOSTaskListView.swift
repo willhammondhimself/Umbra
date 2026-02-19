@@ -82,6 +82,8 @@ struct IOSTaskListView: View {
                                     .foregroundStyle(task.status == .done ? Color.tetherFocused : .secondary)
                             }
                             .buttonStyle(.plain)
+                            .accessibilityLabel(task.status == .done ? "Mark as to do" : "Mark as done")
+                            .accessibilityValue(task.status == .done ? "Completed" : "To do")
 
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(task.title)
@@ -118,6 +120,7 @@ struct IOSTaskListView: View {
                 } label: {
                     Image(systemName: "plus")
                 }
+                .accessibilityLabel("Add task manually")
             }
         }
         .sheet(isPresented: $showManualForm) {

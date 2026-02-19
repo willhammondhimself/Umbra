@@ -1,5 +1,11 @@
+import AppKit
 import SwiftUI
 import TetherKit
+
+private struct InviteLinkResponse: Codable {
+    let inviteCode: String
+    let inviteUrl: String
+}
 
 struct FriendsListView: View {
     @State private var friends: [FriendItem] = []
@@ -9,6 +15,7 @@ struct FriendsListView: View {
     @State private var showEncourageSheet = false
     @State private var selectedFriend: FriendItem?
     @State private var errorMessage: String?
+    @State private var linkCopied = false
 
     private var pendingInvites: [FriendItem] {
         friends.filter { $0.status == "pending" }
@@ -30,6 +37,15 @@ struct FriendsListView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(inviteEmail.isEmpty || isInviting)
+
+                Button {
+                    Task { await generateShareLink() }
+                } label: {
+                    Image(systemName: linkCopied ? "checkmark" : "link")
+                }
+                .buttonStyle(.bordered)
+                .help("Generate shareable invite link")
+                .accessibilityLabel(linkCopied ? "Link copied" : "Generate invite link")
             }
             .padding()
 
@@ -48,6 +64,7 @@ struct FriendsListView: View {
                             .font(.caption2)
                     }
                     .buttonStyle(.borderless)
+                    .accessibilityLabel("Dismiss error")
                 }
                 .foregroundStyle(Color.tetherDistracted)
                 .padding(.horizontal)
@@ -135,6 +152,7 @@ struct FriendsListView: View {
                 }
                 .buttonStyle(.borderless)
                 .help("Send encouragement")
+                .accessibilityLabel("Send encouragement to \(friend.displayName ?? friend.email)")
 
                 Button {
                     Task { await sendPing(to: friend) }
@@ -144,6 +162,7 @@ struct FriendsListView: View {
                 }
                 .buttonStyle(.borderless)
                 .help("Send accountability ping")
+                .accessibilityLabel("Send accountability ping to \(friend.displayName ?? friend.email)")
             }
         }
         .padding(.vertical, 4)
@@ -190,6 +209,23 @@ struct FriendsListView: View {
         } catch {
             withAnimation(.tetherQuick) {
                 errorMessage = "Failed to accept invite"
+            }
+        }
+    }
+
+    private func generateShareLink() async {
+        do {
+            let response: InviteLinkResponse = try await APIClient.shared.request(
+                .friendInviteLink, method: "POST"
+            )
+            NSPasteboard.general.clearContents()
+            NSPasteboard.general.setString(response.inviteUrl, forType: .string)
+            withAnimation(.tetherQuick) { linkCopied = true }
+            try? await Task.sleep(for: .seconds(2))
+            withAnimation(.tetherQuick) { linkCopied = false }
+        } catch {
+            withAnimation(.tetherQuick) {
+                errorMessage = "Failed to generate invite link"
             }
         }
     }

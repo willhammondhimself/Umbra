@@ -51,11 +51,14 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         SWIFT_EMIT_LOC_STRINGS: YES
         INFOPLIST_KEY_NSCalendarsUsageDescription: "Tether uses your calendar to suggest optimal focus times and avoid scheduling conflicts."
+        INFOPLIST_KEY_NSSpeechRecognitionUsageDescription: "Tether uses speech recognition to let you dictate tasks hands-free."
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: "Tether needs microphone access for voice-to-text task planning."
     dependencies:
       - package: TetherKit
         product: TetherKit
       - sdk: AuthenticationServices.framework
       - sdk: EventKit.framework
+      - sdk: Speech.framework
       - target: TetherSafari
         embed: true
     entitlements:
@@ -65,6 +68,7 @@ targets:
         com.apple.security.files.user-selected.read-write: true
         com.apple.security.network.client: true
         com.apple.security.personal-information.calendars: true
+        com.apple.security.device.audio-input: true
         com.apple.security.application-groups:
           - group.com.willhammond.tether.shared
 
@@ -94,6 +98,8 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         SWIFT_EMIT_LOC_STRINGS: YES
         INFOPLIST_KEY_NSCalendarsUsageDescription: "Tether uses your calendar to suggest optimal focus times and avoid scheduling conflicts."
+        INFOPLIST_KEY_NSSpeechRecognitionUsageDescription: "Tether uses speech recognition to let you dictate tasks hands-free."
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: "Tether needs microphone access for voice-to-text task planning."
     dependencies:
       - package: TetherKit
         product: TetherKit
@@ -101,6 +107,7 @@ targets:
       - sdk: EventKit.framework
       - sdk: FamilyControls.framework
       - sdk: ManagedSettings.framework
+      - sdk: Speech.framework
     entitlements:
       path: TetherIOS/TetherIOS.entitlements
       properties:

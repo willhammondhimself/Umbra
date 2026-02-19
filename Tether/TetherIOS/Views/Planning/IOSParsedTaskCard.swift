@@ -24,6 +24,7 @@ struct IOSParsedTaskCard: View {
                         .foregroundStyle(.secondary)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Discard extracted task")
             }
 
             if isEditing {

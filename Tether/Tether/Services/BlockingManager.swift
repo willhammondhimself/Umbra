@@ -15,6 +15,7 @@ final class BlockingManager {
     private(set) var sessionExemptions: Set<String> = [] // Bundle IDs exempted for current session
 
     private var workspaceObserver: Any?
+    private var processCheckTask: Task<Void, Never>?
     private var overlayWindows: [NSWindow] = []
 
     // Current block state
@@ -90,6 +91,7 @@ final class BlockingManager {
         isActive = true
         updateSessionManagerBlocklist()
         startObserving()
+        startProcessScanning()
         SharedBlocklistStore.shared.setSessionActive(true)
         syncSafariRules()
     }
@@ -97,6 +99,8 @@ final class BlockingManager {
     func deactivate() {
         guard isActive else { return }
         isActive = false
+        processCheckTask?.cancel()
+        processCheckTask = nil
         stopObserving()
         dismissOverlay()
         clearExemptions()
@@ -122,6 +126,44 @@ final class BlockingManager {
         if let observer = workspaceObserver {
             NSWorkspace.shared.notificationCenter.removeObserver(observer)
             workspaceObserver = nil
+        }
+        processCheckTask?.cancel()
+        processCheckTask = nil
+    }
+
+    // MARK: - Process Scanning (GAP-12)
+
+    /// Periodic process scanner that catches blocked apps launched via Terminal,
+    /// Automator, or other indirect methods that bypass NSWorkspace activation notifications.
+    private func startProcessScanning() {
+        processCheckTask?.cancel()
+        processCheckTask = Task { @MainActor [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(2))
+                guard !Task.isCancelled, let self, self.isActive else { break }
+                self.scanRunningProcesses()
+            }
+        }
+    }
+
+    private func scanRunningProcesses() {
+        let ownBundleId = Bundle.main.bundleIdentifier
+        let blockedBundleIds = Set(
+            blocklistItems
+                .filter(\.isEnabled)
+                .compactMap(\.bundleId)
+        )
+
+        for app in NSWorkspace.shared.runningApplications {
+            guard let bundleId = app.bundleIdentifier else { continue }
+            if bundleId == ownBundleId { continue }
+            if sessionExemptions.contains(bundleId) { continue }
+            if !blockedBundleIds.contains(bundleId) { continue }
+
+            // Skip if we're already showing an overlay for this app
+            if currentBlockedApp == app.localizedName { continue }
+
+            handleAppActivation(app)
         }
     }
 

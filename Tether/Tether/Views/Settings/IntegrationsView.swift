@@ -320,6 +320,7 @@ private struct IntegrationToggleRow: View {
                         Circle()
                             .fill(Color.green)
                             .frame(width: 8, height: 8)
+                            .accessibilityHidden(true)
                         Text("Connected")
                             .font(.caption)
                             .foregroundStyle(.secondary)

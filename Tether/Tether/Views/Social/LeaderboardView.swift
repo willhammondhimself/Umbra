@@ -62,6 +62,7 @@ struct LeaderboardView: View {
                 .font(.caption.bold())
                 .foregroundStyle(rank <= 3 ? Color.accentColor : .secondary)
         }
+        .accessibilityLabel("Rank \(rank)")
     }
 
     private func formatFocusTime(_ seconds: Int) -> String {

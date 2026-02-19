@@ -33,6 +33,7 @@ struct IOSGroupsView: View {
                             Spacer()
                             Image(systemName: "trophy")
                                 .foregroundStyle(Color.accentColor)
+                                .accessibilityHidden(true)
                         }
                     }
                 }
@@ -45,6 +46,7 @@ struct IOSGroupsView: View {
                 } label: {
                     Image(systemName: "plus")
                 }
+                .accessibilityLabel("Create new group")
             }
         }
         .sheet(isPresented: $showCreateSheet) {
